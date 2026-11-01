@@ -12,7 +12,7 @@ from pathlib import Path
 import psutil
 from sqlalchemy.exc import SQLAlchemyError
 
-from app import artifacts, service
+from app import artifacts, service, checkpoints
 from app.config import settings
 from app.execution_lock import acquire, is_stopped
 from app.models import uid
@@ -30,14 +30,16 @@ class Worker:
         self.running = True
         self.last_heartbeat = 0.0
         self.watchdog_done = threading.Event()
+        self.last_maintenance = 0.0
 
     def register(self):
         service.worker_register(self.id, os.getpid(), psutil.Process().create_time(), socket.gethostname())
 
-    def fault(self, phase, spec):
+    def fault(self, phase, spec, index=None):
         """Local integration-test hook; never accepted through the HTTP API."""
         if (settings.test_faults and os.getenv("TEST_CRASH_PHASE") == phase
                 and spec["key"] == os.getenv("TEST_CRASH_STEP", "remove_background")
+                and (index is None or index == int(os.getenv("TEST_CRASH_CHUNK", "1")))
                 and spec["epoch_number"] == 1):
             os._exit(91)
 
@@ -49,6 +51,11 @@ class Worker:
         try:
             if not service.start_authorized(spec["id"], self.id, spec["fence"]):
                 return
+            spec["chunks"] = checkpoints.prepare(spec)
+            if spec["chunks"] is None:
+                return
+            if settings.test_faults and "TEST_PARTIAL_CHUNK" in os.environ:
+                spec["test_partial_chunk"] = int(os.environ["TEST_PARTIAL_CHUNK"])
             work = artifacts.folder(f'work/{spec["id"]}')
             work.mkdir(parents=True, exist_ok=True)
             artifacts.write_json(work / "spec.json", spec)
@@ -86,6 +93,25 @@ class Worker:
             if not service.start_authorized(aid, self.id, spec["fence"]):
                 self.stop_child(aid)
                 continue
+            for chunk in spec.get("chunks", []):
+                index = chunk["index"]
+                if (chunk.get("reuse") or (work / f"chunk-ack-{index}.json").exists()
+                        or not (work / f"chunk-ready-{index}.json").exists()):
+                    continue
+                published = f"checkpoints/{aid}/{index}"
+                if artifacts.folder(published).exists():
+                    manifest_path = artifacts.folder(published) / "manifest.json"
+                    m = json.loads(manifest_path.read_text(encoding="utf-8"))
+                    blob = {"directory": published, "manifest": m, "content_digest": m["content_digest"],
+                            "manifest_digest": artifacts.file_hash(manifest_path)}
+                else:
+                    blob = artifacts.publish_directory(f"checkpoint-work/{aid}/{index}", published)
+                self.fault("chunk_after_publish", spec, index)
+                if not checkpoints.register(spec, index, blob):
+                    self.stop_child(aid)
+                    break
+                self.fault("chunk_after_commit", spec, index)
+                artifacts.write_json(work / f"chunk-ack-{index}.json", {"committed": True})
             if p.poll() is not None:
                 result_path = work / "result.json"
                 if result_path.exists() and p.returncode == 0:
@@ -117,6 +143,10 @@ class Worker:
                 service.release_confirmed(aid)
 
     def tick(self):
+        if time.monotonic()-self.last_maintenance >= 60:
+            from app.telemetry import maintain
+            maintain()
+            self.last_maintenance=time.monotonic()
         due = time.monotonic() - self.last_heartbeat >= settings.heartbeat_seconds
         if due:
             service.worker_heartbeat(self.id)

@@ -14,7 +14,7 @@ from app.config import settings
 from app.db import Session, db_now
 from app.models import (Artifact, Attempt, CacheEntry, CommandReceipt, Event,
                         ResourceSlot, Step, Task, WorkerSession, uid)
-from app.pipeline import OK, SPECS, TERMINAL, TaskInput, asset_digest, digest, semantic
+from app.pipeline import OK, SPECS, LEGACY_SPECS, TERMINAL, TaskInput, asset_digest, digest, semantic
 
 log = logging.getLogger("pipeline")
 
@@ -53,6 +53,13 @@ def slot_lock(s, slot_id):
 
 def submit(data: TaskInput, key):
     request = data.model_dump(mode="json")
+    specs = SPECS if data.pipeline_version == "animation-v2" else LEGACY_SPECS
+    if data.execution_profile == "hourly":
+        if data.pipeline_version != "animation-v2" or data.scenario != "normal":
+            raise Problem("INVALID_PROFILE", "Hourly profile requires v2 and normal scenario", 422)
+        request.update(cache_read=False, step_timeout_seconds=2700, task_timeout_seconds=9000)
+    elif data.pipeline_version == "animation-v1":
+        request.pop("execution_profile", None)
     fingerprint = digest(request)
     source_digest = asset_digest(data.asset_id)
     with Session.begin() as s:
@@ -60,9 +67,9 @@ def submit(data: TaskInput, key):
         tid = uid()
         inserted = s.scalar(insert(Task).values(
             id=tid, idempotency_key=key, request_hash=fingerprint, request=request,
-            input_digest=source_digest, pipeline=SPECS, status="QUEUED", epoch=1,
+            input_digest=source_digest, pipeline=specs, status="QUEUED", epoch=1,
             revision=1, event_seq=0, created_at=now, epoch_started_at=now,
-            deadline_at=now + timedelta(seconds=data.task_timeout_seconds)
+            deadline_at=now + timedelta(seconds=request["task_timeout_seconds"])
         ).on_conflict_do_nothing(index_elements=[Task.idempotency_key]).returning(Task.id))
         if not inserted:
             existing = s.scalar(select(Task).where(Task.idempotency_key == key))
@@ -70,9 +77,9 @@ def submit(data: TaskInput, key):
                 raise Problem("IDEMPOTENCY_CONFLICT", "The key was used with a different request")
             return {"task_id": existing.id, "status": existing.status, "reused_request": True}
         task = s.get(Task, tid)
-        for spec in SPECS:
+        for spec in specs:
             s.add(Step(task_id=tid, key=spec["key"], spec=spec))
-        event(s, task, "TASK_ACCEPTED", simulated=True, pipeline="animation-v1")
+        event(s, task, "TASK_ACCEPTED", simulated=True, pipeline=data.pipeline_version)
         return {"task_id": tid, "status": "QUEUED", "reused_request": False}
 
 
@@ -111,7 +118,8 @@ def worker_heartbeat(worker_id):
         w = s.get(WorkerSession, worker_id)
         w.heartbeat_at = db_now(s)
         # Samples do not determine allocation and never override ownership fields.
-        slots = list(s.scalars(select(ResourceSlot).where(ResourceSlot.node_id == settings.node_id)))
+        slots = list(s.scalars(select(ResourceSlot).where(ResourceSlot.node_id == settings.node_id)
+                               .order_by(ResourceSlot.id).with_for_update()))
         for slot in slots:
             busy = slot.status == "BUSY"
             slot.sample = {"source": "mock", "simulated": True, "valid": slot.status != "QUARANTINED",
@@ -120,6 +128,8 @@ def worker_heartbeat(worker_id):
                            "memory_used_mb": 4096 if busy else 0, "memory_total_mb": 8192,
                            "temperature_c": 58 if busy else 32}
             slot.measured_at = db_now(s)
+            from app.telemetry import capture
+            capture(s, slot, slot.measured_at)
 
 
 def end_attempt(s, task, step, attempt, status, code, retryable=False, stopped=False):
@@ -249,7 +259,8 @@ def claim(worker_id):
                 continue
             by_key = {x.key: x for x in steps}
             version = step.spec.get("processor_version", "mock-1")
-            supported = {"mock-1", "mock-2"} if step.key == "render_preview" else {"mock-1"}
+            supported = ({"mock-1", "mock-2"} if step.key == "render_preview" else
+                         {"mock-1", "mock-chunks-1"} if step.key in {"remove_background", "enhance_frames"} else {"mock-1"})
             if version not in supported:
                 step.status, step.error = "FAILED", "PROCESSOR_VERSION_UNAVAILABLE"
                 task.stop_reason = step.error
@@ -294,6 +305,7 @@ def claim(worker_id):
             previous = [a for a in attempts if a.step_id == sid]
             a = Attempt(id=aid, task_id=task.id, step_id=sid, number=len(previous) + 1,
                         epoch=task.epoch, fence=step.fence, worker_id=worker_id, slot_id=slot.id,
+                        queue_seconds=max(0, (now-step.ready_at).total_seconds()) if step.ready_at else None,
                         status="RUNNING", phase="STARTING", claimed_at=now, heartbeat_at=now,
                         lease_expires_at=now + timedelta(seconds=settings.lease_seconds))
             s.add(a)
@@ -304,9 +316,10 @@ def claim(worker_id):
             task.status = "RUNNING"
             event(s, task, "ATTEMPT_CLAIMED", step, a, fence=a.fence, slot_id=slot.id)
             return {"cached": False, "id": aid, "worker_id": worker_id, "fence": a.fence,
-                    "task_id": task.id, "key": step.key, "epoch": task.epoch,
+                    "task_id": task.id, "step_id": sid, "key": step.key, "epoch": task.epoch,
                     "epoch_number": 1 + sum(x.epoch == task.epoch for x in previous),
-                    "scenario": task.request["scenario"], "seconds": task.request["step_seconds"],
+                    "scenario": task.request["scenario"], "seconds": (1800 if step.spec.get("partition") else 0.2)
+                    if task.request.get("execution_profile") == "hourly" else task.request["step_seconds"],
                     "timeout": task.request["step_timeout_seconds"],
                     "semantic": probe["semantic"], "cache_key": step.cache_key}
     return None
@@ -359,6 +372,8 @@ def failed(attempt_id, worker_id, fence, code, retryable, stopped=True):
 
 
 def completed(attempt_id, worker_id, fence, blob):
+    from app.checkpoints import completion_proof
+    chunks_valid = completion_proof(attempt_id)
     valid = artifacts.verify(blob["directory"], blob["manifest_digest"])
     with Session.begin() as s:
         task, step, a = current(s, attempt_id)
@@ -367,7 +382,7 @@ def completed(attempt_id, worker_id, fence, blob):
         if not authorized(task, step, a, worker_id, fence, db_now(s)):
             reject(s, task, step, a, "complete")
             return False
-        if not valid or blob["manifest"].get("semantic_key") != step.cache_key:
+        if not valid or not chunks_valid or blob["manifest"].get("semantic_key") != step.cache_key:
             raise Problem("ARTIFACT_INVALID", "Output failed integrity/semantic validation")
         artifact = Artifact(id=uid(), producer_attempt_id=a.id, **blob, valid=True, created_at=db_now(s))
         s.add(artifact)

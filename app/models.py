@@ -94,6 +94,7 @@ class Attempt(Base):
     executor_created: Mapped[float | None] = mapped_column(Float)
     cleanup_state: Mapped[str] = mapped_column(String(20), default="PENDING")
     manifest_digest: Mapped[str | None] = mapped_column(String(64))
+    queue_seconds: Mapped[float | None] = mapped_column(Float)
 
 
 class Artifact(Base):
@@ -153,3 +154,48 @@ class CommandReceipt(Base):
     operation_key: Mapped[str] = mapped_column(String(128))
     request_hash: Mapped[str] = mapped_column(String(64))
     response: Mapped[dict] = mapped_column(JSONB)
+
+
+class Checkpoint(Base):
+    __tablename__ = "checkpoints"
+    __table_args__ = (UniqueConstraint("producer_attempt_id", "chunk_index"),
+                     Index("ix_checkpoint_lookup", "step_id", "chunk_key", "valid"))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    step_id: Mapped[str] = mapped_column(ForeignKey("steps.id"))
+    producer_attempt_id: Mapped[str] = mapped_column(ForeignKey("attempts.id"))
+    chunk_index: Mapped[int] = mapped_column(Integer)
+    chunk_key: Mapped[str] = mapped_column(String(64))
+    identity: Mapped[dict] = mapped_column(JSONB)
+    directory: Mapped[str] = mapped_column(String(200), unique=True)
+    manifest_digest: Mapped[str] = mapped_column(String(64))
+    content_digest: Mapped[str] = mapped_column(String(64))
+    manifest: Mapped[dict] = mapped_column(JSONB)
+    epoch: Mapped[int] = mapped_column(Integer)
+    fence: Mapped[int] = mapped_column(BigInteger)
+    valid: Mapped[bool] = mapped_column(Boolean, default=True)
+    committed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class CheckpointUse(Base):
+    __tablename__ = "checkpoint_uses"
+    __table_args__ = (UniqueConstraint("attempt_id", "chunk_index"),)
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    attempt_id: Mapped[str] = mapped_column(ForeignKey("attempts.id"))
+    checkpoint_id: Mapped[str] = mapped_column(ForeignKey("checkpoints.id"))
+    chunk_index: Mapped[int] = mapped_column(Integer)
+    reused: Mapped[bool] = mapped_column(Boolean)
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class ResourceSample(Base):
+    __tablename__ = "resource_samples"
+    __table_args__ = (UniqueConstraint("slot_id", "measured_at", "resolution"),
+                     Index("ix_resource_samples_time", "measured_at"),
+                     Index("ix_resource_history", "slot_id", "measured_at"))
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    slot_id: Mapped[str] = mapped_column(ForeignKey("resource_slots.id"))
+    measured_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    resolution: Mapped[str] = mapped_column(String(10), default="raw")
+    status: Mapped[str] = mapped_column(String(20))
+    holder_id: Mapped[str | None] = mapped_column(ForeignKey("attempts.id"))
+    sample: Mapped[dict] = mapped_column(JSONB)

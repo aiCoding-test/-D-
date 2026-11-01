@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "at": "2026-11-01T11:39:00.568987+00:00",
+  "old_tasks": [
+    {
+      "task_id": "46867567-18d3-42c0-b38e-0e7571d945c0",
+      "status_unchanged": true,
+      "frozen_pipeline_unchanged": true,
+      "attempts_preserved": true,
+      "downloads_verified": true
+    },
+    {
+      "task_id": "3dd933ec-6339-416e-a4f2-5ef4569aab78",
+      "status_unchanged": true,
+      "frozen_pipeline_unchanged": true,
+      "attempts_preserved": true,
+      "downloads_verified": true
+    }
+  ],
+  "published_0001_unchanged": true
+}

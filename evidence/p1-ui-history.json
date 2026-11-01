@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "task_id": "002df870-b7ec-425c-b69e-7dcf53377cd0",
+  "event_count": 128,
+  "method": "API task with always_fail and five real manual resumes; no direct status changes",
+  "browser_rows_loaded": 128,
+  "older_button_hidden": true
+}

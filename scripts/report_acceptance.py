@@ -1,14 +1,20 @@
 """Generate the acceptance ledger from actual pytest + container-fault results."""
 import json
+import argparse
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 evidence = ROOT / "evidence"
-tree = ET.parse(evidence / "junit.xml")
+parser=argparse.ArgumentParser()
+parser.add_argument("--junit",default="junit.xml")
+parser.add_argument("--runtime",default="runtime.json")
+parser.add_argument("--output",default="acceptance.md")
+args=parser.parse_args()
+tree = ET.parse(evidence / args.junit)
 cases = {c.attrib["name"]: c.find("failure") is None and c.find("error") is None and c.find("skipped") is None
          for c in tree.findall(".//testcase")}
-runtime = json.loads((evidence / "runtime.json").read_text(encoding="utf-8"))
+runtime = json.loads((evidence / args.runtime).read_text(encoding="utf-8"))
 runtime_ok = {aid: check["passed"] for check in runtime.get("checks", []) for aid in check["ids"]}
 
 mapping = {
@@ -43,7 +49,7 @@ mapping = {
 }
 
 lines = ["# P0 验收结果", "", f"运行环境：Linux 容器，Python 3.12.13，PostgreSQL 16.14；{len(cases)} 项 pytest 用例。",
-         "", "证据： [JUnit](junit.xml)、[真实容器故障快照](runtime.json)、[故障过程 Worker 日志](runtime-worker.log)、[全新克隆启动](clean-start.json)、[页面恢复截图](dashboard.jpg)、[最终看板](dashboard-preview.jpg)。",
+         "", f"证据： [JUnit]({args.junit})、[真实容器故障快照]({args.runtime})、[故障过程 Worker 日志]({args.runtime.removesuffix('.json')}-worker.log)、[全新克隆启动](clean-start.json)、[页面恢复截图](dashboard.jpg)、[最终看板](dashboard-preview.jpg)。",
          "", "测试采用加速配置：单步 0.07～0.2 秒、心跳 0.25 秒、租约 2 秒；容器故障验证为心跳 0.5 秒、租约 4 秒。默认演示配置仍为心跳 5 秒、租约 30 秒。",
          "", "| 编号 | 场景 | 结果 | 证据入口 |", "| --- | --- | --- | --- |"]
 passed = 0
@@ -58,7 +64,7 @@ lines += ["", f"**矩阵通过 {passed}/28；pytest 通过 {sum(cases.values())}
           "A16 中执行模式隔离验证的是语义指纹不同，P0 API 拒绝开启真实计算；没有宣称运行过真实模型/GPU。A10 验证实际存在的未发布临时文件中断，没有模拟真实编解码器的内部文件损坏。",
           "", "小时级长跑、真 GPU/NVML、模型内部检查点、宿主掉电和磁盘损坏没有验证，均超出 P0。页面验收已完成：提交预览失败任务、查看失败尝试、点击恢复、完成 7/7 步、刷新后保留历史。",
           "", "复现命令见 [README](../README.md)。不要将这些小规模故障验证解释为集群吞吐或生产高可用证明。", ""]
-(evidence / "acceptance.md").write_text("\n".join(lines), encoding="utf-8")
+(evidence / args.output).write_text("\n".join(lines), encoding="utf-8")
 print(f"Matrix {passed}/28; pytest {sum(cases.values())}/{len(cases)}; runtime={runtime.get('passed')}")
 if passed != 28:
     raise SystemExit(1)

@@ -14,12 +14,17 @@ class Settings:
     poll_seconds: float = field(default_factory=lambda: float(os.getenv("POLL_SECONDS", "0.5")))
     retry_base_seconds: float = field(default_factory=lambda: float(os.getenv("RETRY_BASE_SECONDS", "2")))
     test_faults: bool = field(default_factory=lambda: os.getenv("ENABLE_TEST_FAULTS", "0") == "1")
+    sample_seconds: float = field(default_factory=lambda: float(os.getenv("RESOURCE_SAMPLE_SECONDS", "5")))
+    raw_retention_hours: float = field(default_factory=lambda: float(os.getenv("RESOURCE_RAW_HOURS", "1")))
+    summary_retention_days: float = field(default_factory=lambda: float(os.getenv("RESOURCE_SUMMARY_DAYS", "7")))
 
     def __post_init__(self):
         if not self.database_url.startswith("postgresql+"):
             raise ValueError("This application requires PostgreSQL, not an in-memory/SQLite substitute")
         if not 0 < self.heartbeat_seconds < self.lease_seconds / 2:
             raise ValueError("Heartbeat must be positive and less than half the lease")
+        if self.sample_seconds < .1 or self.raw_retention_hours <= 0 or self.summary_retention_days <= 0:
+            raise ValueError("Telemetry interval and retention must be positive")
 
 
 settings = Settings()

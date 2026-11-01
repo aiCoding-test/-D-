@@ -22,7 +22,9 @@ from conftest import step, wait_for
 
 
 def create(client, **body):
-    data = {"step_seconds": .07, "cache_read": False, **body}
+    # Preserve the original P0 assertions against its frozen processor versions;
+    # P1 scenarios explicitly request animation-v2 in test_p1.py.
+    data = {"pipeline_version": "animation-v1", "step_seconds": .07, "cache_read": False, **body}
     r = client.post("/api/tasks", json=data, headers={"Idempotency-Key": str(uuid.uuid4())})
     assert r.status_code == 202, r.text
     return r.json()["task_id"]

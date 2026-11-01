@@ -3,8 +3,57 @@ import json
 import os
 import sys
 import time
+import shutil
 
 from app.artifacts import folder, seal, write_json
+
+
+def execute_chunks(work, spec):
+    from app.artifacts import verify, file_hash
+    chunks = spec["chunks"]
+    for chunk in chunks:
+        index = chunk["index"]
+        reuse = chunk.get("reuse")
+        if reuse:
+            if not verify(reuse["directory"], reuse["manifest_digest"]):
+                raise ValueError("CHECKPOINT_INVALID")
+            source = folder(reuse["directory"])
+        else:
+            source = folder(f'checkpoint-work/{spec["id"]}/{index}')
+            source.mkdir(parents=True, exist_ok=True)
+            (source / "partial.tmp").write_text("uncommitted chunk", encoding="utf-8")
+            if spec.get("test_partial_chunk") == index and spec["epoch_number"] == 1:
+                time.sleep(60)
+            duration = spec["seconds"] / len(chunks)
+            if spec["key"] == "remove_background" and spec["scenario"] == "slow_step":
+                duration = max(spec["seconds"] * 10, 15) / len(chunks)
+            started = time.monotonic()
+            while True:
+                elapsed = time.monotonic() - started
+                fraction = min(elapsed / duration, 1)
+                write_json(work / "progress.next", {"done": 100 * (index + fraction) / len(chunks),
+                           "total": 100, "current_chunk": index})
+                os.replace(work / "progress.next", work / "progress.json")
+                if fraction == 1:
+                    break
+                time.sleep(min(.5, duration / 5))
+            (source / "partial.tmp").unlink()
+            write_json(source / "output.json", {"simulated": True, "chunk_identity": chunk["identity"]})
+            seal(source, chunk["chunk_key"])
+            write_json(work / f"chunk-ready-{index}.json", {"index": index})
+            while not (work / f"chunk-ack-{index}.json").exists():
+                time.sleep(.03)
+            # The supervisor publishes before acknowledging.
+            source = folder(f'checkpoints/{spec["id"]}/{index}')
+        manifest = json.loads((source / "manifest.json").read_text(encoding="utf-8"))
+        target = work / f"block-{index:03d}.json"
+        shutil.copyfile(source / "output.json", target)
+        if file_hash(target) != next(f["sha256"] for f in manifest["files"] if f["key"] == "output.json"):
+            raise ValueError("CHECKPOINT_INVALID")
+    write_json(work / "output.json", {"simulated": True, "step": spec["key"],
+               "semantic": spec["semantic"], "blocks": [c["chunk_key"] for c in chunks], "frames": 96})
+    seal(work, spec["cache_key"])
+    write_json(work / "result.json", {"ok": True})
 
 
 def run(attempt_id):
@@ -27,6 +76,12 @@ def run(attempt_id):
     if key == "remove_background" and scenario == "hang_step":
         while True:
             time.sleep(1)
+    if spec.get("chunks") and not error:
+        try:
+            execute_chunks(work, spec)
+        except (OSError, ValueError, KeyError):
+            write_json(work / "result.json", {"ok": False, "code": "CHECKPOINT_INVALID", "retryable": True})
+        return
     (work / "partial.tmp").write_text("not a published artifact", encoding="utf-8")
     for i in range(1, 11):
         time.sleep(duration / 10)

@@ -36,7 +36,8 @@ def write_json(path, value):
 def seal(work, semantic_key):
     files = []
     for p in sorted(work.iterdir()):
-        if p.is_file() and p.name not in {"manifest.json", "progress.json", "result.json", "spec.json", "executor.log"}:
+        if (p.is_file() and p.name not in {"manifest.json", "progress.json", "result.json", "spec.json", "executor.log"}
+                and not p.name.startswith(("chunk-ready-", "chunk-ack-"))):
             files.append({"key": p.name, "sha256": file_hash(p), "size": p.stat().st_size})
     if not files:
         raise ValueError("Empty artifact")
@@ -66,12 +67,16 @@ def verify(directory, expected_digest):
 
 
 def publish(attempt_id):
-    work = folder(f"work/{attempt_id}")
+    return publish_directory(f"work/{attempt_id}", f"published/{attempt_id}")
+
+
+def publish_directory(source, destination):
+    work = folder(source)
     manifest = json.loads((work / "manifest.json").read_text(encoding="utf-8"))
     expected = file_hash(work / "manifest.json")
-    if not verify(f"work/{attempt_id}", expected):
+    if not verify(source, expected):
         raise ValueError("ARTIFACT_INVALID")
-    dest = folder(f"published/{attempt_id}")
+    dest = folder(destination)
     dest.parent.mkdir(parents=True, exist_ok=True)
     if not dest.exists():
         # Rename stays within one mounted volume; never overwrite another attempt.
@@ -82,7 +87,7 @@ def publish(attempt_id):
                 os.fsync(fd)
             finally:
                 os.close(fd)
-    if not verify(f"published/{attempt_id}", expected):
+    if not verify(destination, expected):
         raise ValueError("ARTIFACT_INVALID")
-    return {"directory": f"published/{attempt_id}", "manifest_digest": expected,
+    return {"directory": destination, "manifest_digest": expected,
             "content_digest": manifest["content_digest"], "manifest": manifest}

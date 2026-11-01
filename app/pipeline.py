@@ -1,11 +1,12 @@
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-PIPELINE_VERSION = "animation-v1"
+PIPELINE_VERSION = "animation-v2"
 SPECS = [
     {"key": "inspect", "name": "校验素材", "deps": [], "resource": "cpu", "params": []},
     {"key": "normalize_extract", "name": "规范化与抽帧", "deps": ["inspect"], "resource": "cpu", "params": ["fps"]},
@@ -17,6 +18,11 @@ SPECS = [
 ]
 for _spec in SPECS:
     _spec["processor_version"] = "mock-2" if _spec["key"] == "render_preview" else "mock-1"
+LEGACY_SPECS = deepcopy(SPECS)
+for _spec in SPECS:
+    if _spec["key"] in {"remove_background", "enhance_frames"}:
+        _spec["processor_version"] = "mock-chunks-1"
+        _spec["partition"] = {"version": "frames-24-v1", "frames": 96, "chunk_size": 24}
 BY_KEY = {s["key"]: s for s in SPECS}
 OK = {"SUCCEEDED", "CACHED"}
 TERMINAL = {"SUCCEEDED", "FAILED", "CANCELLED"}
@@ -41,13 +47,14 @@ class TaskInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: str = Field("动画素材处理", min_length=1, max_length=80)
     asset_id: Literal["orbit", "bounce"] = "orbit"
-    pipeline_version: Literal["animation-v1"] = PIPELINE_VERSION
+    pipeline_version: Literal["animation-v1", "animation-v2"] = PIPELINE_VERSION
     parameters: Parameters = Field(default_factory=Parameters)
     scenario: Literal["normal", "transient_once", "always_fail", "resume_preview", "gpu_oom", "invalid_input", "slow_step", "hang_step"] = "normal"
     cache_read: bool = True
     step_seconds: float = Field(2, ge=0.05, le=120)
     step_timeout_seconds: float = Field(120, ge=0.1, le=86400)
     task_timeout_seconds: float = Field(1800, ge=0.2, le=172800)
+    execution_profile: Literal["demo", "hourly"] = "demo"
 
 
 def validate_dag(specs):
@@ -67,10 +74,13 @@ def asset_digest(asset_id):
 
 
 def semantic(task, spec, parent_digests):
-    return {"cache_schema": 1, "processor": spec["key"], "processor_version": spec.get("processor_version", "mock-1"),
+    result = {"cache_schema": 1, "processor": spec["key"], "processor_version": spec.get("processor_version", "mock-1"),
             "output_schema": 1, "runtime": "python-mock-1", "simulated": True,
             "parameters": {k: task.request["parameters"][k] for k in spec["params"]},
             "inputs": parent_digests or {"source": task.input_digest}}
+    if spec.get("partition"):
+        result["partition"] = spec["partition"]
+    return result
 
 
 validate_dag(SPECS)

@@ -1,0 +1,16 @@
+# Isolated, persistent long-run project; never shares demo database/artifact volumes.
+services:
+  postgres:
+    ports: !override
+      - "127.0.0.1:55434:5432"
+  api:
+    ports: !override
+      - "127.0.0.1:18081:8000"
+  worker:
+    environment:
+      NODE_ID: hourly
+networks:
+  default:
+    ipam:
+      config: !override
+        - subnet: 10.233.86.0/24

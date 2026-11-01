@@ -4,6 +4,8 @@
 
 **模型、动画加工和 GPU 遥测为 MOCK；数据库、独立进程、调度、重试、租约恢复、文件校验与资源排队真实运行。**
 
+P1 新增步骤内分块恢复、历史分页/筛选、资源历史趋势及 `/metrics`。实际小时级中断恢复状态见 [P1 验收](evidence/p1-acceptance.md)，不能以快速测试代替真实 60 分钟记录。
+
 源码：[aiCoding-test/-D-](https://github.com/aiCoding-test/-D-)。
 
 ## 启动
@@ -66,7 +68,20 @@ docker compose down
 - 文件在私有目录生成、校验、不可变发布，再提交正式引用；孤立文件不作为成功结果，P0 不自动 GC。
 - 缓存键包含输入、步骤/模型版本、有效参数、种子、schema 与模拟模式；命中前校验文件哈希。
 
-提供至少一次计算尝试语义，中断的当前步骤可能重算；进度百分比不是内部检查点。真 GPU、小时级稳定性、多机和永久存储损坏不在已验证范围。
+新任务默认 `animation-v2`：抠图和增强各 4 个 24 帧块，独立文件检查点允许跨 Attempt/恢复代次接续；全部块完成后才汇总给下游。旧 `animation-v1` 的处理器和产物继续兼容，已发布 0001 迁移未改，新表/排队耗时字段通过 0002 添加。
+
+提供至少一次计算尝试语义；旧版本恢复到步骤边界，新版本复用有效已提交块，未提交块可能重算。进度百分比不是检查点。真 GPU、真实模型小时级稳定性、多机和永久存储损坏不在已验证范围。
+
+## P1 长跑和观测
+
+首页默认仍为快速演示，可显式选择“实际长跑 · 约1小时”。`execution_profile=hourly` 使两个分块步骤各运行约 1800 秒，关闭完整结果缓存读取，业务超时提高，心跳/租约仍是 5/30 秒。
+
+`scripts/verify_hourly.py` 使用独立数据库/产物卷，在两块提交后真实 kill Worker 并恢复；脚本至少持续 60 分钟才能通过，后台运行及同任务观察器重连方法见 [P1 实现说明](docs/10-P1实现与验收.md)。它不需要真实 GPU，也不证明真实模型性能。
+
+- 时间线支持步骤、Attempt 筛选及“加载更早历史”，保留完整增量 API。
+- `/api/resources/history` 返回原始与分钟样本、归属和有效性；默认每 5 秒采样，原始保留 1h、分钟汇总保留 7d，仅清理遥测。
+- `/api/tasks/{id}/timings` 定义排队、运行、失联检测与恢复开始延迟；旧记录没有测量时为 null。
+- [本机标准指标](http://localhost:8000/metrics) 不包含任务/尝试 ID 标签；MOCK 指标和缺失数据有明确标识。
 
 ## 验证
 
@@ -77,7 +92,7 @@ docker compose exec -T postgres createdb -U taskd taskd_test
 docker compose -f compose.yaml -f compose.test.yaml run --rm test
 ```
 
-测试库已存在时省略 createdb。JUnit 输出至 evidence/junit.xml。
+测试库已存在时省略 createdb。完整 P0+P1 JUnit 输出至 evidence/p1-full-junit.xml，P0 初始 evidence/junit.xml 保留为历史证据。
 
 真实容器故障验证使用独立 taskd-e2e 项目，端口 18080/55433、网段 10.233.85.0/24，不停止演示服务。主机需要 Python 3.12 和锁定依赖：
 
@@ -88,6 +103,8 @@ python -m venv .venv
 .venv/bin/python scripts/verify_runtime.py
 .venv/bin/python scripts/report_acceptance.py
 ```
+
+P1 版本回归可以增加 `verify_runtime.py --prefix p1-runtime`，再使用 `report_acceptance.py --junit p1-full-junit.xml --runtime p1-runtime.json --output p1-p0-regression.md` 生成更新后的 P0 对照，不覆盖原始基线。
 
 脚本真实 kill Worker、stop PostgreSQL、restart API。验证后可运行 python scripts/verify_runtime.py --cleanup，仅移除该测试项目的容器/网络，保留卷与证据。首次运行自动建立全新项目；重复运行保留历史任务。
 
@@ -104,6 +121,7 @@ python -m venv .venv
 | 数据模型和冻结迁移 | [app/models.py](app/models.py)、[0001.sql](migrations/versions/0001.sql) |
 | 数据库/进程测试 | [tests/test_pipeline.py](tests/test_pipeline.py) |
 | 设计与实现差异 | [实现说明](docs/09-实现差异与限制.md) |
+| P1 检查点、小时级和指标 | [P1 实现说明](docs/10-P1实现与验收.md)、[P1 验收](evidence/p1-acceptance.md) |
 | 原始设计参考 | [业务需求](docs/01-业务场景与需求.md)、[架构](docs/02-架构与技术选型.md)、[恢复协议](docs/03-执行状态与恢复设计.md)、[数据接口](docs/04-数据模型与接口.md)、[模块风险](docs/05-模块拆分与风险.md)、[GPU/长任务](docs/06-GPU与小时级任务.md)、[验收计划](docs/07-验收与实施计划.md) |
 
 设计稿保留作决策参考。已实现行为以代码、实际验收和实现差异为准；P0-GOAL.md 是开发任务原文。

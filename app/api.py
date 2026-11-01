@@ -1,9 +1,10 @@
 import uuid
+from datetime import datetime
 from pathlib import Path
 from typing import Annotated
 
 from fastapi import FastAPI, Header, Query, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, ConfigDict, Field
@@ -17,7 +18,7 @@ from app.pipeline import SPECS, TaskInput
 from app.logging_setup import configure
 
 configure()
-app = FastAPI(title="Task D · Observable Pipeline", version="0.1.0")
+app = FastAPI(title="Task D · Observable Pipeline", version="0.2.0")
 base = Path(__file__).parent
 templates = Jinja2Templates(directory=str(base / "templates"))
 app.mount("/static", StaticFiles(directory=base / "static"), name="static")
@@ -70,7 +71,7 @@ def ready():
 
 @app.get("/api/pipeline")
 def pipeline():
-    return {"version": "animation-v1", "steps": SPECS, "simulated": True}
+    return {"version": "animation-v2", "steps": SPECS, "simulated": True}
 
 
 Idempotency = Annotated[str, Header(alias="Idempotency-Key", min_length=1, max_length=128)]
@@ -94,13 +95,28 @@ def task_detail(tid: str):
 
 
 @app.get("/api/tasks/{tid}/events")
-def events(tid: str, after_seq: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=500)):
+def events(tid: str, after_seq: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=500),
+           before_seq: int | None = Query(None,ge=1), step_key: str | None = None, attempt_id: str | None = None):
+    if before_seq and after_seq:raise service.Problem("INVALID_CURSOR","Choose before_seq or after_seq",422)
     with Session.begin() as s:
         s.connection(execution_options={"isolation_level": "REPEATABLE READ"})
         if not s.get(Task, tid):
             raise service.Problem("NOT_FOUND", "Task not found", 404)
-        items = [queries.row(e) for e in s.scalars(select(Event).where(Event.task_id == tid, Event.seq > after_seq).order_by(Event.seq).limit(limit))]
-        return {"items": items, "next_cursor": items[-1]["seq"] if items else after_seq}
+        query=select(Event).where(Event.task_id==tid)
+        if step_key:
+            if not s.scalar(select(Step.id).where(Step.task_id==tid,Step.key==step_key)):
+                raise service.Problem("NOT_FOUND","Step not found",404)
+            query=query.where(Event.step_key==step_key)
+        if attempt_id:
+            if not s.scalar(select(Attempt.id).where(Attempt.task_id==tid,Attempt.id==attempt_id)):
+                raise service.Problem("NOT_FOUND","Attempt not found",404)
+            query=query.where(Event.attempt_id==attempt_id)
+        query=query.where(Event.seq<before_seq).order_by(Event.seq.desc()) if before_seq else query.where(Event.seq>after_seq).order_by(Event.seq)
+        rows=list(s.scalars(query.limit(limit+1)))
+        items=[queries.row(e) for e in rows[:limit]]
+        if before_seq:items.reverse()
+        return {"items":items,"next_cursor":items[-1]["seq"] if items else after_seq,
+                "older_cursor":items[0]["seq"] if items else None,"has_more":len(rows)>limit}
 
 
 @app.get("/api/tasks/{tid}/steps/{key}/attempts")
@@ -162,3 +178,25 @@ def overview():
         counts = dict(s.execute(select(Task.status, func.count()).group_by(Task.status)).all())
         return {"tasks": counts, "attempts": s.scalar(select(func.count()).select_from(Attempt)),
                 "cached_steps": s.scalar(select(func.count()).select_from(Step).where(Step.status == "CACHED"))}
+
+
+@app.get("/api/tasks/{tid}/timings")
+def task_timings(tid:str):
+    from app.observability import timings
+    return timings(tid)
+
+
+@app.get("/api/resources/history")
+def history(slot_id:str|None=None,since:datetime|None=None,until:datetime|None=None,
+            cursor:str|None=None,limit:int=Query(240,ge=1,le=1000)):
+    if (since and since.tzinfo is None) or (until and until.tzinfo is None):
+        raise service.Problem("TIMEZONE_REQUIRED","Use ISO 8601 timestamps with timezone",422)
+    if since and until and since>until:raise service.Problem("INVALID_RANGE","since must precede until",422)
+    from app.observability import resource_history
+    return resource_history(slot_id,since,until,cursor,limit)
+
+
+@app.get("/metrics",response_class=Response)
+def prometheus_metrics():
+    from app.observability import metrics
+    return Response(metrics(),media_type="text/plain; version=0.0.4; charset=utf-8")

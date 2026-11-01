@@ -54,6 +54,7 @@ def create(c, **kwargs):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cleanup", action="store_true")
+    parser.add_argument("--prefix", default="runtime", choices=["runtime","p1-runtime"])
     args = parser.parse_args()
     if args.cleanup:
         print(dc("down"))
@@ -128,9 +129,9 @@ def main():
         dc("start", "postgres")
         evidence["finished_at"]=datetime.now(timezone.utc).isoformat()
         (ROOT/"evidence").mkdir(exist_ok=True)
-        (ROOT/"evidence"/"runtime.json").write_text(json.dumps(evidence,ensure_ascii=False,indent=2),encoding="utf-8")
+        (ROOT/"evidence"/f"{args.prefix}.json").write_text(json.dumps(evidence,ensure_ascii=False,indent=2),encoding="utf-8")
         raw_logs=dc("logs","--no-color","--tail","300","worker")
-        (ROOT/"evidence"/"runtime-worker.log").write_text("\n".join(line.rstrip() for line in raw_logs.splitlines())+"\n",encoding="utf-8")
+        (ROOT/"evidence"/f"{args.prefix}-worker.log").write_text("\n".join(line.rstrip() for line in raw_logs.splitlines())+"\n",encoding="utf-8")
 
 
 if __name__=="__main__":
