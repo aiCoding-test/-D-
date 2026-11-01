@@ -14,7 +14,7 @@ def read(name):
 
 hour=read("hourly.json")
 mapping=[
- ("P01","分块正常执行、完整 manifest / 下载与整步缓存区分",tests("test_P01_"),"p1-full-junit.xml"),
+ ("P01","分块正常执行、输出 schema、完整 manifest / 下载与整步缓存区分",tests("test_P01_","test_P13_"),"p1-full-junit.xml"),
  ("P02","提交两块后真实杀 Worker/子进程，仅补剩余块",tests("test_P02_"),"p1-full-junit.xml"),
  ("P03","半块中断不复用",tests("test_P03_"),"p1-full-junit.xml"),
  ("P04","发布后登记前崩溃，孤立文件不算完成",tests("test_P04_P05_"),"p1-full-junit.xml"),

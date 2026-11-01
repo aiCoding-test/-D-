@@ -14,36 +14,40 @@ import httpx
 def main():
     p=argparse.ArgumentParser()
     p.add_argument("checkout",type=Path)
+    p.add_argument("--project",default="taskd-p1-clean")
+    p.add_argument("--api-port",type=int,default=18082)
+    p.add_argument("--db-port",type=int,default=55435)
+    p.add_argument("--subnet",default="10.233.87.0/24")
     args=p.parse_args()
     root=args.checkout.resolve()
     output=Path(__file__).resolve().parents[1]/"evidence/p1-clean-start.json"
-    env=dict(os.environ,TASKD_SUBNET="10.233.87.0/24")
+    env=dict(os.environ,TASKD_SUBNET=args.subnet)
     override=root/"runtime/compose.clean.yaml"
     override.parent.mkdir(exist_ok=True)
-    override.write_text('''services:
+    override.write_text(f'''services:
   postgres:
-    ports: !override ["127.0.0.1:55435:5432"]
+    ports: !override ["127.0.0.1:{args.db_port}:5432"]
   api:
-    ports: !override ["127.0.0.1:18082:8000"]
+    ports: !override ["127.0.0.1:{args.api_port}:8000"]
 networks:
   default:
     ipam:
-      config: !override [{subnet: 10.233.87.0/24}]
+      config: !override [{{subnet: {args.subnet}}}]
 ''',encoding="utf-8")
-    dc=["docker","compose","-p","taskd-p1-clean","-f",str(root/"compose.yaml"),"-f",str(override)]
+    dc=["docker","compose","-p",args.project,"-f",str(root/"compose.yaml"),"-f",str(override)]
     def run(cmd,timeout=60):
         r=subprocess.run(cmd,cwd=root,env=env,text=True,capture_output=True,timeout=timeout)
         assert r.returncode==0,r.stdout+r.stderr
         return r.stdout
     existing=run(["docker","volume","ls","--format","{{.Name}}"])
-    volumes=["taskd-p1-clean_database","taskd-p1-clean_artifacts"]
+    volumes=[args.project+"_database",args.project+"_artifacts"]
     assert not any(v in existing.splitlines() for v in volumes),"Fresh-volume proof requires new volumes"
     record={"passed":False,"started_at":datetime.now(timezone.utc).isoformat(),
         "source_commit":run(["git","rev-parse","HEAD"]).strip(),"source_remote":run(["git","remote","get-url","origin"]).strip(),
-        "project":"taskd-p1-clean","fresh_volumes":volumes,
+        "project":args.project,"fresh_volumes":volumes,
         "notes":"Fresh anonymous checkout and new data volumes; cached base images and locked dependency layers reused, not an empty host."}
     run([*dc,"up","--build","-d","api","worker"],timeout=180)
-    with httpx.Client(base_url="http://127.0.0.1:18082",trust_env=False,timeout=15) as c:
+    with httpx.Client(base_url=f"http://127.0.0.1:{args.api_port}",trust_env=False,timeout=15) as c:
         for _ in range(80):
             try:
                 if c.get("/health/ready").status_code==200:break

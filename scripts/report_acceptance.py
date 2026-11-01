@@ -48,8 +48,9 @@ mapping = {
     "A28": ("非法请求、控制幂等与 DAG 校验", ["test_A28_"], []),
 }
 
-lines = ["# P0 验收结果", "", f"运行环境：Linux 容器，Python 3.12.13，PostgreSQL 16.14；{len(cases)} 项 pytest 用例。",
-         "", f"证据： [JUnit]({args.junit})、[真实容器故障快照]({args.runtime})、[故障过程 Worker 日志]({args.runtime.removesuffix('.json')}-worker.log)、[全新克隆启动](clean-start.json)、[页面恢复截图](dashboard.jpg)、[最终看板](dashboard-preview.jpg)。",
+p1=args.junit.startswith("p1-")
+lines = ["# P0 A01～A28 在 P1 版本的回归" if p1 else "# P0 验收结果", "", f"运行环境：Linux 容器，Python 3.12.13，PostgreSQL 16.14；{len(cases)} 项 pytest 用例。",
+         "", f"证据： [JUnit]({args.junit})、[真实容器故障快照]({args.runtime})、[故障过程 Worker 日志]({args.runtime.removesuffix('.json')}-worker.log)、[全新克隆启动]({'p1-clean-start.json' if p1 else 'clean-start.json'})、[页面恢复截图](dashboard.jpg)、[最终看板]({'p1-dashboard.jpg' if p1 else 'dashboard-preview.jpg'})。",
          "", "测试采用加速配置：单步 0.07～0.2 秒、心跳 0.25 秒、租约 2 秒；容器故障验证为心跳 0.5 秒、租约 4 秒。默认演示配置仍为心跳 5 秒、租约 30 秒。",
          "", "| 编号 | 场景 | 结果 | 证据入口 |", "| --- | --- | --- | --- |"]
 passed = 0
@@ -58,11 +59,11 @@ for aid, (description, prefixes, ext) in mapping.items():
     ok = all(any(n.startswith(prefix) for n in cases) for prefix in prefixes)
     ok = ok and all(cases[n] for n in matched) and all(runtime_ok.get(i, False) for i in ext)
     passed += int(ok)
-    refs = "、".join(f"`{n}`" for n in matched) + ("；runtime.json " + ",".join(ext) if ext else "")
+    refs = "、".join(f"`{n}`" for n in matched) + (f"；{args.runtime} " + ",".join(ext) if ext else "")
     lines.append(f"| {aid} | {description} | {'通过' if ok else '失败或未验证'} | {refs} |")
 lines += ["", f"**矩阵通过 {passed}/28；pytest 通过 {sum(cases.values())}/{len(cases)}；容器故障脚本 {'通过' if runtime.get('passed') else '失败或未完成'}。**", "",
           "A16 中执行模式隔离验证的是语义指纹不同，P0 API 拒绝开启真实计算；没有宣称运行过真实模型/GPU。A10 验证实际存在的未发布临时文件中断，没有模拟真实编解码器的内部文件损坏。",
-          "", "小时级长跑、真 GPU/NVML、模型内部检查点、宿主掉电和磁盘损坏没有验证，均超出 P0。页面验收已完成：提交预览失败任务、查看失败尝试、点击恢复、完成 7/7 步、刷新后保留历史。",
+          "", ("小时级与分块验收另见 [P1 记录](p1-acceptance.md)，不从 P0 快速测试推断小时级结论。" if p1 else "小时级长跑、真 GPU/NVML、模型内部检查点、宿主掉电和磁盘损坏没有验证，均超出 P0。")+"页面验收已完成：提交预览失败任务、查看失败尝试、点击恢复、完成 7/7 步、刷新后保留历史。",
           "", "复现命令见 [README](../README.md)。不要将这些小规模故障验证解释为集群吞吐或生产高可用证明。", ""]
 (evidence / args.output).write_text("\n".join(lines), encoding="utf-8")
 print(f"Matrix {passed}/28; pytest {sum(cases.values())}/{len(cases)}; runtime={runtime.get('passed')}")

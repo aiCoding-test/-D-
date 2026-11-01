@@ -124,6 +124,25 @@ def test_P07_chunk_identity_includes_all_semantics():
         assert checkpoints.definitions(changed)[0]["chunk_key"]!=key
 
 
+def test_P13_hash_valid_but_wrong_chunk_schema_is_rejected():
+    from app.pipeline import digest
+    identity={"schema":1,"start":0,"end":24,"step_cache_key":"test"}
+    key=digest(identity)
+    work=artifacts.folder("schema-test")
+    work.mkdir()
+    # Even a correctly sealed file cannot substitute progress for a checkpoint.
+    artifacts.write_json(work/"output.json",{"simulated":True,"frame_index":24})
+    artifacts.seal(work,key)
+    sha=artifacts.file_hash(work/"manifest.json")
+    assert artifacts.verify("schema-test",sha)
+    assert not checkpoints.valid_chunk("schema-test",sha,identity,key)
+    artifacts.write_json(work/"output.json",{"simulated":True,"chunk_identity":identity})
+    artifacts.seal(work,key)
+    sha=artifacts.file_hash(work/"manifest.json")
+    assert checkpoints.valid_chunk("schema-test",sha,identity,key)
+    assert not checkpoints.valid_chunk("schema-test",sha,{**identity,"end":48},key)
+
+
 def test_P12_interrupted_step_recomputes_only_bad_and_missing_chunks(client,workers):
     p=workers(ENABLE_TEST_FAULTS="1",TEST_PARTIAL_CHUNK="2")
     tid=v2(client)

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "controller_identity_verified": true,
+  "observations": [
+    {
+      "at": "2026-11-01T12:07:59.208311+00:00",
+      "step": "enhance_frames",
+      "attempt": "2a022861-95a2-4f64-b769-10be03e9496a",
+      "progress": 20.17144254472219,
+      "business_progress_at": "2026-11-01T12:07:58.773092+00:00",
+      "heartbeat_at": "2026-11-01T12:07:58.773092+00:00",
+      "lease_expires_at": "2026-11-01T12:08:28.773092+00:00",
+      "completed_chunks": 0,
+      "cursor": 28
+    },
+    {
+      "at": "2026-11-01T12:08:06.230291+00:00",
+      "step": "enhance_frames",
+      "attempt": "2a022861-95a2-4f64-b769-10be03e9496a",
+      "progress": 20.17144254472219,
+      "business_progress_at": "2026-11-01T12:07:58.773092+00:00",
+      "heartbeat_at": "2026-11-01T12:08:04.025360+00:00",
+      "lease_expires_at": "2026-11-01T12:08:34.025360+00:00",
+      "completed_chunks": 0,
+      "cursor": 28
+    }
+  ],
+  "executor_pause": {
+    "pid": 10,
+    "at": "2026-11-01T12:07:57.713588+00:00",
+    "resumed_at": "2026-11-01T12:08:06.722958+00:00",
+    "operation": "Actual child SIGSTOP, then SIGCONT in finally; worker/control loop not stopped"
+  },
+  "meaning": "Heartbeat and lease advance while business progress is unchanged during a real hourly task; hanging-progress timeout also covered by P0 test_A20."
+}

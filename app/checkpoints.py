@@ -1,4 +1,5 @@
 """Immutable chunks, fenced publication and per-attempt reuse lineage."""
+import json
 from sqlalchemy import func, select
 from app import artifacts, service
 from app.db import Session, db_now
@@ -19,6 +20,23 @@ def definitions(spec):
     return result
 
 
+def valid_chunk(directory, manifest_digest, identity, chunk_key):
+    """Schema 1: one output.json containing simulated + exact frozen identity."""
+    if not artifacts.verify(directory, manifest_digest):
+        return False
+    try:
+        path=artifacts.folder(directory)
+        manifest=json.loads((path/"manifest.json").read_text(encoding="utf-8"))
+        payload=json.loads((path/"output.json").read_text(encoding="utf-8"))
+        return (identity.get("schema")==1 and digest(identity)==chunk_key
+            and manifest["semantic_key"]==chunk_key
+            and [f["key"] for f in manifest["files"]]==["output.json"]
+            and set(payload)=={"simulated","chunk_identity"}
+            and payload["simulated"] is True and payload["chunk_identity"]==identity)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return False
+
+
 def prepare(spec):
     chunks = definitions(spec)
     if not chunks:
@@ -30,7 +48,7 @@ def prepare(spec):
                 Checkpoint.chunk_key == chunk["chunk_key"], Checkpoint.valid.is_(True))
                 .order_by(Checkpoint.committed_at.desc())))
             for cp in rows:
-                if artifacts.verify(cp.directory, cp.manifest_digest):
+                if cp.identity==chunk["identity"] and valid_chunk(cp.directory, cp.manifest_digest, cp.identity, cp.chunk_key):
                     candidates[chunk["index"]] = {"id": cp.id, "directory": cp.directory,
                         "manifest_digest": cp.manifest_digest, "producer_attempt_id": cp.producer_attempt_id}
                     break
@@ -63,7 +81,7 @@ def register(spec, index, blob):
         raise service.Problem("INVALID_CHUNK", "Chunk index outside frozen partition")
     chunk = chunks[index]
     if (blob["directory"] != f'checkpoints/{spec["id"]}/{index}'
-            or not artifacts.verify(blob["directory"], blob["manifest_digest"])
+            or not valid_chunk(blob["directory"], blob["manifest_digest"], chunk["identity"], chunk["chunk_key"])
             or blob["manifest"].get("semantic_key") != chunk["chunk_key"]):
         raise service.Problem("CHECKPOINT_INVALID", "Chunk failed integrity/identity validation")
     with Session.begin() as s:
@@ -107,6 +125,7 @@ def completion_proof(attempt_id):
             return False
         for use in uses:
             cp = s.get(Checkpoint, use.checkpoint_id)
-            if not cp.valid or cp.identity["step_cache_key"] != step.cache_key or not artifacts.verify(cp.directory, cp.manifest_digest):
+            if (not cp.valid or cp.identity["step_cache_key"] != step.cache_key
+                    or not valid_chunk(cp.directory, cp.manifest_digest, cp.identity, cp.chunk_key)):
                 return False
         return True
