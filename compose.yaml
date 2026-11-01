@@ -1,7 +1,7 @@
 name: taskd
 x-app: &app
   build: .
-  image: taskd-pipeline:0.2
+  image: taskd-pipeline:0.3
   environment: &env
     DATABASE_URL: postgresql+psycopg://taskd:${POSTGRES_PASSWORD:-taskd_local_demo}@postgres:5432/taskd
     ARTIFACT_ROOT: /data

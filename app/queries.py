@@ -95,4 +95,5 @@ def resources():
         workers = [dict(row(w), online=(now - w.heartbeat_at).total_seconds() < 15)
                    for w in s.scalars(select(WorkerSession).order_by(WorkerSession.heartbeat_at.desc()).limit(20))]
         waiting = [row(x) for x in s.scalars(select(Step).where(Step.status.in_(["READY", "RETRY_WAIT"])))]
-        return {"slots": slots, "workers": workers, "waiting": waiting, "server_time": now, "simulated": True}
+        return {"slots": slots, "workers": workers, "waiting": waiting, "server_time": now,
+            "simulated":not any(x.get('device',{}).get('mode')=='nvidia' for x in slots)}

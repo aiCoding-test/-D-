@@ -33,7 +33,7 @@ def write_json(path, value):
         os.fsync(f.fileno())
 
 
-def seal(work, semantic_key):
+def seal(work, semantic_key, simulated=True):
     files = []
     for p in sorted(work.iterdir()):
         if (p.is_file() and p.name not in {"manifest.json", "progress.json", "result.json", "spec.json", "executor.log"}
@@ -41,7 +41,7 @@ def seal(work, semantic_key):
             files.append({"key": p.name, "sha256": file_hash(p), "size": p.stat().st_size})
     if not files:
         raise ValueError("Empty artifact")
-    manifest = {"schema": 1, "simulated": True, "semantic_key": semantic_key, "files": files,
+    manifest = {"schema": 1, "simulated": simulated, "semantic_key": semantic_key, "files": files,
                 "content_digest": digest(files)}
     write_json(work / "manifest.json", manifest)
     return manifest
@@ -53,7 +53,7 @@ def verify(directory, expected_digest):
         if file_hash(path / "manifest.json") != expected_digest:
             return False
         manifest = json.loads((path / "manifest.json").read_text(encoding="utf-8"))
-        if manifest.get("schema") != 1 or manifest.get("simulated") is not True or not manifest["files"]:
+        if manifest.get("schema") != 1 or not isinstance(manifest.get("simulated"),bool) or not manifest["files"]:
             return False
         for f in manifest["files"]:
             if Path(f["key"]).name != f["key"]:

@@ -95,6 +95,7 @@ class Attempt(Base):
     cleanup_state: Mapped[str] = mapped_column(String(20), default="PENDING")
     manifest_digest: Mapped[str | None] = mapped_column(String(64))
     queue_seconds: Mapped[float | None] = mapped_column(Float)
+    execution: Mapped[dict | None] = mapped_column(JSONB)
 
 
 class Artifact(Base):
@@ -121,7 +122,7 @@ class ResourceSlot(Base):
                      CheckConstraint("(status = 'AVAILABLE' AND holder_id IS NULL) OR (status IN ('BUSY','QUARANTINED') AND holder_id IS NOT NULL)", name="slot_holder_state"))
     id: Mapped[str] = mapped_column(String(150), primary_key=True)
     node_id: Mapped[str] = mapped_column(String(100))
-    key: Mapped[str] = mapped_column(String(30))
+    key: Mapped[str] = mapped_column(String(80))
     kind: Mapped[str] = mapped_column(String(10))
     status: Mapped[str] = mapped_column(String(20), default="AVAILABLE")
     holder_id: Mapped[str | None] = mapped_column(ForeignKey("attempts.id", use_alter=True), unique=True)
@@ -129,6 +130,7 @@ class ResourceSlot(Base):
     reason: Mapped[str | None] = mapped_column(Text)
     sample: Mapped[dict] = mapped_column(JSONB, default=dict)
     measured_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    device: Mapped[dict] = mapped_column(JSONB, default=dict)
 
 
 class Event(Base):

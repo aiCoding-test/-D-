@@ -35,7 +35,8 @@ def maintain():
         for (slot_id,minute),group in groups.items():
             good=[r for r in group if r.sample.get("valid")]
             holders=sorted({r.holder_id for r in group if r.holder_id})
-            sample={"source":"mock", "simulated":True, "valid":bool(good), "sample_count":len(group),
+            sources=sorted({r.sample.get('source','unknown') for r in group})
+            sample={"source":sources[0] if len(sources)==1 else 'mixed', "simulated":all(r.sample.get('simulated') for r in group), "valid":bool(good), "sample_count":len(group),
                     "valid_count":len(good), "holder_ids":holders}
             for key in ["utilization_percent","memory_used_mb","memory_total_mb","temperature_c"]:
                 values=[r.sample[key] for r in good if isinstance(r.sample.get(key),(int,float))]

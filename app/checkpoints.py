@@ -28,11 +28,20 @@ def valid_chunk(directory, manifest_digest, identity, chunk_key):
         path=artifacts.folder(directory)
         manifest=json.loads((path/"manifest.json").read_text(encoding="utf-8"))
         payload=json.loads((path/"output.json").read_text(encoding="utf-8"))
+        real=identity.get('semantic',{}).get('simulated') is False
+        fields={'simulated','chunk_identity','cuda_probe'} if real else {'simulated','chunk_identity'}
+        if real:
+            probe=payload.get('cuda_probe',{})
+            if (not str(probe.get('physical_uuid','')).startswith('GPU-') or probe.get('cuda_ordinal')!=0
+                    or probe.get('kernel_launches',0)<1 or probe.get('validated_values')!=64
+                    or probe.get('ptx_sha256')!=identity['semantic']['ptx_sha256']
+                    or probe.get('bytes')!=identity['semantic']['probe']['probe_memory_mb']*1048576
+                    or probe.get('checksum_first64')!=identity['semantic']['parameters']['seed']*64+2016):return False
         return (identity.get("schema")==1 and digest(identity)==chunk_key
             and manifest["semantic_key"]==chunk_key
             and [f["key"] for f in manifest["files"]]==["output.json"]
-            and set(payload)=={"simulated","chunk_identity"}
-            and payload["simulated"] is True and payload["chunk_identity"]==identity)
+            and set(payload)==fields and manifest['simulated'] is (not real)
+            and payload["simulated"] is (not real) and payload["chunk_identity"]==identity)
     except (OSError, ValueError, KeyError, TypeError, AttributeError):
         return False
 
@@ -80,6 +89,10 @@ def register(spec, index, blob):
     if index < 0 or index >= len(chunks):
         raise service.Problem("INVALID_CHUNK", "Chunk index outside frozen partition")
     chunk = chunks[index]
+    if spec.get('execution'):
+        payload=json.loads((artifacts.folder(blob['directory'])/'output.json').read_text(encoding='utf-8'))
+        if payload.get('cuda_probe',{}).get('physical_uuid')!=spec['execution']['gpu_uuid']:
+            raise service.Problem('GPU_BINDING_MISMATCH','Chunk came from an unassigned physical GPU')
     if (blob["directory"] != f'checkpoints/{spec["id"]}/{index}'
             or not valid_chunk(blob["directory"], blob["manifest_digest"], chunk["identity"], chunk["chunk_key"])
             or blob["manifest"].get("semantic_key") != chunk["chunk_key"]):

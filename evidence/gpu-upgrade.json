@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "at": "2026-11-01T13:02:30.784209+00:00",
+  "migration": "0003 (head)",
+  "old_tasks_verified": [
+    {
+      "task_id": "4aa88f04-4af9-4388-a590-478505467a68",
+      "status": "SUCCEEDED",
+      "preserved_request_pipeline_events_attempts_artifacts": true
+    },
+    {
+      "task_id": "002df870-b7ec-425c-b69e-7dcf53377cd0",
+      "status": "FAILED",
+      "preserved_request_pipeline_events_attempts_artifacts": true
+    },
+    {
+      "task_id": "78e46056-25f6-4758-983e-74ae84f75a4d",
+      "status": "SUCCEEDED",
+      "preserved_request_pipeline_events_attempts_artifacts": true
+    },
+    {
+      "task_id": "46867567-18d3-42c0-b38e-0e7571d945c0",
+      "status": "SUCCEEDED",
+      "preserved_request_pipeline_events_attempts_artifacts": true
+    },
+    {
+      "task_id": "3dd933ec-6339-416e-a4f2-5ef4569aab78",
+      "status": "SUCCEEDED",
+      "preserved_request_pipeline_events_attempts_artifacts": true
+    }
+  ],
+  "default_dependencies": "no NVML package in default image",
+  "notes": "Existing P1 user data kept; default Worker remains MOCK without GPU requests"
+}

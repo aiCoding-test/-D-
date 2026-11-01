@@ -1,0 +1,19 @@
+# Dedicated hardware evidence project; preserve volumes, never touches normal demo.
+services:
+  postgres:
+    ports: !override ["127.0.0.1:55438:5432"]
+  api:
+    ports: !override ["127.0.0.1:18085:8000"]
+  worker:
+    environment:
+      NODE_ID: gpu-evidence
+      LEASE_SECONDS: 6
+      HEARTBEAT_SECONDS: 1
+      RESOURCE_SAMPLE_SECONDS: 1
+      POLL_SECONDS: 0.1
+      RETRY_BASE_SECONDS: 0.2
+      ALLOW_CUDA_OOM_TEST: 1
+networks:
+  default:
+    ipam:
+      config: !override [{subnet: 10.233.90.0/24}]

@@ -1,0 +1,6 @@
+# Build the default image first: docker compose build
+FROM taskd-pipeline:0.3
+USER root
+COPY requirements.gpu.lock /app/requirements.gpu.lock
+RUN pip install --no-cache-dir --require-hashes -r requirements.gpu.lock
+USER pipeline

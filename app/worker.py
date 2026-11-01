@@ -31,9 +31,14 @@ class Worker:
         self.last_heartbeat = 0.0
         self.watchdog_done = threading.Event()
         self.last_maintenance = 0.0
+        self.gpu_collector=None
 
     def register(self):
-        service.worker_register(self.id, os.getpid(), psutil.Process().create_time(), socket.gethostname())
+        if settings.gpu_mode=='nvidia':
+            from app.gpu import Collector
+            self.gpu_collector=Collector()  # Explicit startup error if NVML/driver unavailable; no fallback.
+        service.worker_register(self.id, os.getpid(), psutil.Process().create_time(), socket.gethostname(),
+            self.gpu_collector.devices if self.gpu_collector else ())
 
     def fault(self, phase, spec, index=None):
         """Local integration-test hook; never accepted through the HTTP API."""
@@ -61,9 +66,13 @@ class Worker:
             artifacts.write_json(work / "spec.json", spec)
             logfile = (work / "executor.log").open("ab")
             try:
+                env=dict(os.environ)
+                if spec.get('execution'):
+                    env['CUDA_VISIBLE_DEVICES']=spec['execution']['gpu_uuid']
+                    env['CUDA_DEVICE_ORDER']='PCI_BUS_ID'
                 p = subprocess.Popen([sys.executable, "-m", "app.executor", spec["id"]],
                     stdin=subprocess.DEVNULL, stdout=logfile, stderr=logfile,
-                    pass_fds=(lock.fileno(),), start_new_session=True)
+                    pass_fds=(lock.fileno(),), start_new_session=True,env=env)
             finally:
                 logfile.close()
             # The child inherited the locked open-file description. Parent closing
@@ -122,9 +131,9 @@ class Worker:
                         service.completed(aid, self.id, spec["fence"], blob)
                         self.fault("after_commit", spec)
                     else:
-                        service.failed(aid, self.id, spec["fence"], result["code"], result["retryable"])
+                        service.failed(aid, self.id, spec["fence"], result["code"], result["retryable"],detail=result.get('detail'))
                 else:
-                    service.failed(aid, self.id, spec["fence"], "EXECUTOR_EXITED", True)
+                    service.failed(aid, self.id, spec["fence"], "EXECUTOR_EXITED", True,detail=f'process exit={p.returncode}')
                 self.active.pop(aid, None)
             elif heartbeat_due:
                 progress = None
@@ -149,7 +158,7 @@ class Worker:
             self.last_maintenance=time.monotonic()
         due = time.monotonic() - self.last_heartbeat >= settings.heartbeat_seconds
         if due:
-            service.worker_heartbeat(self.id)
+            service.worker_heartbeat(self.id,self.gpu_collector.snapshot() if self.gpu_collector else None)
             self.last_heartbeat = time.monotonic()
         service.reconcile()
         self.supervise(due)
@@ -189,6 +198,7 @@ class Worker:
                     log.exception("worker_operation_failed")
                 time.sleep(settings.poll_seconds)
         finally:
+            if self.gpu_collector:self.gpu_collector.stop.set()
             self.watchdog_done.set()
             watchdog.join(timeout=1)
             for aid in list(self.active):

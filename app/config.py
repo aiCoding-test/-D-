@@ -9,6 +9,9 @@ class Settings:
         "DATABASE_URL", "postgresql+psycopg://taskd:taskd_local_demo@localhost:55432/taskd"))
     artifact_root: Path = field(default_factory=lambda: Path(os.getenv("ARTIFACT_ROOT", "runtime/artifacts")).resolve())
     node_id: str = field(default_factory=lambda: os.getenv("NODE_ID", "local"))
+    gpu_mode: str = field(default_factory=lambda: os.getenv("GPU_MODE", "mock"))
+    gpu_uuids: str = field(default_factory=lambda: os.getenv("GPU_UUIDS", ""))
+    allow_cuda_oom: bool = field(default_factory=lambda: os.getenv("ALLOW_CUDA_OOM_TEST", "0") == "1")
     lease_seconds: float = field(default_factory=lambda: float(os.getenv("LEASE_SECONDS", "30")))
     heartbeat_seconds: float = field(default_factory=lambda: float(os.getenv("HEARTBEAT_SECONDS", "5")))
     poll_seconds: float = field(default_factory=lambda: float(os.getenv("POLL_SECONDS", "0.5")))
@@ -19,6 +22,8 @@ class Settings:
     summary_retention_days: float = field(default_factory=lambda: float(os.getenv("RESOURCE_SUMMARY_DAYS", "7")))
 
     def __post_init__(self):
+        if self.gpu_mode not in {"mock","nvidia"}:
+            raise ValueError("GPU_MODE must be mock or nvidia")
         if not self.database_url.startswith("postgresql+"):
             raise ValueError("This application requires PostgreSQL, not an in-memory/SQLite substitute")
         if not 0 < self.heartbeat_seconds < self.lease_seconds / 2:

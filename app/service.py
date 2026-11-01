@@ -4,7 +4,8 @@ Only the worker control plane calls attempt mutation functions. HTTP clients
 cannot manufacture heartbeats, completions, resource releases or fault points.
 """
 import logging
-from datetime import timedelta
+from datetime import datetime,timedelta
+from copy import deepcopy
 
 from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert
@@ -53,7 +54,13 @@ def slot_lock(s, slot_id):
 
 def submit(data: TaskInput, key):
     request = data.model_dump(mode="json")
-    specs = SPECS if data.pipeline_version == "animation-v2" else LEGACY_SPECS
+    specs = deepcopy(SPECS if data.pipeline_version == "animation-v2" else LEGACY_SPECS)
+    if data.gpu_mode=='nvidia':
+        for spec in specs:
+            if spec['resource']=='gpu':
+                spec.update(processor_version='cuda-probe-chunks-1',gpu_requirements=data.gpu.model_dump())
+    else:
+        request.pop('gpu_mode');request.pop('gpu')  # Preserve old request idempotency fingerprints.
     if data.execution_profile == "hourly":
         if data.pipeline_version != "animation-v2" or data.scenario != "normal":
             raise Problem("INVALID_PROFILE", "Hourly profile requires v2 and normal scenario", 422)
@@ -79,7 +86,7 @@ def submit(data: TaskInput, key):
         task = s.get(Task, tid)
         for spec in specs:
             s.add(Step(task_id=tid, key=spec["key"], spec=spec))
-        event(s, task, "TASK_ACCEPTED", simulated=True, pipeline=data.pipeline_version)
+        event(s, task, "TASK_ACCEPTED", simulated=data.gpu_mode=='mock', pipeline=data.pipeline_version, gpu_mode=data.gpu_mode)
         return {"task_id": tid, "status": "QUEUED", "reused_request": False}
 
 
@@ -103,7 +110,7 @@ def reject(s, task, step, attempt, operation):
     event(s, task, "STALE_ATTEMPT_REJECTED", step, attempt, operation=operation)
 
 
-def worker_register(worker_id, pid, process_created, host_name):
+def worker_register(worker_id, pid, process_created, host_name, devices=()):
     with Session.begin() as s:
         s.add(WorkerSession(id=worker_id, node_id=settings.node_id, pid=pid,
                             process_created=process_created, host_name=host_name, heartbeat_at=db_now(s)))
@@ -111,9 +118,13 @@ def worker_register(worker_id, pid, process_created, host_name):
             s.execute(insert(ResourceSlot).values(id=f"{settings.node_id}:{key}", node_id=settings.node_id,
                       key=key, kind="gpu" if "gpu" in key else "cpu", status="AVAILABLE", sample={})
                       .on_conflict_do_nothing(index_elements=[ResourceSlot.id]))
+        for device in devices:
+            s.execute(insert(ResourceSlot).values(id=f"{settings.node_id}:{device['uuid']}",node_id=settings.node_id,
+                key=device['uuid'],kind='gpu',status='AVAILABLE',sample={},device=device)
+                .on_conflict_do_update(index_elements=[ResourceSlot.id],set_={'device':device}))
 
 
-def worker_heartbeat(worker_id):
+def worker_heartbeat(worker_id, nvml=None):
     with Session.begin() as s:
         w = s.get(WorkerSession, worker_id)
         w.heartbeat_at = db_now(s)
@@ -121,6 +132,16 @@ def worker_heartbeat(worker_id):
         slots = list(s.scalars(select(ResourceSlot).where(ResourceSlot.node_id == settings.node_id)
                                .order_by(ResourceSlot.id).with_for_update()))
         for slot in slots:
+            if slot.device.get('mode')=='nvidia':
+                reading=(nvml or {}).get(slot.device['uuid'])
+                slot.sample=reading['sample'] if reading else {'source':'nvml','simulated':False,'valid':False,
+                    'health':'UNKNOWN','unavailable_reason':'NVML_DEVICE_MISSING','utilization_percent':None,
+                    'memory_used_mb':None,'memory_total_mb':None,'temperature_c':None,'processes':None}
+                slot.measured_at=reading['measured_at'] if reading else slot.measured_at
+                slot.device={**slot.device,'health':slot.sample.get('health','UNKNOWN')}
+                from app.telemetry import capture
+                if slot.measured_at:capture(s,slot,slot.measured_at)
+                continue
             busy = slot.status == "BUSY"
             slot.sample = {"source": "mock", "simulated": True, "valid": slot.status != "QUARANTINED",
                            "unavailable_reason": slot.reason,
@@ -138,6 +159,10 @@ def end_attempt(s, task, step, attempt, status, code, retryable=False, stopped=F
     attempt.error_code, attempt.error, attempt.retryable = code, code, retryable
     attempt.cleanup_state = "CONFIRMED" if stopped else "QUARANTINED"
     slot = slot_lock(s, attempt.slot_id)
+    if slot.device.get('mode')=='nvidia':
+        if stopped:attempt.execution={**attempt.execution,'executor_stopped_at':now.isoformat()}
+        stopped=False  # CUDA process exit + a fresh post-exit health sample required.
+        attempt.cleanup_state='QUARANTINED'
     if slot.holder_id == attempt.id:
         slot.status = "AVAILABLE" if stopped else "QUARANTINED"
         slot.holder_id = None if stopped else attempt.id
@@ -260,7 +285,7 @@ def claim(worker_id):
             by_key = {x.key: x for x in steps}
             version = step.spec.get("processor_version", "mock-1")
             supported = ({"mock-1", "mock-2"} if step.key == "render_preview" else
-                         {"mock-1", "mock-chunks-1"} if step.key in {"remove_background", "enhance_frames"} else {"mock-1"})
+                         {"mock-1", "mock-chunks-1", "cuda-probe-chunks-1"} if step.key in {"remove_background", "enhance_frames"} else {"mock-1"})
             if version not in supported:
                 step.status, step.error = "FAILED", "PROCESSOR_VERSION_UNAVAILABLE"
                 task.stop_reason = step.error
@@ -291,11 +316,27 @@ def claim(worker_id):
                     event(s, task, "STEP_CACHED", step, artifact_id=a.id, source_attempt=a.producer_attempt_id)
                     settle(s, task, steps, attempts)
                     return {"cached": True}
-            slot = s.scalar(select(ResourceSlot).where(ResourceSlot.node_id == settings.node_id,
+            slots = list(s.scalars(select(ResourceSlot).where(ResourceSlot.node_id == settings.node_id,
                     ResourceSlot.kind == step.spec["resource"], ResourceSlot.status == "AVAILABLE")
-                    .order_by(ResourceSlot.id).with_for_update(skip_locked=True).limit(1))
+                    .order_by(ResourceSlot.id).with_for_update(skip_locked=True)))
+            reason='GPU_BUSY' if step.spec['resource']=='gpu' else 'CPU_BUSY'
+            slot=None
+            if step.spec['resource']=='gpu':
+                from app.gpu import eligible
+                reason='NO_MATCHING_NVIDIA_GPU' if task.request.get('gpu_mode')=='nvidia' else reason
+                for candidate in slots:
+                    rejected=eligible(candidate,task.request,db_now(s))
+                    if rejected is None:
+                        if candidate.device.get('mode')=='nvidia' and settings.gpu_mode!='nvidia':
+                            reason='NVIDIA_WORKER_REQUIRED';continue
+                        slot=candidate;break
+                    if candidate.device.get('mode')=='nvidia':reason=rejected
+            elif slots:slot=slots[0]
             if not slot:
-                reason = "GPU_BUSY" if step.spec["resource"] == "gpu" else "CPU_BUSY"
+                if step.spec['resource']=='gpu' and task.request.get('gpu_mode')=='nvidia':
+                    physical=list(s.scalars(select(ResourceSlot).where(ResourceSlot.node_id==settings.node_id,ResourceSlot.kind=='gpu')))
+                    if any(x.device.get('mode')=='nvidia' and x.status=='QUARANTINED' for x in physical):reason='RESOURCE_CLEANUP_REQUIRED'
+                    elif any(x.device.get('mode')=='nvidia' and x.status=='BUSY' for x in physical):reason='GPU_BUSY'
                 if step.wait_reason != reason:
                     step.wait_reason = reason
                     event(s, task, "STEP_WAITING_RESOURCE", step, reason=reason)
@@ -308,20 +349,23 @@ def claim(worker_id):
                         queue_seconds=max(0, (now-step.ready_at).total_seconds()) if step.ready_at else None,
                         status="RUNNING", phase="STARTING", claimed_at=now, heartbeat_at=now,
                         lease_expires_at=now + timedelta(seconds=settings.lease_seconds))
+            if slot.device.get('mode')=='nvidia':
+                a.execution={'gpu_uuid':slot.device['uuid'],'device':slot.device,'cuda_ordinal':0,
+                    'effective_config':task.request['gpu'],'mode':'nvidia','oom_authorized':settings.allow_cuda_oom}
             s.add(a)
             s.flush()  # insert Attempt before slot holder FK
             slot.status, slot.holder_id, slot.holder_fence, slot.reason = "BUSY", aid, step.fence, None
             step.status, step.current_attempt_id, step.progress, step.wait_reason = "RUNNING", aid, 0, None
             step.next_run_at, step.error, step.last_progress_at = None, None, None
             task.status = "RUNNING"
-            event(s, task, "ATTEMPT_CLAIMED", step, a, fence=a.fence, slot_id=slot.id)
+            event(s, task, "ATTEMPT_CLAIMED", step, a, fence=a.fence, slot_id=slot.id, execution=a.execution)
             return {"cached": False, "id": aid, "worker_id": worker_id, "fence": a.fence,
                     "task_id": task.id, "step_id": sid, "key": step.key, "epoch": task.epoch,
                     "epoch_number": 1 + sum(x.epoch == task.epoch for x in previous),
                     "scenario": task.request["scenario"], "seconds": (1800 if step.spec.get("partition") else 0.2)
                     if task.request.get("execution_profile") == "hourly" else task.request["step_seconds"],
                     "timeout": task.request["step_timeout_seconds"],
-                    "semantic": probe["semantic"], "cache_key": step.cache_key}
+                    "semantic": probe["semantic"], "cache_key": step.cache_key,"execution":a.execution}
     return None
 
 
@@ -358,13 +402,16 @@ def heartbeat(attempt_id, worker_id, fence, progress=None):
         return True
 
 
-def failed(attempt_id, worker_id, fence, code, retryable, stopped=True):
+def failed(attempt_id, worker_id, fence, code, retryable, stopped=True, detail=None):
     with Session.begin() as s:
         task, step, a = current(s, attempt_id)
         if not authorized(task, step, a, worker_id, fence, db_now(s)):
             reject(s, task, step, a, "failure")
             return False
         end_attempt(s, task, step, a, "FAILED", code, retryable, stopped)
+        if detail:
+            a.error=detail
+            event(s,task,'EXECUTOR_ERROR_DETAIL',step,a,detail=detail,execution=a.execution)
         steps = list(s.scalars(select(Step).where(Step.task_id == task.id)))
         attempts = list(s.scalars(select(Attempt).where(Attempt.task_id == task.id)))
         settle(s, task, steps, attempts)
@@ -396,6 +443,10 @@ def completed(attempt_id, worker_id, fence, blob):
         if slot.holder_id != a.id or slot.holder_fence != fence:
             raise Problem("RESOURCE_OWNER_CONFLICT", "Slot owner mismatch")
         slot.status, slot.holder_id, slot.holder_fence, slot.reason = "AVAILABLE", None, None, None
+        if slot.device.get('mode')=='nvidia':
+            a.execution={**a.execution,'executor_stopped_at':db_now(s).isoformat()}
+            slot.status,slot.holder_id,slot.holder_fence,slot.reason='QUARANTINED',a.id,fence,'CUDA_CLEANUP_HEALTH_CHECK'
+            a.cleanup_state='QUARANTINED'
         # Cache races may duplicate computation; the first committed valid entry wins.
         s.execute(insert(CacheEntry).values(key=step.cache_key, artifact_id=artifact.id)
                   .on_conflict_do_nothing(index_elements=[CacheEntry.key]))
@@ -419,6 +470,16 @@ def release_confirmed(attempt_id):
         if a.status == "RUNNING" or a.cleanup_state != "QUARANTINED":
             return
         slot = slot_lock(s, a.slot_id)
+        if slot.device.get('mode')=='nvidia' and not a.execution.get('executor_stopped_at'):
+            a.execution={**a.execution,'executor_stopped_at':db_now(s).isoformat()}
+            slot.reason='GPU_POST_EXIT_SAMPLE_REQUIRED'
+            event(s,task,'GPU_EXECUTOR_EXIT_CONFIRMED',step,a)
+            return
+        if slot.device.get('mode')=='nvidia' and (not slot.sample.get('valid')
+                or slot.sample.get('health')!='HEALTHY' or not slot.measured_at
+                or (db_now(s)-slot.measured_at).total_seconds()>=15
+                or slot.measured_at<datetime.fromisoformat(a.execution['executor_stopped_at'])):
+            slot.reason='GPU_HEALTH_UNAVAILABLE';return
         if slot.holder_id == a.id:
             slot.status, slot.holder_id, slot.holder_fence, slot.reason = "AVAILABLE", None, None, None
         a.cleanup_state = "CONFIRMED"

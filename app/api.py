@@ -18,7 +18,7 @@ from app.pipeline import SPECS, TaskInput
 from app.logging_setup import configure
 
 configure()
-app = FastAPI(title="Task D · Observable Pipeline", version="0.2.0")
+app = FastAPI(title="Task D · Observable Pipeline", version="0.3.0")
 base = Path(__file__).parent
 templates = Jinja2Templates(directory=str(base / "templates"))
 app.mount("/static", StaticFiles(directory=base / "static"), name="static")

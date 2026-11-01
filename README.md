@@ -2,7 +2,7 @@
 
 一个“能看进度、出错能重试、进程中断能继续”的后台任务处理工具。提交预置动画任务后，页面展示 7 步过程、执行尝试、失败原因、资源等待和产物；相同输入可以复用已验证结果。
 
-**模型、动画加工和 GPU 遥测为 MOCK；数据库、独立进程、调度、重试、租约恢复、文件校验与资源排队真实运行。**
+**动画加工和 AI 模型为 MOCK；数据库、独立进程、调度、重试、租约恢复、文件校验与资源排队真实运行。** 默认 GPU 遥测也是 MOCK；可显式启用 NVIDIA CUDA 探针与 NVML 硬件采样。
 
 P1 已完成步骤内分块恢复、历史分页/筛选、资源历史趋势及 `/metrics`。37 项集成回归、P0 A01～A28 和 P1 15 项验收均通过；实际 MOCK 任务运行 **3643.86 秒**，中途 SIGKILL Worker 后复用已提交块并成功。见 [P1 验收](evidence/p1-acceptance.md)。
 
@@ -87,6 +87,16 @@ docker compose down
 
 ## 验证
 
+真实 NVIDIA 可选启动：
+
+```bash
+docker compose build api
+docker compose -f compose.yaml -f compose.gpu.yaml build worker
+docker compose -f compose.yaml -f compose.gpu.yaml up --no-build -d
+```
+
+在页面显式选择 NVIDIA；无匹配设备时排队，不回退 MOCK。已在 **RTX 4060 Laptop 8GB / 驱动 560.94 / CUDA Driver API 12.6** 实测 UUID 绑定、分块计算、排队、受限内存池真实 OOM、中断与取消清理。当前 WSL 利用率查询不支持，显示 unavailable；显存/温度为 NVML 实际值。详见 [硬件验收](evidence/gpu-acceptance.md) 和 [运行/安全边界](docs/11-真实GPU实现与验收.md)。这不是实际 AI 模型验证。
+
 测试只允许清空名为 taskd_test 的独立测试库，不清空演示任务。
 
 ```bash
@@ -94,7 +104,7 @@ docker compose exec -T postgres createdb -U taskd taskd_test
 docker compose -f compose.yaml -f compose.test.yaml run --rm test
 ```
 
-测试库已存在时省略 createdb。完整 P0+P1 JUnit 输出至 evidence/p1-full-junit.xml，P0 初始 evidence/junit.xml 保留为历史证据。
+测试库已存在时省略 createdb。当前完整 JUnit 输出至 evidence/latest-junit.xml；P0 的 evidence/junit.xml、P1 的 evidence/p1-full-junit.xml 保留为历史证据。GPU 增量实际回归另存 evidence/gpu-regression-junit.xml。
 
 真实容器故障验证使用独立 taskd-e2e 项目，端口 18080/55433、网段 10.233.85.0/24，不停止演示服务。主机需要 Python 3.12 和锁定依赖：
 
@@ -124,6 +134,7 @@ P1 版本回归可以增加 `verify_runtime.py --prefix p1-runtime`，再使用 
 | 数据库/进程测试 | [tests/test_pipeline.py](tests/test_pipeline.py) |
 | 设计与实现差异 | [实现说明](docs/09-实现差异与限制.md) |
 | P1 检查点、小时级和指标 | [P1 实现说明](docs/10-P1实现与验收.md)、[P1 验收](evidence/p1-acceptance.md) |
+| 真实 NVIDIA 适配、资源边界与硬件证据 | [GPU 实现说明](docs/11-真实GPU实现与验收.md)、[GPU 验收](evidence/gpu-acceptance.md) |
 | 原始设计参考 | [业务需求](docs/01-业务场景与需求.md)、[架构](docs/02-架构与技术选型.md)、[恢复协议](docs/03-执行状态与恢复设计.md)、[数据接口](docs/04-数据模型与接口.md)、[模块风险](docs/05-模块拆分与风险.md)、[GPU/长任务](docs/06-GPU与小时级任务.md)、[验收计划](docs/07-验收与实施计划.md) |
 
 设计稿保留作决策参考。已实现行为以代码、实际验收和实现差异为准；P0-GOAL.md 是开发任务原文。

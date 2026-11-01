@@ -18,9 +18,11 @@ def main():
     p.add_argument("--api-port",type=int,default=18082)
     p.add_argument("--db-port",type=int,default=55435)
     p.add_argument("--subnet",default="10.233.87.0/24")
+    p.add_argument("--revision",default="0003")
+    p.add_argument("--output",default="clean-latest.json")
     args=p.parse_args()
     root=args.checkout.resolve()
-    output=Path(__file__).resolve().parents[1]/"evidence/p1-clean-start.json"
+    output=Path(__file__).resolve().parents[1]/"evidence"/args.output
     env=dict(os.environ,TASKD_SUBNET=args.subnet)
     override=root/"runtime/compose.clean.yaml"
     override.parent.mkdir(exist_ok=True)
@@ -57,7 +59,7 @@ networks:
         assert initial["items"]==[],initial
         record["initial_tasks"]=0
         record["migration"]=run([*dc,"run","--rm","migrate","alembic","current"]).strip()
-        assert "0002" in record["migration"]
+        assert args.revision in record["migration"]
         results=[]
         for version in ["animation-v2","animation-v1"]:
             r=c.post("/api/tasks",headers={"Idempotency-Key":str(uuid.uuid4())},json={

@@ -4,7 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 PIPELINE_VERSION = "animation-v2"
 SPECS = [
@@ -55,6 +55,28 @@ class TaskInput(BaseModel):
     step_timeout_seconds: float = Field(120, ge=0.1, le=86400)
     task_timeout_seconds: float = Field(1800, ge=0.2, le=172800)
     execution_profile: Literal["demo", "hourly"] = "demo"
+    gpu_mode: Literal["mock", "nvidia"] = "mock"
+    gpu: 'GPURequest' = Field(default_factory=lambda: GPURequest())
+
+    @model_validator(mode='after')
+    def real_profile(self):
+        if self.gpu_mode=='nvidia' and (self.pipeline_version!='animation-v2' or self.execution_profile!='demo' or self.scenario!='normal'):
+            raise ValueError('NVIDIA probe requires v2/demo/normal; MOCK failure scenarios cannot substitute hardware errors')
+        if self.gpu_mode=='mock' and self.gpu!=GPURequest():
+            raise ValueError('GPU constraints/probe settings require explicit gpu_mode=nvidia')
+        return self
+
+
+class GPURequest(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+    min_memory_mb: int = Field(512,ge=128,le=1048576)
+    min_compute_major: int = Field(7,ge=7,le=20)
+    uuid: str | None = Field(None,pattern=r'^GPU-[0-9a-fA-F-]{36}$')
+    probe_memory_mb: int = Field(8,ge=1,le=64)
+    oom_test: bool = False
+
+
+TaskInput.model_rebuild()
 
 
 def validate_dag(specs):
@@ -80,6 +102,12 @@ def semantic(task, spec, parent_digests):
             "inputs": parent_digests or {"source": task.input_digest}}
     if spec.get("partition"):
         result["partition"] = spec["partition"]
+    if task.request.get('gpu_mode')=='nvidia':
+        result['execution_mode']='nvidia-probe-1'
+        if spec['resource']=='gpu':
+            from app.cuda_probe import PTX_SHA
+            result.update(simulated=False,runtime='cuda-driver-12-ptx7-sm70-integer-v1',output_schema=2,
+                probe={k:task.request['gpu'][k] for k in ['probe_memory_mb','oom_test']},ptx_sha256=PTX_SHA)
     return result
 
 

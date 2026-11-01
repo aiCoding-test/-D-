@@ -98,9 +98,15 @@ def metrics():
         emit("pipeline_resource_slots","Slots by kind and state","gauge",
              [({"kind":kind,"state":state},n) for (kind,state),n in Counter((x.kind,x.status) for x in slots).items()])
         now=db_now(s)
-        fresh=[x for x in slots if x.kind=="gpu" and x.measured_at and (now-x.measured_at).total_seconds()<15 and x.sample.get("valid")]
+        fresh=[x for x in slots if x.kind=="gpu" and x.sample.get('source')=='mock' and x.measured_at and (now-x.measured_at).total_seconds()<15 and x.sample.get("valid")]
         emit("pipeline_mock_gpu_valid_samples","Fresh valid MOCK GPU samples; 0 means unavailable, not idle","gauge",[({},len(fresh))])
         if fresh:
             emit("pipeline_mock_gpu_utilization_percent","Mean fresh simulated GPU utilization","gauge",
                  [({"source":"mock"},sum(x.sample["utilization_percent"] for x in fresh)/len(fresh))])
+        real=[x for x in slots if x.sample.get('source')=='nvml' and x.measured_at
+            and (now-x.measured_at).total_seconds()<15 and x.sample.get('valid')]
+        emit('pipeline_nvml_valid_samples','Fresh valid physical NVIDIA device samples','gauge',[({},len(real))])
+        for field in ['utilization_percent','memory_used_mb','temperature_c']:
+            values=[x.sample[field] for x in real if isinstance(x.sample.get(field),(int,float))]
+            if values:emit('pipeline_nvml_'+field,'Mean available NVML device value','gauge',[({'source':'nvml'},sum(values)/len(values))])
     return "\n".join(lines)+"\n"

@@ -8,7 +8,7 @@ import shutil
 from app.artifacts import folder, seal, write_json
 
 
-def execute_chunks(work, spec):
+def execute_chunks(work, spec, probe=None):
     from app.artifacts import verify, file_hash
     chunks = spec["chunks"]
     for chunk in chunks:
@@ -28,7 +28,8 @@ def execute_chunks(work, spec):
             if spec["key"] == "remove_background" and spec["scenario"] == "slow_step":
                 duration = max(spec["seconds"] * 10, 15) / len(chunks)
             started = time.monotonic()
-            while True:
+            cuda_result=probe.compute(duration) if probe else None
+            while not probe:
                 elapsed = time.monotonic() - started
                 fraction = min(elapsed / duration, 1)
                 write_json(work / "progress.next", {"done": 100 * (index + fraction) / len(chunks),
@@ -38,8 +39,10 @@ def execute_chunks(work, spec):
                     break
                 time.sleep(min(.5, duration / 5))
             (source / "partial.tmp").unlink()
-            write_json(source / "output.json", {"simulated": True, "chunk_identity": chunk["identity"]})
-            seal(source, chunk["chunk_key"])
+            payload={"simulated":probe is None,"chunk_identity":chunk['identity']}
+            if probe:payload['cuda_probe']=cuda_result
+            write_json(source / "output.json",payload)
+            seal(source, chunk["chunk_key"],simulated=probe is None)
             write_json(work / f"chunk-ready-{index}.json", {"index": index})
             while not (work / f"chunk-ack-{index}.json").exists():
                 time.sleep(.03)
@@ -50,9 +53,9 @@ def execute_chunks(work, spec):
         shutil.copyfile(source / "output.json", target)
         if file_hash(target) != next(f["sha256"] for f in manifest["files"] if f["key"] == "output.json"):
             raise ValueError("CHECKPOINT_INVALID")
-    write_json(work / "output.json", {"simulated": True, "step": spec["key"],
+    write_json(work / "output.json", {"simulated": probe is None, "step": spec["key"],
                "semantic": spec["semantic"], "blocks": [c["chunk_key"] for c in chunks], "frames": 96})
-    seal(work, spec["cache_key"])
+    seal(work, spec["cache_key"],simulated=probe is None)
     write_json(work / "result.json", {"ok": True})
 
 
@@ -60,6 +63,26 @@ def run(attempt_id):
     work = folder(f"work/{attempt_id}")
     spec = json.loads((work / "spec.json").read_text(encoding="utf-8"))
     key, scenario = spec["key"], spec["scenario"]
+    if spec.get('execution'):
+        from app.cuda_probe import Probe,CudaError
+        probe=None
+        try:
+            execution=spec['execution'];config=execution['effective_config']
+            if config['oom_test'] and not execution['oom_authorized']:
+                raise RuntimeError('OOM_TEST_DISABLED: explicit worker authorization required')
+            probe=Probe(execution['gpu_uuid'],config['probe_memory_mb'],spec['semantic']['parameters']['seed'])
+            if config['oom_test']:probe.bounded_oom()
+            execute_chunks(work,spec,probe)
+        except CudaError as exc:
+            print(str(exc),flush=True)
+            write_json(work/'result.json',{'ok':False,'code':'CUDA_OOM' if exc.code==2 else 'CUDA_DRIVER_ERROR',
+                'retryable':False,'detail':str(exc),'cuda_code':exc.code})
+        except Exception as exc:
+            print(repr(exc),flush=True)
+            write_json(work/'result.json',{'ok':False,'code':'CUDA_PROBE_ERROR','retryable':False,'detail':str(exc)})
+        finally:
+            if probe:probe.close()
+        return
     error = None
     if key == "inspect" and scenario == "invalid_input":
         error = ("INVALID_INPUT", False)
