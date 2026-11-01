@@ -8,6 +8,8 @@ P1 已完成步骤内分块恢复、历史分页/筛选、资源历史趋势及 
 
 源码：[aiCoding-test/-D-](https://github.com/aiCoding-test/-D-)。
 
+**笔试提交材料：[题目要求的 Markdown 简要说明](SUBMISSION.md)**，按实现、恢复、依赖、持久化、AI/token、个人投入和失败分析七项组织。
+
 ## 启动
 
 需要 Docker Engine / Docker Desktop（Linux 容器）、Docker Compose **2.24.4+**。首次构建需要访问官方镜像与 PyPI。Windows 推荐 Docker Desktop + WSL2；Worker 使用 Linux flock，不支持原生 Windows 执行。
