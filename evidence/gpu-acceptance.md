@@ -1,6 +1,6 @@
 # R14 实际 GPU 验收
 
-回归 **42/42**，使用真实 PostgreSQL；其中 G01～G05 为无 GPU 契约测试，不作为硬件证据。
+回归 **43/43**，使用真实 PostgreSQL；其中 G01～G05 为无 GPU 契约测试，不作为硬件证据。
 [JUnit](gpu-regression-junit.xml) · [硬件快照/任务/Attempt](gpu-hardware.json) · [真实日志](gpu-worker.log) · [子进程退出验证](gpu-extra.json)
 
 GPU：`NVIDIA GeForce RTX 4060 Laptop GPU`；UUID `GPU-069ab99a-b67f-4aef-e072-90c6f401d7d8`；驱动 `560.94`；CUDA Driver API `12060`。
@@ -21,5 +21,7 @@ NVML 的显存/温度为真实查询。当前 WSL 驱动利用率返回 Unknown 
 OOM 为真实 CUDA 驱动封顶池分配失败，不等于真实模型或全卡耗尽试验。未下载/运行 AI 模型；CPU 媒体产物仍为 MOCK。
 
 设备回收依赖 lifetime flock 退出证明与确认退出后的新鲜健康样本；缺失时保持隔离。G05 专门检查旧健康样本不能提前解除隔离。
+
+[旧数据升级](gpu-upgrade.json) · [最终匿名源码干净部署](gpu-clean-final.json) · [独立交付审计](gpu-completion-audit.json) · [页面实际提交](gpu-ui.json)
 
 运行命令与边界见 [实现说明](../docs/11-真实GPU实现与验收.md)。P0/P1 初始证据完整保留；当前迁移/公开交付状态另见 README。

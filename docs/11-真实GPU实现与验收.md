@@ -70,4 +70,6 @@ docker compose -p taskd-gpu -f compose.yaml -f compose.gpu.yaml -f compose.gpu-t
 
 硬件脚本保存任务/尝试 ID、快照、真实日志、两任务排队、受限 OOM、取消清理、实际 SIGKILL Worker 后块复用、旧令牌拒绝及缓存/参数隔离。原始文件见 [gpu-hardware.json](../evidence/gpu-hardware.json)、[Worker 日志](../evidence/gpu-worker.log)；实际结果以 [验收表](../evidence/gpu-acceptance.md) 为准。无硬件的契约测试不计作硬件通过。
 
+本次实际 **43 项完整回归、8 项硬件场景通过**。`python scripts/verify_gpu_extra.py` 补验单独杀 CUDA 子进程的 -9 退出和块复用；`python scripts/audit_gpu.py` 独立核对全部证据与退出后的健康时刻。[0003 旧数据升级](../evidence/gpu-upgrade.json)、[最终公开源码干净启动](../evidence/gpu-clean-final.json)、[审计结果](../evidence/gpu-completion-audit.json)。测试 fixture 会清理 taskd_test，因此通过数据库级互斥禁止多个 pytest 同时使用它；曾发生的误并行运行保留为无效证据，不计入通过。
+
 参考 NVIDIA 官方 [Driver API](https://docs.nvidia.com/cuda/archive/12.6.2/cuda-driver-api/group__CUDA__MALLOC__ASYNC.html)、[WSL 限制](https://docs.nvidia.com/cuda/wsl-user-guide/index.html)、[NVML](https://docs.nvidia.com/deploy/nvml-api/latest/index.html)。

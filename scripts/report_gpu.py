@@ -28,6 +28,7 @@ lines.append(f"| H08 | 单独杀 CUDA 子进程，记录 -9 退出、只补缺�
 lines += ['', 'NVML 的显存/温度为真实查询。当前 WSL 驱动利用率返回 Unknown Error，保留 null/unavailable，趋势不填 0，指标不导出伪值；NVML 进程列表可能受 WSL 限制，不据此承诺外部独占。',
  'OOM 为真实 CUDA 驱动封顶池分配失败，不等于真实模型或全卡耗尽试验。未下载/运行 AI 模型；CPU 媒体产物仍为 MOCK。', '',
  '设备回收依赖 lifetime flock 退出证明与确认退出后的新鲜健康样本；缺失时保持隔离。G05 专门检查旧健康样本不能提前解除隔离。', '',
+ '[旧数据升级](gpu-upgrade.json) · [最终匿名源码干净部署](gpu-clean-final.json) · [独立交付审计](gpu-completion-audit.json) · [页面实际提交](gpu-ui.json)', '',
  '运行命令与边界见 [实现说明](../docs/11-真实GPU实现与验收.md)。P0/P1 初始证据完整保留；当前迁移/公开交付状态另见 README。']
 (E/'gpu-acceptance.md').write_text('\n'.join(lines)+'\n',encoding='utf-8')
 print(f"Regression {passed}/{len(cases)}; hardware {sum(bool(x.get('passed')) for x in checks.values())}/7; child_exit={extra.get('passed',False)}")

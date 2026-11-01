@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "at": "2026-11-01T13:15:36.043480+00:00",
+  "pytest_passed": 43,
+  "hardware_scenarios": 8,
+  "physical_device": {
+    "mode": "nvidia",
+    "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "uuid": "GPU-069ab99a-b67f-4aef-e072-90c6f401d7d8",
+    "driver": "560.94",
+    "health": "HEALTHY",
+    "source": "nvml",
+    "memory_total_mb": 8188,
+    "compute_capability": [
+      8,
+      9
+    ]
+  },
+  "confirmed_executors": [
+    {
+      "task_id": "da43e9a6-a090-483f-8c94-1b4916353a08",
+      "attempt_id": "8af00cbb-d2f7-4e3b-9b66-cc3a51946799",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T12:58:40.064240+00:00"
+    },
+    {
+      "task_id": "da43e9a6-a090-483f-8c94-1b4916353a08",
+      "attempt_id": "031a11f0-045d-4eac-9a11-21bf9130820f",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T12:58:42.762349+00:00"
+    },
+    {
+      "task_id": "6cbb7210-91a3-4d47-aa3f-6731a54dd13f",
+      "attempt_id": "1345aa35-cab4-4c78-99b4-e8e51670ca14",
+      "state": "CANCELLED",
+      "executor_stopped_at": "2026-11-01T12:59:39.814875+00:00"
+    },
+    {
+      "task_id": "e2e18515-d2e5-46fa-9f12-a849fde4d673",
+      "attempt_id": "8e44da55-999f-4286-a0f6-535e8a0194bc",
+      "state": "LOST",
+      "executor_stopped_at": "2026-11-01T13:00:01.601822+00:00"
+    },
+    {
+      "task_id": "e2e18515-d2e5-46fa-9f12-a849fde4d673",
+      "attempt_id": "ea60dcb7-0bc2-4906-9ca4-4f829f3c597d",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T13:00:05.617365+00:00"
+    },
+    {
+      "task_id": "e2e18515-d2e5-46fa-9f12-a849fde4d673",
+      "attempt_id": "b7391566-33d9-47e3-a8cf-adaba02ac703",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T13:00:11.987870+00:00"
+    },
+    {
+      "task_id": "670f209f-d5bf-4cea-9d61-41549ecc196c",
+      "attempt_id": "09184cba-90be-48d3-88f9-199a401f5912",
+      "state": "FAILED",
+      "executor_stopped_at": "2026-11-01T13:01:57.219771+00:00"
+    },
+    {
+      "task_id": "670f209f-d5bf-4cea-9d61-41549ecc196c",
+      "attempt_id": "a4367e61-9211-46d4-9035-39299ceeaa8a",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T13:02:01.799188+00:00"
+    },
+    {
+      "task_id": "670f209f-d5bf-4cea-9d61-41549ecc196c",
+      "attempt_id": "ecc68c81-b5f0-403c-a8eb-6715e6933dcb",
+      "state": "SUCCEEDED",
+      "executor_stopped_at": "2026-11-01T13:02:08.746506+00:00"
+    }
+  ],
+  "final_resource": {
+    "id": "gpu-evidence:GPU-069ab99a-b67f-4aef-e072-90c6f401d7d8",
+    "node_id": "gpu-evidence",
+    "key": "GPU-069ab99a-b67f-4aef-e072-90c6f401d7d8",
+    "kind": "gpu",
+    "status": "AVAILABLE",
+    "holder_id": null,
+    "holder_fence": null,
+    "reason": null,
+    "sample": {
+      "valid": true,
+      "health": "HEALTHY",
+      "source": "nvml",
+      "processes": [],
+      "simulated": false,
+      "process_scope": "NVML driver view; WSL/WDDM may omit processes, not proof of exclusive ownership",
+      "temperature_c": 54,
+      "memory_free_mb": 7957.0,
+      "memory_used_mb": 231.0,
+      "memory_total_mb": 8188.0,
+      "graphics_processes": [],
+      "unavailable_fields": {
+        "utilization_percent": "Unknown Error"
+      },
+      "unavailable_reason": null,
+      "utilization_percent": null
+    },
+    "measured_at": "2026-11-01T13:15:34.197725+00:00",
+    "device": {
+      "mode": "nvidia",
+      "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "uuid": "GPU-069ab99a-b67f-4aef-e072-90c6f401d7d8",
+      "driver": "560.94",
+      "health": "HEALTHY",
+      "source": "nvml",
+      "memory_total_mb": 8188,
+      "compute_capability": [
+        8,
+        9
+      ]
+    },
+    "sample_age_seconds": 1.632413,
+    "sample_fresh": true,
+    "holder": null
+  },
+  "legacy_migrations_unchanged": true,
+  "clean_public_checkout_verified": true,
+  "default_mock_without_nvml_verified": true,
+  "ui_explicit_nvidia_verified": true,
+  "regression_overlap_invalidated_and_guard_added": true,
+  "gpu_image_id": "sha256:d0c4bae6d5892233f5458de92c9f7a8db00ab6ae1558b925953e796b34fd78d6",
+  "nvml_package_version": "13.615.71",
+  "limitations": [
+    "Real CUDA integer probe, not AI inference",
+    "WSL utilization unavailable; process view may omit applications",
+    "Pool-limited real driver OOM, not whole-card exhaustion",
+    "Single-node whole-card scheduling; no external application isolation"
+  ]
+}

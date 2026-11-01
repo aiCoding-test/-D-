@@ -95,7 +95,7 @@ docker compose -f compose.yaml -f compose.gpu.yaml build worker
 docker compose -f compose.yaml -f compose.gpu.yaml up --no-build -d
 ```
 
-在页面显式选择 NVIDIA；无匹配设备时排队，不回退 MOCK。已在 **RTX 4060 Laptop 8GB / 驱动 560.94 / CUDA Driver API 12.6** 实测 UUID 绑定、分块计算、排队、受限内存池真实 OOM、中断与取消清理。当前 WSL 利用率查询不支持，显示 unavailable；显存/温度为 NVML 实际值。详见 [硬件验收](evidence/gpu-acceptance.md) 和 [运行/安全边界](docs/11-真实GPU实现与验收.md)。这不是实际 AI 模型验证。
+在页面显式选择 NVIDIA；无匹配设备时排队，不回退 MOCK。已在 **RTX 4060 Laptop 8GB / 驱动 560.94 / CUDA Driver API 12.6** 实测 UUID 绑定、分块计算、排队、受限内存池真实 OOM、中断与取消清理，**43 项回归与 8 项硬件场景通过**。当前 WSL 利用率查询不支持，显示 unavailable；显存/温度为 NVML 实际值。详见 [硬件验收](evidence/gpu-acceptance.md)、[独立审计](evidence/gpu-completion-audit.json) 和 [运行/安全边界](docs/11-真实GPU实现与验收.md)。这不是实际 AI 模型验证。
 
 测试只允许清空名为 taskd_test 的独立测试库，不清空演示任务。
 
