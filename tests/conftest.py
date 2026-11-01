@@ -13,6 +13,23 @@ from app.config import settings
 from app.db import engine
 
 
+def pytest_sessionstart(session):
+    # Tests truncate their dedicated DB; independent pytest runners must serialize.
+    assert engine.url.database=='taskd_test','Use the dedicated taskd_test database'
+    conn=engine.connect().execution_options(isolation_level='AUTOCOMMIT')
+    if not conn.scalar(text('SELECT pg_try_advisory_lock(771030)')):
+        conn.close()
+        pytest.exit('Another pytest runner owns taskd_test; use a separate database or wait',returncode=2)
+    session._taskd_test_lock=conn
+
+
+def pytest_sessionfinish(session,exitstatus):
+    conn=getattr(session,'_taskd_test_lock',None)
+    if conn is not None:
+        conn.execute(text('SELECT pg_advisory_unlock(771030)'))
+        conn.close()
+
+
 @pytest.fixture(autouse=True)
 def isolated_database(tmp_path, monkeypatch):
     # Explicit safety gate: tests are allowed to truncate only the dedicated test DB.

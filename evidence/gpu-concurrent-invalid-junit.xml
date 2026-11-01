@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="6" time="12.149" timestamp="2026-11-01T13:07:56.104551+00:00" hostname="dcc0397a9526"><testcase classname="tests.test_gpu_contract" name="test_G01_explicit_mode_and_semantic_isolation" time="0.452" /><testcase classname="tests.test_gpu_contract" name="test_G02_device_requirements_and_freshness" time="0.378" /><testcase classname="tests.test_gpu_contract" name="test_G03_no_gpu_queues_without_mock_fallback" time="7.153"><failure message="AssertionError: {&quot;code&quot;:&quot;NOT_FOUND&quot;,&quot;message&quot;:&quot;Task not found&quot;,&quot;request_id&quot;:&quot;3f44a67b-a266-42ae-9688-e4c48b881143&quot;}&#10;assert 404 == 200&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x70220d198c80&gt;
+workers = &lt;function workers.&lt;locals&gt;.launch at 0x70220c60b560&gt;
+
+    def test_G03_no_gpu_queues_without_mock_fallback(client,workers):
+        workers()
+        tid=create(client,pipeline_version='animation-v2',gpu_mode='nvidia')
+&gt;       d=wait_for(client,tid,lambda d:step(d,'remove_background')['status']=='READY'
+            and step(d,'remove_background')['wait_reason']=='NO_MATCHING_NVIDIA_GPU')
+
+tests/test_gpu_contract.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = &lt;starlette.testclient.TestClient object at 0x70220d198c80&gt;
+tid = '9c6c8572-f66e-4140-90dd-ca697d33cdd1'
+predicate = &lt;function test_G03_no_gpu_queues_without_mock_fallback.&lt;locals&gt;.&lt;lambda&gt; at 0x70220c60bc40&gt;
+timeout = 25
+
+    def wait_for(client, tid, predicate, timeout=25):
+        deadline = time.monotonic() + timeout
+        data = None
+        while time.monotonic() &lt; deadline:
+            response = client.get(f"/api/tasks/{tid}")
+&gt;           assert response.status_code == 200, response.text
+E           AssertionError: {"code":"NOT_FOUND","message":"Task not found","request_id":"3f44a67b-a266-42ae-9688-e4c48b881143"}
+E           assert 404 == 200
+E            +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+
+tests/conftest.py:71: AssertionError</failure></testcase><testcase classname="tests.test_gpu_contract" name="test_G04_legacy_mock_idempotency_fields" time="0.469" /><testcase classname="tests.test_gpu_contract" name="test_G05_post_exit_sample_required_before_release[False]" time="2.286"><failure message="assert (None)">client = &lt;starlette.testclient.TestClient object at 0x70220d199310&gt;
+workers = &lt;function workers.&lt;locals&gt;.launch at 0x70220c60b420&gt;, fatal = False
+
+    @pytest.mark.parametrize('fatal',[False,True])
+    def test_G05_post_exit_sample_required_before_release(client,workers,fatal):
+        # Synthetic adapter data checks the control contract, never hardware evidence.
+        from app.config import settings
+        from app.db import Session,db_now
+        from app.models import ResourceSlot,WorkerSession,Attempt
+        from sqlalchemy import select
+        p=workers();tid=create(client,pipeline_version='animation-v2',gpu_mode='nvidia')
+        wait_for(client,tid,lambda d:step(d,'remove_background')['wait_reason']=='NO_MATCHING_NVIDIA_GPU')
+        p.terminate();p.wait(timeout=5)
+        with Session.begin() as s:
+            wid=s.scalar(select(WorkerSession.id))
+            slot=ResourceSlot(id=settings.node_id+':GPU-contract',node_id=settings.node_id,key='GPU-contract',kind='gpu',status='AVAILABLE',
+                device={'mode':'nvidia','uuid':'GPU-contract','memory_total_mb':8192,'compute_capability':[8,9]},
+                measured_at=db_now(s),sample={'valid':True,'health':'HEALTHY','source':'nvml','processes':[],'memory_free_mb':7000})
+            s.add(slot)
+        old=settings.gpu_mode
+        object.__setattr__(settings,'gpu_mode','nvidia')
+        try:spec=service.claim(wid)
+        finally:object.__setattr__(settings,'gpu_mode',old)
+&gt;       assert spec and spec['execution']['gpu_uuid']=='GPU-contract'
+E       assert (None)
+
+tests/test_gpu_contract.py:77: AssertionError</failure></testcase><testcase classname="tests.test_gpu_contract" name="test_G05_post_exit_sample_required_before_release[True]" time="0.866"><failure message="AssertionError: {&quot;code&quot;:&quot;NOT_FOUND&quot;,&quot;message&quot;:&quot;Task not found&quot;,&quot;request_id&quot;:&quot;9d07f8c1-e6c6-46b6-a296-2ed617d69af4&quot;}&#10;assert 404 == 200&#10; +  where 404 = &lt;Response [404 Not Found]&gt;.status_code">client = &lt;starlette.testclient.TestClient object at 0x70220c603da0&gt;
+workers = &lt;function workers.&lt;locals&gt;.launch at 0x70220c77e840&gt;, fatal = True
+
+    @pytest.mark.parametrize('fatal',[False,True])
+    def test_G05_post_exit_sample_required_before_release(client,workers,fatal):
+        # Synthetic adapter data checks the control contract, never hardware evidence.
+        from app.config import settings
+        from app.db import Session,db_now
+        from app.models import ResourceSlot,WorkerSession,Attempt
+        from sqlalchemy import select
+        p=workers();tid=create(client,pipeline_version='animation-v2',gpu_mode='nvidia')
+&gt;       wait_for(client,tid,lambda d:step(d,'remove_background')['wait_reason']=='NO_MATCHING_NVIDIA_GPU')
+
+tests/test_gpu_contract.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = &lt;starlette.testclient.TestClient object at 0x70220c603da0&gt;
+tid = '5e5630db-dc49-449d-9840-3f6effa9d6e9'
+predicate = &lt;function test_G05_post_exit_sample_required_before_release.&lt;locals&gt;.&lt;lambda&gt; at 0x70220c77d300&gt;
+timeout = 25
+
+    def wait_for(client, tid, predicate, timeout=25):
+        deadline = time.monotonic() + timeout
+        data = None
+        while time.monotonic() &lt; deadline:
+            response = client.get(f"/api/tasks/{tid}")
+&gt;           assert response.status_code == 200, response.text
+E           AssertionError: {"code":"NOT_FOUND","message":"Task not found","request_id":"9d07f8c1-e6c6-46b6-a296-2ed617d69af4"}
+E           assert 404 == 200
+E            +  where 404 = &lt;Response [404 Not Found]&gt;.status_code
+
+tests/conftest.py:71: AssertionError</failure></testcase></testsuite></testsuites>

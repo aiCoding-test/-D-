@@ -48,6 +48,8 @@ docker compose -f compose.yaml -f compose.gpu.yaml up --no-build -d
 
 稳定 CUDA OOM 记录 API 操作、实际返回值、错误文本、有效配置和执行日志，原配置不自动重试。其他 CUDA 初始化/内核错误也明确失败；进程异常退出记录 returncode，按既有预算重试并保留有效块。
 
+非 OOM 的 CUDA 驱动错误视为设备状态不确定，额外持久化 `device_review_required`，槽保持 `CUDA_DEVICE_REVIEW_REQUIRED` 隔离，不能凭显存查询成功自动清除。没有普通用户强制释放入口；需维护人员核对具体错误、设备和旧执行器后制定修复，不能靠重启 Worker 隐去该标记。
+
 ## 采样与限制
 
 NVML 获取实际显存、利用率、温度和可获得的计算/图形进程信息。返回 null/unavailable 与字段错误原因，不补 0；设备有效表示身份/显存查询可用，不意味着每个可选指标都可用。当前 Windows WSL2 驱动的利用率查询返回 `Unknown Error`，因此利用率趋势留空、Prometheus 不导出虚假的利用率值；显存和温度为实际值。

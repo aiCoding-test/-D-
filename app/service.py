@@ -160,6 +160,8 @@ def end_attempt(s, task, step, attempt, status, code, retryable=False, stopped=F
     attempt.cleanup_state = "CONFIRMED" if stopped else "QUARANTINED"
     slot = slot_lock(s, attempt.slot_id)
     if slot.device.get('mode')=='nvidia':
+        if code=='CUDA_DRIVER_ERROR':
+            attempt.execution={**attempt.execution,'device_review_required':True}
         if stopped:attempt.execution={**attempt.execution,'executor_stopped_at':now.isoformat()}
         stopped=False  # CUDA process exit + a fresh post-exit health sample required.
         attempt.cleanup_state='QUARANTINED'
@@ -470,6 +472,8 @@ def release_confirmed(attempt_id):
         if a.status == "RUNNING" or a.cleanup_state != "QUARANTINED":
             return
         slot = slot_lock(s, a.slot_id)
+        if slot.device.get('mode')=='nvidia' and a.execution.get('device_review_required'):
+            slot.reason='CUDA_DEVICE_REVIEW_REQUIRED';return
         if slot.device.get('mode')=='nvidia' and not a.execution.get('executor_stopped_at'):
             a.execution={**a.execution,'executor_stopped_at':db_now(s).isoformat()}
             slot.reason='GPU_POST_EXIT_SAMPLE_REQUIRED'

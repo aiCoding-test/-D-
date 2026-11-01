@@ -54,7 +54,8 @@ def test_G04_legacy_mock_idempotency_fields(client):
     assert service.submit(data,'gpu-compatibility')['reused_request']
 
 
-def test_G05_post_exit_sample_required_before_release(client,workers):
+@pytest.mark.parametrize('fatal',[False,True])
+def test_G05_post_exit_sample_required_before_release(client,workers,fatal):
     # Synthetic adapter data checks the control contract, never hardware evidence.
     from app.config import settings
     from app.db import Session,db_now
@@ -75,14 +76,18 @@ def test_G05_post_exit_sample_required_before_release(client,workers):
     finally:object.__setattr__(settings,'gpu_mode',old)
     assert spec and spec['execution']['gpu_uuid']=='GPU-contract'
     import uuid
-    service.command(tid,'cancel',str(uuid.uuid4()))
+    if fatal:service.failed(spec['id'],spec['worker_id'],spec['fence'],'CUDA_DRIVER_ERROR',False)
+    else:service.command(tid,'cancel',str(uuid.uuid4()))
     service.release_confirmed(spec['id'])  # Records first OS-stop confirmation.
     service.release_confirmed(spec['id'])  # Pre-exit healthy sample cannot release.
     with Session.begin() as s:
         slot=s.get(ResourceSlot,settings.node_id+':GPU-contract')
         assert slot.status=='QUARANTINED'
-        assert s.get(Attempt,spec['id']).execution['executor_stopped_at']
+        if fatal:assert s.get(Attempt,spec['id']).execution['device_review_required']
+        else:assert s.get(Attempt,spec['id']).execution['executor_stopped_at']
         slot.measured_at=db_now(s)
     service.release_confirmed(spec['id'])
     with Session() as s:
-        assert s.get(ResourceSlot,settings.node_id+':GPU-contract').status=='AVAILABLE'
+        slot=s.get(ResourceSlot,settings.node_id+':GPU-contract')
+        assert slot.status==('QUARANTINED' if fatal else 'AVAILABLE')
+        if fatal:assert slot.reason=='CUDA_DEVICE_REVIEW_REQUIRED'
