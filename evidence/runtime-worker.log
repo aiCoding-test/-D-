@@ -1,0 +1,300 @@
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1320, in _checkout
+worker-1  |     fairy = _ConnectionRecord.checkout(pool)
+worker-1  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+worker-1  |     dbapi_connection = rec.get_connection()
+worker-1  |                        ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 853, in get_connection
+worker-1  |     self.__connect()
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 921, in __connect
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 917, in __connect
+worker-1  |     self.dbapi_connection = connection = pool._invoke_creator(self)
+worker-1  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+worker-1  |     return dialect.connect(*cargs_tup, **cparams)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 642, in connect
+worker-1  |     return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/connection.py", line 100, in connect
+worker-1  |     attempts = conninfo_attempts(params)
+worker-1  |                ^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+worker-1  |     raise last_exc
+worker-1  | psycopg.OperationalError: failed to resolve host 'postgres': [Errno -3] Temporary failure in name resolution
+worker-1  |
+worker-1  | The above exception was the direct cause of the following exception:
+worker-1  |
+worker-1  | Traceback (most recent call last):
+worker-1  |   File "/app/app/worker.py", line 149, in run
+worker-1  |     self.tick()
+worker-1  |   File "/app/app/worker.py", line 120, in tick
+worker-1  |     service.worker_heartbeat(self.id)
+worker-1  |   File "/app/app/service.py", line 111, in worker_heartbeat
+worker-1  |     w = s.get(WorkerSession, worker_id)
+worker-1  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3702, in get
+worker-1  |     return self._get_impl(
+worker-1  |            ^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3881, in _get_impl
+worker-1  |     return db_load_fn(
+worker-1  |            ^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+worker-1  |     session.execute(
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
+worker-1  |     return self._execute_internal(
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2261, in _execute_internal
+worker-1  |     conn = self._connection_for_bind(bind)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2113, in _connection_for_bind
+worker-1  |     return trans._connection_for_bind(engine, execution_options)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "<string>", line 2, in _connection_for_bind
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+worker-1  |     ret_value = fn(self, *arg, **kw)
+worker-1  |                 ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1191, in _connection_for_bind
+worker-1  |     conn = bind.connect()
+worker-1  |            ^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3302, in connect
+worker-1  |     return self._connection_cls(self)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+worker-1  |     Connection._handle_dbapi_exception_noconnection(
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2457, in _handle_dbapi_exception_noconnection
+worker-1  |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 144, in __init__
+worker-1  |     self._dbapi_connection = engine.raw_connection()
+worker-1  |                              ^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3326, in raw_connection
+worker-1  |     return self.pool.connect()
+worker-1  |            ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+worker-1  |     return _ConnectionFairy._checkout(self)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1320, in _checkout
+worker-1  |     fairy = _ConnectionRecord.checkout(pool)
+worker-1  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+worker-1  |     dbapi_connection = rec.get_connection()
+worker-1  |                        ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 853, in get_connection
+worker-1  |     self.__connect()
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 921, in __connect
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 917, in __connect
+worker-1  |     self.dbapi_connection = connection = pool._invoke_creator(self)
+worker-1  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+worker-1  |     return dialect.connect(*cargs_tup, **cparams)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 642, in connect
+worker-1  |     return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/connection.py", line 100, in connect
+worker-1  |     attempts = conninfo_attempts(params)
+worker-1  |                ^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+worker-1  |     raise last_exc
+worker-1  | sqlalchemy.exc.OperationalError: (psycopg.OperationalError) failed to resolve host 'postgres': [Errno -3] Temporary failure in name resolution
+worker-1  | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+worker-1  | 2026-11-01 10:57:27,056 ERROR database_unavailable
+worker-1  | Traceback (most recent call last):
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 144, in __init__
+worker-1  |     self._dbapi_connection = engine.raw_connection()
+worker-1  |                              ^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3326, in raw_connection
+worker-1  |     return self.pool.connect()
+worker-1  |            ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+worker-1  |     return _ConnectionFairy._checkout(self)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1320, in _checkout
+worker-1  |     fairy = _ConnectionRecord.checkout(pool)
+worker-1  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+worker-1  |     dbapi_connection = rec.get_connection()
+worker-1  |                        ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 853, in get_connection
+worker-1  |     self.__connect()
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 921, in __connect
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 917, in __connect
+worker-1  |     self.dbapi_connection = connection = pool._invoke_creator(self)
+worker-1  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+worker-1  |     return dialect.connect(*cargs_tup, **cparams)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 642, in connect
+worker-1  |     return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/connection.py", line 100, in connect
+worker-1  |     attempts = conninfo_attempts(params)
+worker-1  |                ^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+worker-1  |     raise last_exc
+worker-1  | psycopg.OperationalError: failed to resolve host 'postgres': [Errno -3] Temporary failure in name resolution
+worker-1  |
+worker-1  | The above exception was the direct cause of the following exception:
+worker-1  |
+worker-1  | Traceback (most recent call last):
+worker-1  |   File "/app/app/worker.py", line 149, in run
+worker-1  |     self.tick()
+worker-1  |   File "/app/app/worker.py", line 120, in tick
+worker-1  |     service.worker_heartbeat(self.id)
+worker-1  |   File "/app/app/service.py", line 111, in worker_heartbeat
+worker-1  |     w = s.get(WorkerSession, worker_id)
+worker-1  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3702, in get
+worker-1  |     return self._get_impl(
+worker-1  |            ^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 3881, in _get_impl
+worker-1  |     return db_load_fn(
+worker-1  |            ^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/loading.py", line 695, in load_on_pk_identity
+worker-1  |     session.execute(
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2373, in execute
+worker-1  |     return self._execute_internal(
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2261, in _execute_internal
+worker-1  |     conn = self._connection_for_bind(bind)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 2113, in _connection_for_bind
+worker-1  |     return trans._connection_for_bind(engine, execution_options)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "<string>", line 2, in _connection_for_bind
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/state_changes.py", line 137, in _go
+worker-1  |     ret_value = fn(self, *arg, **kw)
+worker-1  |                 ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py", line 1191, in _connection_for_bind
+worker-1  |     conn = bind.connect()
+worker-1  |            ^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3302, in connect
+worker-1  |     return self._connection_cls(self)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 146, in __init__
+worker-1  |     Connection._handle_dbapi_exception_noconnection(
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2457, in _handle_dbapi_exception_noconnection
+worker-1  |     raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 144, in __init__
+worker-1  |     self._dbapi_connection = engine.raw_connection()
+worker-1  |                              ^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3326, in raw_connection
+worker-1  |     return self.pool.connect()
+worker-1  |            ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 448, in connect
+worker-1  |     return _ConnectionFairy._checkout(self)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1320, in _checkout
+worker-1  |     fairy = _ConnectionRecord.checkout(pool)
+worker-1  |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 717, in checkout
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 715, in checkout
+worker-1  |     dbapi_connection = rec.get_connection()
+worker-1  |                        ^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 853, in get_connection
+worker-1  |     self.__connect()
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 921, in __connect
+worker-1  |     with util.safe_reraise():
+worker-1  |          ^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 122, in __exit__
+worker-1  |     raise exc_value.with_traceback(exc_tb)
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 917, in __connect
+worker-1  |     self.dbapi_connection = connection = pool._invoke_creator(self)
+worker-1  |                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 667, in connect
+worker-1  |     return dialect.connect(*cargs_tup, **cparams)
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 642, in connect
+worker-1  |     return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+worker-1  |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/connection.py", line 100, in connect
+worker-1  |     attempts = conninfo_attempts(params)
+worker-1  |                ^^^^^^^^^^^^^^^^^^^^^^^^^
+worker-1  |   File "/usr/local/lib/python3.12/site-packages/psycopg/_conninfo_attempts.py", line 55, in conninfo_attempts
+worker-1  |     raise last_exc
+worker-1  | sqlalchemy.exc.OperationalError: (psycopg.OperationalError) failed to resolve host 'postgres': [Errno -3] Temporary failure in name resolution
+worker-1  | (Background on this error at: https://sqlalche.me/e/20/e3q8)
+worker-1  | 2026-11-01 10:57:27,186 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_LOST', 'step': 'remove_background', 'attempt_id': '1b98ebd0-43de-415a-9af4-f0378239e47a', 'code': 'LEASE_EXPIRED', 'retryable': True}
+worker-1  | 2026-11-01 10:57:27,190 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_RETRY_SCHEDULED', 'step': 'remove_background', 'attempt_id': '1b98ebd0-43de-415a-9af4-f0378239e47a', 'next_run_at': '2026-11-01T10:57:27.387098+00:00'}
+worker-1  | 2026-11-01 10:57:27,198 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'EXECUTOR_STOP_CONFIRMED', 'step': 'remove_background', 'attempt_id': '1b98ebd0-43de-415a-9af4-f0378239e47a'}
+worker-1  | 2026-11-01 10:57:27,414 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_READY', 'step': 'remove_background', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:27,432 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'remove_background', 'attempt_id': '368540b5-7fad-4810-9c1c-f404963b39e6', 'fence': 2, 'slot_id': 'local:mock-gpu-0'}
+worker-1  | 2026-11-01 10:57:27,447 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'remove_background', 'attempt_id': '368540b5-7fad-4810-9c1c-f404963b39e6', 'pid': 17}
+worker-1  | 2026-11-01 10:57:42,808 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'remove_background', 'attempt_id': '368540b5-7fad-4810-9c1c-f404963b39e6', 'artifact_id': '54d496f6-b9d0-4035-8a53-c9e266768df1', 'fence': 2}
+worker-1  | 2026-11-01 10:57:42,810 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_READY', 'step': 'enhance_frames', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:42,822 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'enhance_frames', 'attempt_id': 'ae71e12f-1b27-4e74-93aa-82a3e89c01a2', 'fence': 1, 'slot_id': 'local:mock-gpu-0'}
+worker-1  | 2026-11-01 10:57:42,835 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'enhance_frames', 'attempt_id': 'ae71e12f-1b27-4e74-93aa-82a3e89c01a2', 'pid': 18}
+worker-1  | 2026-11-01 10:57:43,408 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'enhance_frames', 'attempt_id': 'ae71e12f-1b27-4e74-93aa-82a3e89c01a2', 'artifact_id': 'cb94bc59-9d21-4b7a-8197-989b16ab6bf8', 'fence': 1}
+worker-1  | 2026-11-01 10:57:43,410 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_READY', 'step': 'build_atlas', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:43,410 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_READY', 'step': 'render_preview', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:43,422 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'build_atlas', 'attempt_id': 'f3a1ddb1-272f-42f7-9c19-2aaa80bac306', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:43,435 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'build_atlas', 'attempt_id': 'f3a1ddb1-272f-42f7-9c19-2aaa80bac306', 'pid': 19}
+worker-1  | 2026-11-01 10:57:43,559 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'render_preview', 'attempt_id': 'fb3cb9c8-4048-4f8c-963f-44e63bf8910d', 'fence': 1, 'slot_id': 'local:cpu-1'}
+worker-1  | 2026-11-01 10:57:43,572 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'render_preview', 'attempt_id': 'fb3cb9c8-4048-4f8c-963f-44e63bf8910d', 'pid': 20}
+worker-1  | 2026-11-01 10:57:44,099 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'build_atlas', 'attempt_id': 'f3a1ddb1-272f-42f7-9c19-2aaa80bac306', 'artifact_id': '1bf918a8-3ca4-49c9-b128-3823bc8efe68', 'fence': 1}
+worker-1  | 2026-11-01 10:57:44,338 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'render_preview', 'attempt_id': 'fb3cb9c8-4048-4f8c-963f-44e63bf8910d', 'artifact_id': '1389524d-8d15-49ad-95e6-073c769b62d8', 'fence': 1}
+worker-1  | 2026-11-01 10:57:44,340 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'STEP_READY', 'step': 'package', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:44,352 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'package', 'attempt_id': 'acd76064-91e5-47bd-aa4f-2937a70c1910', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:44,366 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'package', 'attempt_id': 'acd76064-91e5-47bd-aa4f-2937a70c1910', 'pid': 21}
+worker-1  | 2026-11-01 10:57:44,939 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'package', 'attempt_id': 'acd76064-91e5-47bd-aa4f-2937a70c1910', 'artifact_id': '71733703-f984-41c5-a639-e9b2413045c7', 'fence': 1}
+worker-1  | 2026-11-01 10:57:44,941 INFO {'task_id': 'bd0193fe-d688-494b-b182-d37c38758880', 'epoch': 1, 'event': 'TASK_SUCCEEDED', 'step': None, 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:45,153 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'inspect', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:45,165 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'inspect', 'attempt_id': '32c4024e-04f2-4886-903b-8e64b4783eb2', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:45,175 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'inspect', 'attempt_id': '32c4024e-04f2-4886-903b-8e64b4783eb2', 'pid': 22}
+worker-1  | 2026-11-01 10:57:46,310 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'inspect', 'attempt_id': '32c4024e-04f2-4886-903b-8e64b4783eb2', 'artifact_id': '40bc30d9-fe2d-4433-ae2b-5c19c48af358', 'fence': 1}
+worker-1  | 2026-11-01 10:57:46,311 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'normalize_extract', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:46,323 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'normalize_extract', 'attempt_id': '895f258c-5a46-4327-ad50-6abb56d38bfc', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:46,334 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'normalize_extract', 'attempt_id': '895f258c-5a46-4327-ad50-6abb56d38bfc', 'pid': 23}
+worker-1  | 2026-11-01 10:57:47,500 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'normalize_extract', 'attempt_id': '895f258c-5a46-4327-ad50-6abb56d38bfc', 'artifact_id': 'fe14a360-d737-4b56-bcf4-c4cbf880f65e', 'fence': 1}
+worker-1  | 2026-11-01 10:57:47,503 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'remove_background', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:47,519 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'remove_background', 'attempt_id': '0ee31031-319a-42c5-bf27-930e79ac0327', 'fence': 1, 'slot_id': 'local:mock-gpu-0'}
+worker-1  | 2026-11-01 10:57:47,535 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'remove_background', 'attempt_id': '0ee31031-319a-42c5-bf27-930e79ac0327', 'pid': 24}
+worker-1  | 2026-11-01 10:57:48,822 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'remove_background', 'attempt_id': '0ee31031-319a-42c5-bf27-930e79ac0327', 'artifact_id': '69a9ad93-1ca8-4ff9-ae84-894c4affeaab', 'fence': 1}
+worker-1  | 2026-11-01 10:57:48,825 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'enhance_frames', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:48,842 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'enhance_frames', 'attempt_id': '4e364dcb-8095-4624-b40c-a7ef15fb8b0d', 'fence': 1, 'slot_id': 'local:mock-gpu-0'}
+worker-1  | 2026-11-01 10:57:48,858 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'enhance_frames', 'attempt_id': '4e364dcb-8095-4624-b40c-a7ef15fb8b0d', 'pid': 25}
+worker-1  | 2026-11-01 10:57:50,112 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'enhance_frames', 'attempt_id': '4e364dcb-8095-4624-b40c-a7ef15fb8b0d', 'artifact_id': 'b77ab709-b587-407a-991e-3bb28c60b1e4', 'fence': 1}
+worker-1  | 2026-11-01 10:57:50,114 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'build_atlas', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:50,114 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'render_preview', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:50,128 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'build_atlas', 'attempt_id': 'c7294fed-a7c2-470b-bc81-8c07a9805775', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:50,141 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'build_atlas', 'attempt_id': 'c7294fed-a7c2-470b-bc81-8c07a9805775', 'pid': 26}
+worker-1  | 2026-11-01 10:57:50,264 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'render_preview', 'attempt_id': '0d7ff43b-4ff2-4ad4-8210-5aec624cbb70', 'fence': 1, 'slot_id': 'local:cpu-1'}
+worker-1  | 2026-11-01 10:57:50,276 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'render_preview', 'attempt_id': '0d7ff43b-4ff2-4ad4-8210-5aec624cbb70', 'pid': 27}
+worker-1  | 2026-11-01 10:57:51,383 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'build_atlas', 'attempt_id': 'c7294fed-a7c2-470b-bc81-8c07a9805775', 'artifact_id': '5dc0f978-dc50-4892-a0fe-c8400b2662ef', 'fence': 1}
+worker-1  | 2026-11-01 10:57:51,619 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'render_preview', 'attempt_id': '0d7ff43b-4ff2-4ad4-8210-5aec624cbb70', 'artifact_id': '7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7', 'fence': 1}
+worker-1  | 2026-11-01 10:57:51,621 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'STEP_READY', 'step': 'package', 'attempt_id': None}
+worker-1  | 2026-11-01 10:57:51,634 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_CLAIMED', 'step': 'package', 'attempt_id': '16b7fba5-7a6a-4b36-a74a-758d23b83108', 'fence': 1, 'slot_id': 'local:cpu-0'}
+worker-1  | 2026-11-01 10:57:51,645 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_STARTED', 'step': 'package', 'attempt_id': '16b7fba5-7a6a-4b36-a74a-758d23b83108', 'pid': 28}
+worker-1  | 2026-11-01 10:57:52,781 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'ATTEMPT_SUCCEEDED', 'step': 'package', 'attempt_id': '16b7fba5-7a6a-4b36-a74a-758d23b83108', 'artifact_id': '10d5b1e9-8a9d-4167-acc7-9777414fd95a', 'fence': 1}
+worker-1  | 2026-11-01 10:57:52,783 INFO {'task_id': '888d74a2-d157-442c-98b0-004d41922940', 'epoch': 1, 'event': 'TASK_SUCCEEDED', 'step': None, 'attempt_id': None}

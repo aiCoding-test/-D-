@@ -1,0 +1,69 @@
+name: taskd
+x-app: &app
+  build: .
+  image: taskd-pipeline:0.1
+  environment: &env
+    DATABASE_URL: postgresql+psycopg://taskd:${POSTGRES_PASSWORD:-taskd_local_demo}@postgres:5432/taskd
+    ARTIFACT_ROOT: /data
+    NODE_ID: local
+    LEASE_SECONDS: ${LEASE_SECONDS:-30}
+    HEARTBEAT_SECONDS: ${HEARTBEAT_SECONDS:-5}
+    POLL_SECONDS: ${POLL_SECONDS:-0.5}
+    RETRY_BASE_SECONDS: ${RETRY_BASE_SECONDS:-2}
+    ENABLE_TEST_FAULTS: ${ENABLE_TEST_FAULTS:-0}
+  volumes:
+    - artifacts:/data
+  depends_on:
+    postgres:
+      condition: service_healthy
+  mem_limit: 512m
+  cpus: 1
+services:
+  postgres:
+    image: postgres:16-alpine@sha256:16bc17c64a573ef34162af9298258d1aec548232985b33ed7b1eac33ba35c229
+    environment:
+      POSTGRES_USER: taskd
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-taskd_local_demo}
+      POSTGRES_DB: taskd
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:55432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U taskd -d taskd"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  migrate:
+    <<: *app
+    command: ["alembic", "upgrade", "head"]
+  api:
+    <<: *app
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    volumes:
+      - artifacts:/data:ro
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')"]
+      interval: 10s
+      timeout: 4s
+      retries: 5
+  worker:
+    <<: *app
+    command: ["python", "-m", "app.worker"]
+    init: true
+    stop_grace_period: 10s
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+volumes:
+  database:
+  artifacts:
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${TASKD_SUBNET:-10.233.84.0/24}

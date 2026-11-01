@@ -1,0 +1,11 @@
+.venv/
+.cache/
+.env
+__pycache__/
+.pytest_cache/
+*.pyc
+runtime/
+artifacts/
+.coverage
+*.egg-info/
+evidence/raw/

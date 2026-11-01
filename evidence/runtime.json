@@ -1,0 +1,3391 @@
+{
+  "started_at": "2026-11-01T10:56:48.171441+00:00",
+  "project": "taskd-e2e",
+  "checks": [
+    {
+      "ids": [
+        "A07",
+        "A10"
+      ],
+      "passed": true,
+      "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+      "operation": "docker compose kill -s SIGKILL worker; up -d worker",
+      "snapshot": {
+        "id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+        "request": {
+          "name": "E2E · kill Worker container",
+          "asset_id": "orbit",
+          "scenario": "slow_step",
+          "cache_read": false,
+          "parameters": {
+            "fps": 24,
+            "seed": 42,
+            "size": 256,
+            "matte_model": "matte-mock-v1",
+            "atlas_columns": 4,
+            "enhance_model": "enhance-mock-v1",
+            "preview_format": "svg"
+          },
+          "step_seconds": 0.2,
+          "pipeline_version": "animation-v1",
+          "step_timeout_seconds": 120.0,
+          "task_timeout_seconds": 1800.0
+        },
+        "input_digest": "2a9473bfffb5351e5c123c7cee904fef469b5306f01433ecf5e9b6036f8559a3",
+        "pipeline": [
+          {
+            "key": "inspect",
+            "deps": [],
+            "name": "校验素材",
+            "params": [],
+            "resource": "cpu"
+          },
+          {
+            "key": "normalize_extract",
+            "deps": [
+              "inspect"
+            ],
+            "name": "规范化与抽帧",
+            "params": [
+              "fps"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "remove_background",
+            "deps": [
+              "normalize_extract"
+            ],
+            "name": "逐帧抠图",
+            "params": [
+              "matte_model",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "enhance_frames",
+            "deps": [
+              "remove_background"
+            ],
+            "name": "帧增强",
+            "params": [
+              "enhance_model",
+              "size",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "build_atlas",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成图集",
+            "params": [
+              "atlas_columns"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "render_preview",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成预览",
+            "params": [
+              "preview_format"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "package",
+            "deps": [
+              "build_atlas",
+              "render_preview"
+            ],
+            "name": "打包产物",
+            "params": [],
+            "resource": "cpu"
+          }
+        ],
+        "status": "SUCCEEDED",
+        "epoch": 1,
+        "revision": 37,
+        "event_seq": 36,
+        "stop_reason": null,
+        "created_at": "2026-11-01T10:56:53.443311+00:00",
+        "epoch_started_at": "2026-11-01T10:56:53.443311+00:00",
+        "deadline_at": "2026-11-01T11:26:53.443311+00:00",
+        "finished_at": "2026-11-01T10:57:16.955446+00:00",
+        "steps": [
+          {
+            "id": "3f659dad-49b0-40c6-80ed-f45fb2737695",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "inspect",
+            "spec": {
+              "key": "inspect",
+              "deps": [],
+              "name": "校验素材",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:56:53.530334+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9",
+            "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+                "step_id": "3f659dad-49b0-40c6-80ed-f45fb2737695",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:56:53.555117+00:00",
+                "started_at": "2026-11-01T10:56:53.579894+00:00",
+                "heartbeat_at": "2026-11-01T10:56:53.718722+00:00",
+                "lease_expires_at": "2026-11-01T10:56:57.718722+00:00",
+                "run_deadline_at": "2026-11-01T10:58:53.579894+00:00",
+                "finished_at": "2026-11-01T10:56:54.299047+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 9,
+                "executor_created": 1793530613.23,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
+              }
+            ],
+            "artifact": {
+              "id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9",
+              "producer_attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+              "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
+              "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 376,
+                    "sha256": "bea96f6880b2d6c73f7cd35cb530ef31f0abbd2d3d9e8b7f8bd895bea9ff358d"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+                "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:56:54.297651+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "dfefe133-ba31-4526-8dd3-826b4ec7dccc",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "normalize_extract",
+            "spec": {
+              "key": "normalize_extract",
+              "deps": [
+                "inspect"
+              ],
+              "name": "规范化与抽帧",
+              "params": [
+                "fps"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:56:54.306315+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc",
+            "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+                "step_id": "dfefe133-ba31-4526-8dd3-826b4ec7dccc",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:56:54.319510+00:00",
+                "started_at": "2026-11-01T10:56:54.336021+00:00",
+                "heartbeat_at": "2026-11-01T10:56:54.319510+00:00",
+                "lease_expires_at": "2026-11-01T10:56:58.319510+00:00",
+                "run_deadline_at": "2026-11-01T10:58:54.336021+00:00",
+                "finished_at": "2026-11-01T10:56:54.912968+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 10,
+                "executor_created": 1793530613.99,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
+              }
+            ],
+            "artifact": {
+              "id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc",
+              "producer_attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+              "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
+              "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 406,
+                    "sha256": "ebb7d45b0d250055ab1b4a842329d9d35c8daf6fae4bcda783491e84bc96b590"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+                "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:56:54.912093+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "20b15ebc-f39f-4781-b996-956bbb063256",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "remove_background",
+            "spec": {
+              "key": "remove_background",
+              "deps": [
+                "normalize_extract"
+              ],
+              "name": "逐帧抠图",
+              "params": [
+                "matte_model",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 2,
+            "current_attempt_id": null,
+            "next_run_at": "2026-11-01T10:56:59.242429+00:00",
+            "ready_at": "2026-11-01T10:56:59.274487+00:00",
+            "wait_reason": null,
+            "error": "LEASE_EXPIRED",
+            "artifact_id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25",
+            "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:13.452979+00:00",
+            "attempts": [
+              {
+                "id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+                "step_id": "20b15ebc-f39f-4781-b996-956bbb063256",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "slot_id": "local:mock-gpu-0",
+                "status": "LOST",
+                "phase": "EXECUTING",
+                "claimed_at": "2026-11-01T10:56:54.931343+00:00",
+                "started_at": "2026-11-01T10:56:54.945961+00:00",
+                "heartbeat_at": "2026-11-01T10:56:54.931343+00:00",
+                "lease_expires_at": "2026-11-01T10:56:58.931343+00:00",
+                "run_deadline_at": "2026-11-01T10:58:54.945961+00:00",
+                "finished_at": "2026-11-01T10:56:59.031605+00:00",
+                "error_code": "LEASE_EXPIRED",
+                "error": "LEASE_EXPIRED",
+                "retryable": true,
+                "executor_pid": 11,
+                "executor_created": 1793530614.6,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": null
+              },
+              {
+                "id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+                "step_id": "20b15ebc-f39f-4781-b996-956bbb063256",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 2,
+                "epoch": 1,
+                "fence": 2,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:56:59.292264+00:00",
+                "started_at": "2026-11-01T10:56:59.307312+00:00",
+                "heartbeat_at": "2026-11-01T10:57:14.610079+00:00",
+                "lease_expires_at": "2026-11-01T10:57:18.610079+00:00",
+                "run_deadline_at": "2026-11-01T10:58:59.307312+00:00",
+                "finished_at": "2026-11-01T10:57:14.731860+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 9,
+                "executor_created": 1793530618.96,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
+              }
+            ],
+            "artifact": {
+              "id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25",
+              "producer_attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+              "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
+              "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 449,
+                    "sha256": "facfe63c995162678b4911c41dcfef09b6b0f97a43f892276a518608787521a4"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+                "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:14.730099+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "8dcd3a68-65da-4177-b4ca-6a3efb870711",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "enhance_frames",
+            "spec": {
+              "key": "enhance_frames",
+              "deps": [
+                "remove_background"
+              ],
+              "name": "帧增强",
+              "params": [
+                "enhance_model",
+                "size",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:14.738637+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "0509c702-1291-4058-a412-f6ffc89bd589",
+            "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:15.114021+00:00",
+            "attempts": [
+              {
+                "id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+                "step_id": "8dcd3a68-65da-4177-b4ca-6a3efb870711",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:14.751639+00:00",
+                "started_at": "2026-11-01T10:57:14.766908+00:00",
+                "heartbeat_at": "2026-11-01T10:57:15.114021+00:00",
+                "lease_expires_at": "2026-11-01T10:57:19.114021+00:00",
+                "run_deadline_at": "2026-11-01T10:59:14.766908+00:00",
+                "finished_at": "2026-11-01T10:57:15.344511+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 10,
+                "executor_created": 1793530634.42,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
+              }
+            ],
+            "artifact": {
+              "id": "0509c702-1291-4058-a412-f6ffc89bd589",
+              "producer_attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+              "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
+              "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 460,
+                    "sha256": "bbccdd9bfd9543f62be9924ed6f3a0d42ee0cb543eedabbb609ebcc283846af7"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+                "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:15.343623+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "fccdae57-f44b-4223-9943-0c40af1c01a2",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "build_atlas",
+            "spec": {
+              "key": "build_atlas",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成图集",
+              "params": [
+                "atlas_columns"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:15.349113+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d",
+            "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+                "step_id": "fccdae57-f44b-4223-9943-0c40af1c01a2",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:15.362540+00:00",
+                "started_at": "2026-11-01T10:57:15.375733+00:00",
+                "heartbeat_at": "2026-11-01T10:57:15.662076+00:00",
+                "lease_expires_at": "2026-11-01T10:57:19.662076+00:00",
+                "run_deadline_at": "2026-11-01T10:59:15.375733+00:00",
+                "finished_at": "2026-11-01T10:57:16.206419+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 11,
+                "executor_created": 1793530635.03,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
+              }
+            ],
+            "artifact": {
+              "id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d",
+              "producer_attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+              "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
+              "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 410,
+                    "sha256": "8140301f15807b560c6a7190080bcf2c6eb4cea99f8ad25a141a7359b9d83adf"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 682,
+                    "sha256": "9b8ad6f3a0e4115d4997f817b243e742000ec83ced60b2dddba4b2fe6b145fb2"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+                "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:16.205573+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "e9f2ff23-46bd-4ec8-8256-ae11c4d30203",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "render_preview",
+            "spec": {
+              "key": "render_preview",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成预览",
+              "params": [
+                "preview_format"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:15.349113+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "034a9e70-040d-4c3e-a841-1299acc88640",
+            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:16.218896+00:00",
+            "attempts": [
+              {
+                "id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
+                "step_id": "e9f2ff23-46bd-4ec8-8256-ae11c4d30203",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-1",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:15.521806+00:00",
+                "started_at": "2026-11-01T10:57:15.539957+00:00",
+                "heartbeat_at": "2026-11-01T10:57:16.218896+00:00",
+                "lease_expires_at": "2026-11-01T10:57:20.218896+00:00",
+                "run_deadline_at": "2026-11-01T10:59:15.539957+00:00",
+                "finished_at": "2026-11-01T10:57:16.340427+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 12,
+                "executor_created": 1793530635.2,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+              }
+            ],
+            "artifact": {
+              "id": "034a9e70-040d-4c3e-a841-1299acc88640",
+              "producer_attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
+              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
+              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 421,
+                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 685,
+                    "sha256": "b0aedc5beabe838c07892a192318857db1399dee58560aac226c0f1c16658e70"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:16.339485+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "eb2ad460-1beb-4322-945e-d51ee037da49",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "key": "package",
+            "spec": {
+              "key": "package",
+              "deps": [
+                "build_atlas",
+                "render_preview"
+              ],
+              "name": "打包产物",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:16.345486+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4",
+            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:16.721172+00:00",
+            "attempts": [
+              {
+                "id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
+                "step_id": "eb2ad460-1beb-4322-945e-d51ee037da49",
+                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:16.361397+00:00",
+                "started_at": "2026-11-01T10:57:16.376220+00:00",
+                "heartbeat_at": "2026-11-01T10:57:16.721172+00:00",
+                "lease_expires_at": "2026-11-01T10:57:20.721172+00:00",
+                "run_deadline_at": "2026-11-01T10:59:16.376220+00:00",
+                "finished_at": "2026-11-01T10:57:16.951051+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 13,
+                "executor_created": 1793530636.03,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+              }
+            ],
+            "artifact": {
+              "id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4",
+              "producer_attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
+              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
+              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 467,
+                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 678,
+                    "sha256": "5650856fd5addfac317705fe0f92941d7270cf60bfe9ef56618e7b8eaf88a532"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:16.950204+00:00",
+              "available": true
+            }
+          }
+        ],
+        "event_cursor": 36,
+        "completed_steps": 7,
+        "server_time": "2026-11-01T10:57:17.087239+00:00",
+        "events": [
+          {
+            "id": "c599e17b-4232-454b-806f-3e5ab17e8a0a",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 1,
+            "epoch": 1,
+            "type": "TASK_ACCEPTED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:56:53.454028+00:00",
+            "payload": {
+              "pipeline": "animation-v1",
+              "simulated": true
+            }
+          },
+          {
+            "id": "cd1fc9e1-99db-41f1-9d0b-f4b201bd54fb",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 2,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "inspect",
+            "attempt_id": null,
+            "at": "2026-11-01T10:56:53.530630+00:00",
+            "payload": {}
+          },
+          {
+            "id": "0193a4ce-3baf-4db0-b39e-0b5185f95125",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 3,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "inspect",
+            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+            "at": "2026-11-01T10:56:53.558787+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "a74baf7b-846b-4598-b4e4-14775d8db1e7",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 4,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "inspect",
+            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+            "at": "2026-11-01T10:56:53.580968+00:00",
+            "payload": {
+              "pid": 9
+            }
+          },
+          {
+            "id": "f475d614-f845-498a-a0a0-65e8f88c1861",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 5,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "inspect",
+            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+            "at": "2026-11-01T10:56:54.302774+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9"
+            }
+          },
+          {
+            "id": "6683fac8-cd11-4817-be46-962a414a12fe",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 6,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "normalize_extract",
+            "attempt_id": null,
+            "at": "2026-11-01T10:56:54.306514+00:00",
+            "payload": {}
+          },
+          {
+            "id": "5d47ea1c-50ad-4888-8f09-6f8142bc9fac",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 7,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "normalize_extract",
+            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+            "at": "2026-11-01T10:56:54.321056+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "12dd5599-80f4-41f8-b507-43b2ce0275c6",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 8,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "normalize_extract",
+            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+            "at": "2026-11-01T10:56:54.336410+00:00",
+            "payload": {
+              "pid": 10
+            }
+          },
+          {
+            "id": "0919e841-175a-4966-acb8-c97567e054f8",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 9,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "normalize_extract",
+            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+            "at": "2026-11-01T10:56:54.915361+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc"
+            }
+          },
+          {
+            "id": "7e397fa5-2e75-49fe-afc5-b8f48bc49dd0",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 10,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "remove_background",
+            "attempt_id": null,
+            "at": "2026-11-01T10:56:54.917634+00:00",
+            "payload": {}
+          },
+          {
+            "id": "7cf1de43-edd5-4c3f-b928-abf81e080e3e",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 11,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "remove_background",
+            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+            "at": "2026-11-01T10:56:54.932773+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "f7e46842-7561-48ed-a33b-c8b9c6ddc1b9",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 12,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "remove_background",
+            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+            "at": "2026-11-01T10:56:54.946237+00:00",
+            "payload": {
+              "pid": 11
+            }
+          },
+          {
+            "id": "1d9d916b-7a11-4606-9418-fc539bd16d3a",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 13,
+            "epoch": 1,
+            "type": "ATTEMPT_LOST",
+            "step_key": "remove_background",
+            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+            "at": "2026-11-01T10:56:59.034121+00:00",
+            "payload": {
+              "code": "LEASE_EXPIRED",
+              "retryable": true
+            }
+          },
+          {
+            "id": "338db73f-aa99-4b88-b8c1-aa763449da67",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 14,
+            "epoch": 1,
+            "type": "STEP_RETRY_SCHEDULED",
+            "step_key": "remove_background",
+            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+            "at": "2026-11-01T10:56:59.040482+00:00",
+            "payload": {
+              "next_run_at": "2026-11-01T10:56:59.242429+00:00"
+            }
+          },
+          {
+            "id": "a167199d-f1a6-412a-907f-45338dd62ffd",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 15,
+            "epoch": 1,
+            "type": "EXECUTOR_STOP_CONFIRMED",
+            "step_key": "remove_background",
+            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
+            "at": "2026-11-01T10:56:59.049953+00:00",
+            "payload": {}
+          },
+          {
+            "id": "518adb04-aaf8-4320-b8a9-ee808b755a79",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 16,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "remove_background",
+            "attempt_id": null,
+            "at": "2026-11-01T10:56:59.274796+00:00",
+            "payload": {}
+          },
+          {
+            "id": "554cfcea-bf32-4982-a1c5-d065f63607f5",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 17,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "remove_background",
+            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+            "at": "2026-11-01T10:56:59.294348+00:00",
+            "payload": {
+              "fence": 2,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "b7e08487-a19f-4fe2-b3cc-5e983512f4e9",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 18,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "remove_background",
+            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+            "at": "2026-11-01T10:56:59.307648+00:00",
+            "payload": {
+              "pid": 9
+            }
+          },
+          {
+            "id": "167d3d6b-f58f-4d22-9555-4da460758f62",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 19,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "remove_background",
+            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+            "at": "2026-11-01T10:57:14.735428+00:00",
+            "payload": {
+              "fence": 2,
+              "artifact_id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25"
+            }
+          },
+          {
+            "id": "046babb7-0701-4964-a528-a5c7ff673716",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 20,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "enhance_frames",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:14.738870+00:00",
+            "payload": {}
+          },
+          {
+            "id": "15630fe7-05df-4066-a1a6-062ef5378942",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 21,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "enhance_frames",
+            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+            "at": "2026-11-01T10:57:14.753270+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "ec14337c-1eb4-4ed6-9a27-a4cfd470b2ce",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 22,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "enhance_frames",
+            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+            "at": "2026-11-01T10:57:14.767212+00:00",
+            "payload": {
+              "pid": 10
+            }
+          },
+          {
+            "id": "d101b714-7c69-4d6d-82b4-826c440ee4c7",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 23,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "enhance_frames",
+            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+            "at": "2026-11-01T10:57:15.346975+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "0509c702-1291-4058-a412-f6ffc89bd589"
+            }
+          },
+          {
+            "id": "0ddfb568-df14-4c21-a7df-5a1d3b66c4d0",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 24,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "build_atlas",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:15.349270+00:00",
+            "payload": {}
+          },
+          {
+            "id": "9a07f77d-b893-4028-aede-c0c6b8112e1f",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 25,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "render_preview",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:15.349523+00:00",
+            "payload": {}
+          },
+          {
+            "id": "ddb72618-5295-4bd2-a419-c78038fe4d76",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 26,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "build_atlas",
+            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+            "at": "2026-11-01T10:57:15.363838+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "088fbab9-4882-4c74-98fa-c95ecf2a839d",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 27,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "build_atlas",
+            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+            "at": "2026-11-01T10:57:15.376130+00:00",
+            "payload": {
+              "pid": 11
+            }
+          },
+          {
+            "id": "a4737e94-b2dc-4556-b18a-5d6766d3e910",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 28,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "render_preview",
+            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
+            "at": "2026-11-01T10:57:15.523851+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-1"
+            }
+          },
+          {
+            "id": "d5b538f1-2cb2-4138-a4c1-56389c31cf92",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 29,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "render_preview",
+            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
+            "at": "2026-11-01T10:57:15.540348+00:00",
+            "payload": {
+              "pid": 12
+            }
+          },
+          {
+            "id": "e2afa7c4-d710-48a4-a851-ce75308a314d",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 30,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "build_atlas",
+            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+            "at": "2026-11-01T10:57:16.209081+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d"
+            }
+          },
+          {
+            "id": "ede57216-9cf4-4703-bfc7-6e49bc81abe6",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 31,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "render_preview",
+            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
+            "at": "2026-11-01T10:57:16.343068+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "034a9e70-040d-4c3e-a841-1299acc88640"
+            }
+          },
+          {
+            "id": "d78c32f2-f29c-4cb7-90ca-c638e6b9d282",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 32,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "package",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:16.345687+00:00",
+            "payload": {}
+          },
+          {
+            "id": "17da4a5b-d9e1-4f4f-8f4c-f0448c1bd2a2",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 33,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "package",
+            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
+            "at": "2026-11-01T10:57:16.363115+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "fe19c58d-a316-4dfa-b97b-6dd271ea472c",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 34,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "package",
+            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
+            "at": "2026-11-01T10:57:16.376602+00:00",
+            "payload": {
+              "pid": 13
+            }
+          },
+          {
+            "id": "7ae047f4-f2b9-4d91-ba65-c4cb02a46c6d",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 35,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "package",
+            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
+            "at": "2026-11-01T10:57:16.953357+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4"
+            }
+          },
+          {
+            "id": "26162ef0-5c7a-4596-911d-2bf5775cbf16",
+            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "seq": 36,
+            "epoch": 1,
+            "type": "TASK_SUCCEEDED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:16.955737+00:00",
+            "payload": {}
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "A22"
+      ],
+      "passed": true,
+      "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+      "old_attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+      "api_while_db_down": {
+        "code": "DATABASE_UNAVAILABLE",
+        "message": "数据库暂不可用，请稍后重试",
+        "retryable": true,
+        "request_id": "571ea932-718b-4ad0-b352-8fd38f363753"
+      },
+      "snapshot": {
+        "id": "bd0193fe-d688-494b-b182-d37c38758880",
+        "request": {
+          "name": "E2E · PostgreSQL outage",
+          "asset_id": "orbit",
+          "scenario": "slow_step",
+          "cache_read": false,
+          "parameters": {
+            "fps": 24,
+            "seed": 42,
+            "size": 256,
+            "matte_model": "matte-mock-v1",
+            "atlas_columns": 4,
+            "enhance_model": "enhance-mock-v1",
+            "preview_format": "svg"
+          },
+          "step_seconds": 0.2,
+          "pipeline_version": "animation-v1",
+          "step_timeout_seconds": 120.0,
+          "task_timeout_seconds": 1800.0
+        },
+        "input_digest": "2a9473bfffb5351e5c123c7cee904fef469b5306f01433ecf5e9b6036f8559a3",
+        "pipeline": [
+          {
+            "key": "inspect",
+            "deps": [],
+            "name": "校验素材",
+            "params": [],
+            "resource": "cpu"
+          },
+          {
+            "key": "normalize_extract",
+            "deps": [
+              "inspect"
+            ],
+            "name": "规范化与抽帧",
+            "params": [
+              "fps"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "remove_background",
+            "deps": [
+              "normalize_extract"
+            ],
+            "name": "逐帧抠图",
+            "params": [
+              "matte_model",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "enhance_frames",
+            "deps": [
+              "remove_background"
+            ],
+            "name": "帧增强",
+            "params": [
+              "enhance_model",
+              "size",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "build_atlas",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成图集",
+            "params": [
+              "atlas_columns"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "render_preview",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成预览",
+            "params": [
+              "preview_format"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "package",
+            "deps": [
+              "build_atlas",
+              "render_preview"
+            ],
+            "name": "打包产物",
+            "params": [],
+            "resource": "cpu"
+          }
+        ],
+        "status": "SUCCEEDED",
+        "epoch": 1,
+        "revision": 37,
+        "event_seq": 36,
+        "stop_reason": null,
+        "created_at": "2026-11-01T10:57:17.101283+00:00",
+        "epoch_started_at": "2026-11-01T10:57:17.101283+00:00",
+        "deadline_at": "2026-11-01T11:27:17.101283+00:00",
+        "finished_at": "2026-11-01T10:57:44.941342+00:00",
+        "steps": [
+          {
+            "id": "d2bbb095-f63f-4932-95a1-a6dc1ae3651c",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "inspect",
+            "spec": {
+              "key": "inspect",
+              "deps": [],
+              "name": "校验素材",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:17.167715+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "639ad54a-f4b7-4164-a845-a03c6a45974d",
+            "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+                "step_id": "d2bbb095-f63f-4932-95a1-a6dc1ae3651c",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:17.181014+00:00",
+                "started_at": "2026-11-01T10:57:17.194907+00:00",
+                "heartbeat_at": "2026-11-01T10:57:17.315002+00:00",
+                "lease_expires_at": "2026-11-01T10:57:21.315002+00:00",
+                "run_deadline_at": "2026-11-01T10:59:17.194907+00:00",
+                "finished_at": "2026-11-01T10:57:17.769467+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 14,
+                "executor_created": 1793530636.85,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
+              }
+            ],
+            "artifact": {
+              "id": "639ad54a-f4b7-4164-a845-a03c6a45974d",
+              "producer_attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+              "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
+              "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 376,
+                    "sha256": "bea96f6880b2d6c73f7cd35cb530ef31f0abbd2d3d9e8b7f8bd895bea9ff358d"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+                "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:17.768685+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "a593e2bd-1d45-470f-a201-084882a899cc",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "normalize_extract",
+            "spec": {
+              "key": "normalize_extract",
+              "deps": [
+                "inspect"
+              ],
+              "name": "规范化与抽帧",
+              "params": [
+                "fps"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:17.773529+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "7b1da665-e7b5-457e-9086-f43c699e3698",
+            "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+                "step_id": "a593e2bd-1d45-470f-a201-084882a899cc",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:17.784455+00:00",
+                "started_at": "2026-11-01T10:57:17.798437+00:00",
+                "heartbeat_at": "2026-11-01T10:57:17.926463+00:00",
+                "lease_expires_at": "2026-11-01T10:57:21.926463+00:00",
+                "run_deadline_at": "2026-11-01T10:59:17.798437+00:00",
+                "finished_at": "2026-11-01T10:57:18.383434+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 15,
+                "executor_created": 1793530637.46,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
+              }
+            ],
+            "artifact": {
+              "id": "7b1da665-e7b5-457e-9086-f43c699e3698",
+              "producer_attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+              "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
+              "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 406,
+                    "sha256": "ebb7d45b0d250055ab1b4a842329d9d35c8daf6fae4bcda783491e84bc96b590"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+                "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:18.382569+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "remove_background",
+            "spec": {
+              "key": "remove_background",
+              "deps": [
+                "normalize_extract"
+              ],
+              "name": "逐帧抠图",
+              "params": [
+                "matte_model",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 2,
+            "current_attempt_id": null,
+            "next_run_at": "2026-11-01T10:57:27.387098+00:00",
+            "ready_at": "2026-11-01T10:57:27.414507+00:00",
+            "wait_reason": null,
+            "error": "LEASE_EXPIRED",
+            "artifact_id": "54d496f6-b9d0-4035-8a53-c9e266768df1",
+            "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:41.444907+00:00",
+            "attempts": [
+              {
+                "id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+                "step_id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "LOST",
+                "phase": "EXECUTING",
+                "claimed_at": "2026-11-01T10:57:18.403499+00:00",
+                "started_at": "2026-11-01T10:57:18.418032+00:00",
+                "heartbeat_at": "2026-11-01T10:57:18.549163+00:00",
+                "lease_expires_at": "2026-11-01T10:57:22.549163+00:00",
+                "run_deadline_at": "2026-11-01T10:59:18.418032+00:00",
+                "finished_at": "2026-11-01T10:57:27.184980+00:00",
+                "error_code": "LEASE_EXPIRED",
+                "error": "LEASE_EXPIRED",
+                "retryable": true,
+                "executor_pid": 16,
+                "executor_created": 1793530638.07,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": null
+              },
+              {
+                "id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+                "step_id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 2,
+                "epoch": 1,
+                "fence": 2,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:27.430271+00:00",
+                "started_at": "2026-11-01T10:57:27.447062+00:00",
+                "heartbeat_at": "2026-11-01T10:57:42.577155+00:00",
+                "lease_expires_at": "2026-11-01T10:57:46.577155+00:00",
+                "run_deadline_at": "2026-11-01T10:59:27.447062+00:00",
+                "finished_at": "2026-11-01T10:57:42.805619+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 17,
+                "executor_created": 1793530647.1,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
+              }
+            ],
+            "artifact": {
+              "id": "54d496f6-b9d0-4035-8a53-c9e266768df1",
+              "producer_attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+              "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
+              "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 449,
+                    "sha256": "facfe63c995162678b4911c41dcfef09b6b0f97a43f892276a518608787521a4"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+                "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:42.804718+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "29e4407f-0d41-443d-b453-ce7463099888",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "enhance_frames",
+            "spec": {
+              "key": "enhance_frames",
+              "deps": [
+                "remove_background"
+              ],
+              "name": "帧增强",
+              "params": [
+                "enhance_model",
+                "size",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:42.810333+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8",
+            "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:43.177168+00:00",
+            "attempts": [
+              {
+                "id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+                "step_id": "29e4407f-0d41-443d-b453-ce7463099888",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:42.821249+00:00",
+                "started_at": "2026-11-01T10:57:42.834699+00:00",
+                "heartbeat_at": "2026-11-01T10:57:43.177168+00:00",
+                "lease_expires_at": "2026-11-01T10:57:47.177168+00:00",
+                "run_deadline_at": "2026-11-01T10:59:42.834699+00:00",
+                "finished_at": "2026-11-01T10:57:43.406147+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 18,
+                "executor_created": 1793530662.49,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
+              }
+            ],
+            "artifact": {
+              "id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8",
+              "producer_attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+              "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
+              "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 460,
+                    "sha256": "bbccdd9bfd9543f62be9924ed6f3a0d42ee0cb543eedabbb609ebcc283846af7"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+                "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:43.405436+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "9803d95d-df2b-4288-b98b-27e9824fc467",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "build_atlas",
+            "spec": {
+              "key": "build_atlas",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成图集",
+              "params": [
+                "atlas_columns"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:43.410042+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68",
+            "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+                "step_id": "9803d95d-df2b-4288-b98b-27e9824fc467",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:43.421394+00:00",
+                "started_at": "2026-11-01T10:57:43.434997+00:00",
+                "heartbeat_at": "2026-11-01T10:57:43.736606+00:00",
+                "lease_expires_at": "2026-11-01T10:57:47.736606+00:00",
+                "run_deadline_at": "2026-11-01T10:59:43.434997+00:00",
+                "finished_at": "2026-11-01T10:57:44.097016+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 19,
+                "executor_created": 1793530663.09,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
+              }
+            ],
+            "artifact": {
+              "id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68",
+              "producer_attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+              "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
+              "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 410,
+                    "sha256": "8140301f15807b560c6a7190080bcf2c6eb4cea99f8ad25a141a7359b9d83adf"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 682,
+                    "sha256": "9b8ad6f3a0e4115d4997f817b243e742000ec83ced60b2dddba4b2fe6b145fb2"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+                "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:44.096169+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "087ed4ce-12ed-4ed7-927f-c6ef709fc3f8",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "render_preview",
+            "spec": {
+              "key": "render_preview",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成预览",
+              "params": [
+                "preview_format"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:43.410042+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "1389524d-8d15-49ad-95e6-073c769b62d8",
+            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
+                "step_id": "087ed4ce-12ed-4ed7-927f-c6ef709fc3f8",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-1",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:43.557664+00:00",
+                "started_at": "2026-11-01T10:57:43.571884+00:00",
+                "heartbeat_at": "2026-11-01T10:57:43.745679+00:00",
+                "lease_expires_at": "2026-11-01T10:57:47.745679+00:00",
+                "run_deadline_at": "2026-11-01T10:59:43.571884+00:00",
+                "finished_at": "2026-11-01T10:57:44.336420+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 20,
+                "executor_created": 1793530663.23,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+              }
+            ],
+            "artifact": {
+              "id": "1389524d-8d15-49ad-95e6-073c769b62d8",
+              "producer_attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
+              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
+              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 421,
+                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 685,
+                    "sha256": "b0aedc5beabe838c07892a192318857db1399dee58560aac226c0f1c16658e70"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:44.335834+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "457fed19-c4fa-49e5-ac02-b06260f0a139",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "key": "package",
+            "spec": {
+              "key": "package",
+              "deps": [
+                "build_atlas",
+                "render_preview"
+              ],
+              "name": "打包产物",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:44.340558+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "71733703-f984-41c5-a639-e9b2413045c7",
+            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "progress": 100.0,
+            "last_progress_at": null,
+            "attempts": [
+              {
+                "id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
+                "step_id": "457fed19-c4fa-49e5-ac02-b06260f0a139",
+                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:44.351720+00:00",
+                "started_at": "2026-11-01T10:57:44.365851+00:00",
+                "heartbeat_at": "2026-11-01T10:57:44.351720+00:00",
+                "lease_expires_at": "2026-11-01T10:57:48.351720+00:00",
+                "run_deadline_at": "2026-11-01T10:59:44.365851+00:00",
+                "finished_at": "2026-11-01T10:57:44.937574+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 21,
+                "executor_created": 1793530664.02,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+              }
+            ],
+            "artifact": {
+              "id": "71733703-f984-41c5-a639-e9b2413045c7",
+              "producer_attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
+              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
+              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 467,
+                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 678,
+                    "sha256": "5650856fd5addfac317705fe0f92941d7270cf60bfe9ef56618e7b8eaf88a532"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:44.936987+00:00",
+              "available": true
+            }
+          }
+        ],
+        "event_cursor": 36,
+        "completed_steps": 7,
+        "server_time": "2026-11-01T10:57:45.048953+00:00",
+        "events": [
+          {
+            "id": "dd61a6ff-d0ae-4ea5-8846-b06eee137c0f",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 1,
+            "epoch": 1,
+            "type": "TASK_ACCEPTED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:17.105492+00:00",
+            "payload": {
+              "pipeline": "animation-v1",
+              "simulated": true
+            }
+          },
+          {
+            "id": "c7e7b986-0040-4a10-8820-6d75fbcdb362",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 2,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "inspect",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:17.168103+00:00",
+            "payload": {}
+          },
+          {
+            "id": "9ff9eec9-d345-427f-b100-d5aab728ad8b",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 3,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "inspect",
+            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+            "at": "2026-11-01T10:57:17.182312+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "a05a05d2-c36b-4795-a74a-86a3279011be",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 4,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "inspect",
+            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+            "at": "2026-11-01T10:57:17.195176+00:00",
+            "payload": {
+              "pid": 14
+            }
+          },
+          {
+            "id": "523d8845-b44f-447e-b291-558ab9f0eb6d",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 5,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "inspect",
+            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+            "at": "2026-11-01T10:57:17.771847+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "639ad54a-f4b7-4164-a845-a03c6a45974d"
+            }
+          },
+          {
+            "id": "cef2bda7-c5e9-48f9-b949-a926c36be14f",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 6,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "normalize_extract",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:17.773696+00:00",
+            "payload": {}
+          },
+          {
+            "id": "4a14798e-6882-47c2-9554-ab6ecb462923",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 7,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "normalize_extract",
+            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+            "at": "2026-11-01T10:57:17.785301+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "f17cec24-2da7-4418-85e6-eb85884bd16f",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 8,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "normalize_extract",
+            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+            "at": "2026-11-01T10:57:17.798786+00:00",
+            "payload": {
+              "pid": 15
+            }
+          },
+          {
+            "id": "f87ece70-09c0-422e-b86b-598acdeacae6",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 9,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "normalize_extract",
+            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+            "at": "2026-11-01T10:57:18.386141+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "7b1da665-e7b5-457e-9086-f43c699e3698"
+            }
+          },
+          {
+            "id": "b3fbb618-3ae5-42f5-bed2-52ab7397b9a7",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 10,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "remove_background",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:18.388701+00:00",
+            "payload": {}
+          },
+          {
+            "id": "81227f1a-99ff-4f94-875c-25d44ce99d08",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 11,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "remove_background",
+            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+            "at": "2026-11-01T10:57:18.404923+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "d4d4a167-6e55-47c3-8473-fc3daf239410",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 12,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "remove_background",
+            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+            "at": "2026-11-01T10:57:18.418407+00:00",
+            "payload": {
+              "pid": 16
+            }
+          },
+          {
+            "id": "dc83aafc-3319-47dd-8ab6-9178cf794268",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 13,
+            "epoch": 1,
+            "type": "ATTEMPT_LOST",
+            "step_key": "remove_background",
+            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+            "at": "2026-11-01T10:57:27.186372+00:00",
+            "payload": {
+              "code": "LEASE_EXPIRED",
+              "retryable": true
+            }
+          },
+          {
+            "id": "8ced2fca-21c4-48f4-85a4-5dbc49c7d6d9",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 14,
+            "epoch": 1,
+            "type": "STEP_RETRY_SCHEDULED",
+            "step_key": "remove_background",
+            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+            "at": "2026-11-01T10:57:27.190088+00:00",
+            "payload": {
+              "next_run_at": "2026-11-01T10:57:27.387098+00:00"
+            }
+          },
+          {
+            "id": "627904d0-b878-46d0-8b9d-cfcab1fdc37e",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 15,
+            "epoch": 1,
+            "type": "EXECUTOR_STOP_CONFIRMED",
+            "step_key": "remove_background",
+            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+            "at": "2026-11-01T10:57:27.197934+00:00",
+            "payload": {}
+          },
+          {
+            "id": "45bf927e-fc8b-473b-ba82-006bba875198",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 16,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "remove_background",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:27.414797+00:00",
+            "payload": {}
+          },
+          {
+            "id": "b531c211-76c9-46c5-bd99-6976d218787a",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 17,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "remove_background",
+            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+            "at": "2026-11-01T10:57:27.432369+00:00",
+            "payload": {
+              "fence": 2,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "c960dcd9-815b-4952-883a-fdfee9d24418",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 18,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "remove_background",
+            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+            "at": "2026-11-01T10:57:27.447314+00:00",
+            "payload": {
+              "pid": 17
+            }
+          },
+          {
+            "id": "600d335d-b086-4643-b356-688420f1ac18",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 19,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "remove_background",
+            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+            "at": "2026-11-01T10:57:42.808036+00:00",
+            "payload": {
+              "fence": 2,
+              "artifact_id": "54d496f6-b9d0-4035-8a53-c9e266768df1"
+            }
+          },
+          {
+            "id": "7db11fc8-ffe6-406f-9653-b30f679ca05f",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 20,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "enhance_frames",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:42.810508+00:00",
+            "payload": {}
+          },
+          {
+            "id": "9b94b660-134b-437c-8aa0-af54064e99ff",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 21,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "enhance_frames",
+            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+            "at": "2026-11-01T10:57:42.822607+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "583b35de-b2ba-4b23-bce3-cdc3e8854cc4",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 22,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "enhance_frames",
+            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+            "at": "2026-11-01T10:57:42.835061+00:00",
+            "payload": {
+              "pid": 18
+            }
+          },
+          {
+            "id": "25058b2d-9a52-4175-9c2e-4184364f6f75",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 23,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "enhance_frames",
+            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+            "at": "2026-11-01T10:57:43.408005+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8"
+            }
+          },
+          {
+            "id": "ef5ccc9a-fcfa-4790-ba36-d4d58769476a",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 24,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "build_atlas",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:43.410189+00:00",
+            "payload": {}
+          },
+          {
+            "id": "f6d85ea8-3ce8-4826-b1a2-ea353e84a2c9",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 25,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "render_preview",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:43.410442+00:00",
+            "payload": {}
+          },
+          {
+            "id": "8bef9d80-b066-461a-aadc-1125b3b5ffeb",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 26,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "build_atlas",
+            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+            "at": "2026-11-01T10:57:43.422663+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "6eb3eaa5-b2cb-4863-a744-74376991fe50",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 27,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "build_atlas",
+            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+            "at": "2026-11-01T10:57:43.435474+00:00",
+            "payload": {
+              "pid": 19
+            }
+          },
+          {
+            "id": "16acca40-2685-4e87-8f6c-0ef30ce6adc4",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 28,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "render_preview",
+            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
+            "at": "2026-11-01T10:57:43.558994+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-1"
+            }
+          },
+          {
+            "id": "f6cb466d-e16e-43cd-8a3e-3fc6d2649653",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 29,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "render_preview",
+            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
+            "at": "2026-11-01T10:57:43.572241+00:00",
+            "payload": {
+              "pid": 20
+            }
+          },
+          {
+            "id": "5377ea6d-3321-46e1-9e0d-ddecc7d4b289",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 30,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "build_atlas",
+            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+            "at": "2026-11-01T10:57:44.099005+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68"
+            }
+          },
+          {
+            "id": "9bb564ec-c727-414b-a147-5843300aaa13",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 31,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "render_preview",
+            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
+            "at": "2026-11-01T10:57:44.338504+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "1389524d-8d15-49ad-95e6-073c769b62d8"
+            }
+          },
+          {
+            "id": "a1e7dd98-6838-4e0c-b984-8ba93a1f01b7",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 32,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "package",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:44.340692+00:00",
+            "payload": {}
+          },
+          {
+            "id": "c226bebd-c7f0-4579-83f3-769f76ed6e49",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 33,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "package",
+            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
+            "at": "2026-11-01T10:57:44.352742+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "e3688c7e-17d3-46f3-a46f-d3b1750e3b9b",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 34,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "package",
+            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
+            "at": "2026-11-01T10:57:44.366250+00:00",
+            "payload": {
+              "pid": 21
+            }
+          },
+          {
+            "id": "7f76654d-1004-4d8a-9a16-765f68645831",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 35,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "package",
+            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
+            "at": "2026-11-01T10:57:44.939742+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "71733703-f984-41c5-a639-e9b2413045c7"
+            }
+          },
+          {
+            "id": "c018d123-3ca2-4e50-9868-19a8e52ee708",
+            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "seq": 36,
+            "epoch": 1,
+            "type": "TASK_SUCCEEDED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:44.941475+00:00",
+            "payload": {}
+          }
+        ]
+      }
+    },
+    {
+      "ids": [
+        "A24"
+      ],
+      "passed": true,
+      "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+      "operation": "docker compose restart api",
+      "snapshot": {
+        "id": "888d74a2-d157-442c-98b0-004d41922940",
+        "request": {
+          "name": "E2E · API restart",
+          "asset_id": "orbit",
+          "scenario": "normal",
+          "cache_read": false,
+          "parameters": {
+            "fps": 24,
+            "seed": 42,
+            "size": 256,
+            "matte_model": "matte-mock-v1",
+            "atlas_columns": 4,
+            "enhance_model": "enhance-mock-v1",
+            "preview_format": "svg"
+          },
+          "step_seconds": 0.8,
+          "pipeline_version": "animation-v1",
+          "step_timeout_seconds": 120.0,
+          "task_timeout_seconds": 1800.0
+        },
+        "input_digest": "2a9473bfffb5351e5c123c7cee904fef469b5306f01433ecf5e9b6036f8559a3",
+        "pipeline": [
+          {
+            "key": "inspect",
+            "deps": [],
+            "name": "校验素材",
+            "params": [],
+            "resource": "cpu"
+          },
+          {
+            "key": "normalize_extract",
+            "deps": [
+              "inspect"
+            ],
+            "name": "规范化与抽帧",
+            "params": [
+              "fps"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "remove_background",
+            "deps": [
+              "normalize_extract"
+            ],
+            "name": "逐帧抠图",
+            "params": [
+              "matte_model",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "enhance_frames",
+            "deps": [
+              "remove_background"
+            ],
+            "name": "帧增强",
+            "params": [
+              "enhance_model",
+              "size",
+              "seed"
+            ],
+            "resource": "gpu"
+          },
+          {
+            "key": "build_atlas",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成图集",
+            "params": [
+              "atlas_columns"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "render_preview",
+            "deps": [
+              "enhance_frames"
+            ],
+            "name": "生成预览",
+            "params": [
+              "preview_format"
+            ],
+            "resource": "cpu"
+          },
+          {
+            "key": "package",
+            "deps": [
+              "build_atlas",
+              "render_preview"
+            ],
+            "name": "打包产物",
+            "params": [],
+            "resource": "cpu"
+          }
+        ],
+        "status": "SUCCEEDED",
+        "epoch": 1,
+        "revision": 31,
+        "event_seq": 30,
+        "stop_reason": null,
+        "created_at": "2026-11-01T10:57:45.063360+00:00",
+        "epoch_started_at": "2026-11-01T10:57:45.063360+00:00",
+        "deadline_at": "2026-11-01T11:27:45.063360+00:00",
+        "finished_at": "2026-11-01T10:57:52.783600+00:00",
+        "steps": [
+          {
+            "id": "8c7b6251-4a0a-4d26-a568-17fff5b61d0a",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "inspect",
+            "spec": {
+              "key": "inspect",
+              "deps": [],
+              "name": "校验素材",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:45.152798+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358",
+            "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:46.079240+00:00",
+            "attempts": [
+              {
+                "id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+                "step_id": "8c7b6251-4a0a-4d26-a568-17fff5b61d0a",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:45.163881+00:00",
+                "started_at": "2026-11-01T10:57:45.175128+00:00",
+                "heartbeat_at": "2026-11-01T10:57:46.079240+00:00",
+                "lease_expires_at": "2026-11-01T10:57:50.079240+00:00",
+                "run_deadline_at": "2026-11-01T10:59:45.175128+00:00",
+                "finished_at": "2026-11-01T10:57:46.308050+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 22,
+                "executor_created": 1793530664.83,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
+              }
+            ],
+            "artifact": {
+              "id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358",
+              "producer_attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+              "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
+              "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 376,
+                    "sha256": "bea96f6880b2d6c73f7cd35cb530ef31f0abbd2d3d9e8b7f8bd895bea9ff358d"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
+                "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:46.307459+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "cddf615b-f53e-4188-bf22-bc5a30798a8a",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "normalize_extract",
+            "spec": {
+              "key": "normalize_extract",
+              "deps": [
+                "inspect"
+              ],
+              "name": "规范化与抽帧",
+              "params": [
+                "fps"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:46.311746+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e",
+            "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:47.266038+00:00",
+            "attempts": [
+              {
+                "id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+                "step_id": "cddf615b-f53e-4188-bf22-bc5a30798a8a",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:46.321980+00:00",
+                "started_at": "2026-11-01T10:57:46.334146+00:00",
+                "heartbeat_at": "2026-11-01T10:57:47.266038+00:00",
+                "lease_expires_at": "2026-11-01T10:57:51.266038+00:00",
+                "run_deadline_at": "2026-11-01T10:59:46.334146+00:00",
+                "finished_at": "2026-11-01T10:57:47.498090+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 23,
+                "executor_created": 1793530665.99,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
+              }
+            ],
+            "artifact": {
+              "id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e",
+              "producer_attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+              "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
+              "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 406,
+                    "sha256": "ebb7d45b0d250055ab1b4a842329d9d35c8daf6fae4bcda783491e84bc96b590"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
+                "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:47.497205+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "2816ea7e-eba6-4e9b-8eb3-e27203751ee6",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "remove_background",
+            "spec": {
+              "key": "remove_background",
+              "deps": [
+                "normalize_extract"
+              ],
+              "name": "逐帧抠图",
+              "params": [
+                "matte_model",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:47.502962+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab",
+            "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:48.460748+00:00",
+            "attempts": [
+              {
+                "id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+                "step_id": "2816ea7e-eba6-4e9b-8eb3-e27203751ee6",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:47.517640+00:00",
+                "started_at": "2026-11-01T10:57:47.535195+00:00",
+                "heartbeat_at": "2026-11-01T10:57:48.460748+00:00",
+                "lease_expires_at": "2026-11-01T10:57:52.460748+00:00",
+                "run_deadline_at": "2026-11-01T10:59:47.535195+00:00",
+                "finished_at": "2026-11-01T10:57:48.818650+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 24,
+                "executor_created": 1793530667.19,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
+              }
+            ],
+            "artifact": {
+              "id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab",
+              "producer_attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+              "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
+              "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 449,
+                    "sha256": "facfe63c995162678b4911c41dcfef09b6b0f97a43f892276a518608787521a4"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
+                "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:48.817595+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "63429f59-787f-41b6-93c7-e120b06bf4ff",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "enhance_frames",
+            "spec": {
+              "key": "enhance_frames",
+              "deps": [
+                "remove_background"
+              ],
+              "name": "帧增强",
+              "params": [
+                "enhance_model",
+                "size",
+                "seed"
+              ],
+              "resource": "gpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:48.825113+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "b77ab709-b587-407a-991e-3bb28c60b1e4",
+            "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:49.545306+00:00",
+            "attempts": [
+              {
+                "id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+                "step_id": "63429f59-787f-41b6-93c7-e120b06bf4ff",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:mock-gpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:48.841220+00:00",
+                "started_at": "2026-11-01T10:57:48.858319+00:00",
+                "heartbeat_at": "2026-11-01T10:57:49.545306+00:00",
+                "lease_expires_at": "2026-11-01T10:57:53.545306+00:00",
+                "run_deadline_at": "2026-11-01T10:59:48.858319+00:00",
+                "finished_at": "2026-11-01T10:57:50.110040+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 25,
+                "executor_created": 1793530668.52,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
+              }
+            ],
+            "artifact": {
+              "id": "b77ab709-b587-407a-991e-3bb28c60b1e4",
+              "producer_attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+              "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
+              "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 460,
+                    "sha256": "bbccdd9bfd9543f62be9924ed6f3a0d42ee0cb543eedabbb609ebcc283846af7"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
+                "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:50.109437+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "681b193d-9a8e-4de6-aa66-3494103c00c9",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "build_atlas",
+            "spec": {
+              "key": "build_atlas",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成图集",
+              "params": [
+                "atlas_columns"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:50.114215+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef",
+            "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:51.255099+00:00",
+            "attempts": [
+              {
+                "id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+                "step_id": "681b193d-9a8e-4de6-aa66-3494103c00c9",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:50.127187+00:00",
+                "started_at": "2026-11-01T10:57:50.140756+00:00",
+                "heartbeat_at": "2026-11-01T10:57:51.255099+00:00",
+                "lease_expires_at": "2026-11-01T10:57:55.255099+00:00",
+                "run_deadline_at": "2026-11-01T10:59:50.140756+00:00",
+                "finished_at": "2026-11-01T10:57:51.381347+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 26,
+                "executor_created": 1793530669.8,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
+              }
+            ],
+            "artifact": {
+              "id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef",
+              "producer_attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+              "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
+              "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 410,
+                    "sha256": "8140301f15807b560c6a7190080bcf2c6eb4cea99f8ad25a141a7359b9d83adf"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 682,
+                    "sha256": "9b8ad6f3a0e4115d4997f817b243e742000ec83ced60b2dddba4b2fe6b145fb2"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
+                "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:51.380774+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "80ae88d2-649a-4611-846b-84488a8b1aa7",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "render_preview",
+            "spec": {
+              "key": "render_preview",
+              "deps": [
+                "enhance_frames"
+              ],
+              "name": "生成预览",
+              "params": [
+                "preview_format"
+              ],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:50.114215+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7",
+            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:51.262927+00:00",
+            "attempts": [
+              {
+                "id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
+                "step_id": "80ae88d2-649a-4611-846b-84488a8b1aa7",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-1",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:50.263119+00:00",
+                "started_at": "2026-11-01T10:57:50.275796+00:00",
+                "heartbeat_at": "2026-11-01T10:57:51.262927+00:00",
+                "lease_expires_at": "2026-11-01T10:57:55.262927+00:00",
+                "run_deadline_at": "2026-11-01T10:59:50.275796+00:00",
+                "finished_at": "2026-11-01T10:57:51.617134+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 27,
+                "executor_created": 1793530669.93,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+              }
+            ],
+            "artifact": {
+              "id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7",
+              "producer_attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
+              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
+              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 421,
+                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 685,
+                    "sha256": "b0aedc5beabe838c07892a192318857db1399dee58560aac226c0f1c16658e70"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:51.616240+00:00",
+              "available": true
+            }
+          },
+          {
+            "id": "2b643efa-38ee-46b6-b1d4-2c6a1479f6d4",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "key": "package",
+            "spec": {
+              "key": "package",
+              "deps": [
+                "build_atlas",
+                "render_preview"
+              ],
+              "name": "打包产物",
+              "params": [],
+              "resource": "cpu"
+            },
+            "status": "SUCCEEDED",
+            "fence": 1,
+            "current_attempt_id": null,
+            "next_run_at": null,
+            "ready_at": "2026-11-01T10:57:51.620832+00:00",
+            "wait_reason": null,
+            "error": null,
+            "artifact_id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a",
+            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "progress": 100.0,
+            "last_progress_at": "2026-11-01T10:57:52.329287+00:00",
+            "attempts": [
+              {
+                "id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
+                "step_id": "2b643efa-38ee-46b6-b1d4-2c6a1479f6d4",
+                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "number": 1,
+                "epoch": 1,
+                "fence": 1,
+                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "slot_id": "local:cpu-0",
+                "status": "SUCCEEDED",
+                "phase": "FINALIZING",
+                "claimed_at": "2026-11-01T10:57:51.632788+00:00",
+                "started_at": "2026-11-01T10:57:51.644799+00:00",
+                "heartbeat_at": "2026-11-01T10:57:52.329287+00:00",
+                "lease_expires_at": "2026-11-01T10:57:56.329287+00:00",
+                "run_deadline_at": "2026-11-01T10:59:51.644799+00:00",
+                "finished_at": "2026-11-01T10:57:52.780035+00:00",
+                "error_code": null,
+                "error": null,
+                "retryable": false,
+                "executor_pid": 28,
+                "executor_created": 1793530671.3,
+                "cleanup_state": "CONFIRMED",
+                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+              }
+            ],
+            "artifact": {
+              "id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a",
+              "producer_attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
+              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
+              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "manifest": {
+                "files": [
+                  {
+                    "key": "output.json",
+                    "size": 467,
+                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                  },
+                  {
+                    "key": "preview.svg",
+                    "size": 678,
+                    "sha256": "5650856fd5addfac317705fe0f92941d7270cf60bfe9ef56618e7b8eaf88a532"
+                  }
+                ],
+                "schema": 1,
+                "simulated": true,
+                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+              },
+              "valid": true,
+              "created_at": "2026-11-01T10:57:52.779345+00:00",
+              "available": true
+            }
+          }
+        ],
+        "event_cursor": 30,
+        "completed_steps": 7,
+        "server_time": "2026-11-01T10:57:52.926764+00:00",
+        "events": [
+          {
+            "id": "2b76e0ec-4561-4222-8948-6152e759d0d1",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 1,
+            "epoch": 1,
+            "type": "TASK_ACCEPTED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:45.066787+00:00",
+            "payload": {
+              "pipeline": "animation-v1",
+              "simulated": true
+            }
+          },
+          {
+            "id": "aadf49b8-04e1-4e65-9a3d-14ffbdb529a6",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 2,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "inspect",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:45.153027+00:00",
+            "payload": {}
+          },
+          {
+            "id": "ec82a06b-a03a-431c-97f8-6da56c16ea00",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 3,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "inspect",
+            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+            "at": "2026-11-01T10:57:45.164902+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "d11abfad-e63f-447b-878b-9a53639301aa",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 4,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "inspect",
+            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+            "at": "2026-11-01T10:57:45.175380+00:00",
+            "payload": {
+              "pid": 22
+            }
+          },
+          {
+            "id": "b344549d-b9a6-48e3-b160-2d4dfa3a4af8",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 5,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "inspect",
+            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+            "at": "2026-11-01T10:57:46.310196+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358"
+            }
+          },
+          {
+            "id": "36aaae11-563e-4878-9c74-b614936fed09",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 6,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "normalize_extract",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:46.311876+00:00",
+            "payload": {}
+          },
+          {
+            "id": "92b4ef18-d75a-41d5-adb6-576da0db175c",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 7,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "normalize_extract",
+            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+            "at": "2026-11-01T10:57:46.323067+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "3f2b1a33-d732-468b-8a04-1a12c27cded3",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 8,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "normalize_extract",
+            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+            "at": "2026-11-01T10:57:46.334536+00:00",
+            "payload": {
+              "pid": 23
+            }
+          },
+          {
+            "id": "a1272f9c-fee2-41c1-b0e7-322bf65417a7",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 9,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "normalize_extract",
+            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+            "at": "2026-11-01T10:57:47.500698+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e"
+            }
+          },
+          {
+            "id": "a2d14573-cdc2-43a0-8783-8f1c839fcf57",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 10,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "remove_background",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:47.503153+00:00",
+            "payload": {}
+          },
+          {
+            "id": "a59d25a3-ea0d-44c8-98ce-cdcc7cde3468",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 11,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "remove_background",
+            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+            "at": "2026-11-01T10:57:47.519093+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "a7274822-f9e5-408e-bee9-4a8090bf6b20",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 12,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "remove_background",
+            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+            "at": "2026-11-01T10:57:47.535562+00:00",
+            "payload": {
+              "pid": 24
+            }
+          },
+          {
+            "id": "67981cb6-58aa-400f-8ee2-b222907f0dda",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 13,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "remove_background",
+            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+            "at": "2026-11-01T10:57:48.821999+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab"
+            }
+          },
+          {
+            "id": "b7586622-0073-4803-857d-1fd208f762e7",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 14,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "enhance_frames",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:48.825419+00:00",
+            "payload": {}
+          },
+          {
+            "id": "3f66208c-3414-4657-8eea-dbb600d9bcc7",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 15,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "enhance_frames",
+            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+            "at": "2026-11-01T10:57:48.842824+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:mock-gpu-0"
+            }
+          },
+          {
+            "id": "1aba9dc4-f69e-4998-a37e-797e33fa4d4d",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 16,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "enhance_frames",
+            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+            "at": "2026-11-01T10:57:48.858741+00:00",
+            "payload": {
+              "pid": 25
+            }
+          },
+          {
+            "id": "30f070bf-4782-4c8e-a11d-73d1fe91e7be",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 17,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "enhance_frames",
+            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+            "at": "2026-11-01T10:57:50.111943+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "b77ab709-b587-407a-991e-3bb28c60b1e4"
+            }
+          },
+          {
+            "id": "bdd96815-bade-42ac-9e75-ebcb71fd568d",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 18,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "build_atlas",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:50.114464+00:00",
+            "payload": {}
+          },
+          {
+            "id": "d216f13d-78c4-48ff-b5c7-934a586d0509",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 19,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "render_preview",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:50.114764+00:00",
+            "payload": {}
+          },
+          {
+            "id": "e899c5ce-b019-4fc3-a6e4-9283e2f17a14",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 20,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "build_atlas",
+            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+            "at": "2026-11-01T10:57:50.128398+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "5be2381f-db1b-4592-8246-23580b61c8ce",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 21,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "build_atlas",
+            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+            "at": "2026-11-01T10:57:50.141067+00:00",
+            "payload": {
+              "pid": 26
+            }
+          },
+          {
+            "id": "956c1765-15d3-4330-bcf6-1390a0bbc024",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 22,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "render_preview",
+            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
+            "at": "2026-11-01T10:57:50.264237+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-1"
+            }
+          },
+          {
+            "id": "5bdf903e-dd4e-4615-9b0f-c90f7f56344f",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 23,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "render_preview",
+            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
+            "at": "2026-11-01T10:57:50.276044+00:00",
+            "payload": {
+              "pid": 27
+            }
+          },
+          {
+            "id": "72019400-6711-416b-8cfd-344aecf58a56",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 24,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "build_atlas",
+            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+            "at": "2026-11-01T10:57:51.383629+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef"
+            }
+          },
+          {
+            "id": "71dda8ac-5430-4895-92fc-fd8af21c8a73",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 25,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "render_preview",
+            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
+            "at": "2026-11-01T10:57:51.618996+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7"
+            }
+          },
+          {
+            "id": "b4b833c5-28c6-4e40-88e7-871bef0a2a70",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 26,
+            "epoch": 1,
+            "type": "STEP_READY",
+            "step_key": "package",
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:51.621089+00:00",
+            "payload": {}
+          },
+          {
+            "id": "7e16e7c1-f330-4d39-b5d1-e8a1519aec68",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 27,
+            "epoch": 1,
+            "type": "ATTEMPT_CLAIMED",
+            "step_key": "package",
+            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
+            "at": "2026-11-01T10:57:51.633901+00:00",
+            "payload": {
+              "fence": 1,
+              "slot_id": "local:cpu-0"
+            }
+          },
+          {
+            "id": "b91c606d-5568-4304-b98f-deb85c20d4f9",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 28,
+            "epoch": 1,
+            "type": "ATTEMPT_STARTED",
+            "step_key": "package",
+            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
+            "at": "2026-11-01T10:57:51.645028+00:00",
+            "payload": {
+              "pid": 28
+            }
+          },
+          {
+            "id": "76b66bed-c955-4cd5-a099-b1173de7ed19",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 29,
+            "epoch": 1,
+            "type": "ATTEMPT_SUCCEEDED",
+            "step_key": "package",
+            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
+            "at": "2026-11-01T10:57:52.781800+00:00",
+            "payload": {
+              "fence": 1,
+              "artifact_id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a"
+            }
+          },
+          {
+            "id": "596d6876-4fc1-47c5-9f24-18fe808d8303",
+            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "seq": 30,
+            "epoch": 1,
+            "type": "TASK_SUCCEEDED",
+            "step_key": null,
+            "attempt_id": null,
+            "at": "2026-11-01T10:57:52.783730+00:00",
+            "payload": {}
+          }
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "finished_at": "2026-11-01T10:57:53.326205+00:00"
+}

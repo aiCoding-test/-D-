@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<div id="task-view" data-task-id="{{ task_id }}"><a class="back" href="/">← 返回任务总览</a><section class="heading"><div><p class="eyebrow">EXECUTION DETAIL</p><h1 id="task-title">加载任务…</h1><p id="task-meta"></p></div><div class="actions"><button id="resume" hidden>↻ 恢复未完成步骤</button><button id="cancel" class="secondary" hidden>取消任务</button></div></section>
+<div id="task-summary" class="summary"></div><p class="muted" id="updated"></p>
+<section class="panel"><div class="panel-title"><h2>处理流程</h2><span class="muted">点击节点查看执行尝试 · 成功节点在恢复时保留</span></div><div id="dag" class="dag"></div></section>
+<div class="detail-grid"><section class="panel"><div class="panel-title"><h2 id="step-title">执行尝试</h2><span id="step-resource" class="pill"></span></div><div id="step-info"></div><div id="attempts"></div></section><section class="panel"><div class="panel-title"><h2>执行时间线</h2><span class="muted">数据库持久记录</span></div><div id="events" class="timeline"></div></section></div>
+<section class="panel"><div class="panel-title"><h2>产物与复用来源</h2><span class="pill">SIMULATED ARTIFACTS</span></div><div id="artifact-list" class="artifact-grid"></div></section><section class="panel"><div class="panel-title"><h2>资源占用与等待</h2></div><div id="resource-list" class="resource-grid"></div><p class="muted" id="workers"></p></section></div>
+{% endblock %}

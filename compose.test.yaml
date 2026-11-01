@@ -1,0 +1,20 @@
+services:
+  test:
+    build: .
+    image: taskd-pipeline:0.1
+    profiles: [test]
+    environment:
+      DATABASE_URL: postgresql+psycopg://taskd:${POSTGRES_PASSWORD:-taskd_local_demo}@postgres:5432/taskd_test
+      ARTIFACT_ROOT: /tmp/taskd-test-artifacts
+      NODE_ID: test-node
+      LEASE_SECONDS: 2
+      HEARTBEAT_SECONDS: 0.25
+      POLL_SECONDS: 0.05
+      RETRY_BASE_SECONDS: 0.15
+    volumes:
+      - .:/app:ro
+      - ./evidence:/evidence
+    command: ["sh", "-c", "alembic upgrade head && python -m pytest -q --junitxml=/evidence/junit.xml"]
+    depends_on:
+      postgres:
+        condition: service_healthy
