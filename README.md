@@ -4,7 +4,7 @@
 
 **模型、动画加工和 GPU 遥测为 MOCK；数据库、独立进程、调度、重试、租约恢复、文件校验与资源排队真实运行。**
 
-P1 新增步骤内分块恢复、历史分页/筛选、资源历史趋势及 `/metrics`。实际小时级中断恢复状态见 [P1 验收](evidence/p1-acceptance.md)，不能以快速测试代替真实 60 分钟记录。
+P1 已完成步骤内分块恢复、历史分页/筛选、资源历史趋势及 `/metrics`。37 项集成回归、P0 A01～A28 和 P1 15 项验收均通过；实际 MOCK 任务运行 **3643.86 秒**，中途 SIGKILL Worker 后复用已提交块并成功。见 [P1 验收](evidence/p1-acceptance.md)。
 
 源码：[aiCoding-test/-D-](https://github.com/aiCoding-test/-D-)。
 
@@ -78,6 +78,8 @@ docker compose down
 
 `scripts/verify_hourly.py` 使用独立数据库/产物卷，在两块提交后真实 kill Worker 并恢复；脚本至少持续 60 分钟才能通过，后台运行及同任务观察器重连方法见 [P1 实现说明](docs/10-P1实现与验收.md)。它不需要真实 GPU，也不证明真实模型性能。
 
+本次实际记录：UTC **2026-11-01 11:31:17.235327 → 12:32:01.099975**（北京时间 19:31 → 20:32）；租约/心跳保持 30/5 秒。8 个块成功提交、前两块跨 Attempt 复用、18 个下载文件哈希校验通过，见 [独立审计](evidence/p1-hourly-audit.json)。
+
 - 时间线支持步骤、Attempt 筛选及“加载更早历史”，保留完整增量 API。
 - `/api/resources/history` 返回原始与分钟样本、归属和有效性；默认每 5 秒采样，原始保留 1h、分钟汇总保留 7d，仅清理遥测。
 - `/api/tasks/{id}/timings` 定义排队、运行、失联检测与恢复开始延迟；旧记录没有测量时为 null。
@@ -108,7 +110,7 @@ P1 版本回归可以增加 `verify_runtime.py --prefix p1-runtime`，再使用 
 
 脚本真实 kill Worker、stop PostgreSQL、restart API。验证后可运行 python scripts/verify_runtime.py --cleanup，仅移除该测试项目的容器/网络，保留卷与证据。首次运行自动建立全新项目；重复运行保留历史任务。
 
-实际结果与 A01～A28 对照见 **[验收记录](evidence/acceptance.md)**、[容器故障快照](evidence/runtime.json)、[全新克隆启动证据](evidence/clean-start.json)、[页面截图](evidence/dashboard.jpg)。
+当前交付结果见 **[P1 验收](evidence/p1-acceptance.md)**、[P0 回归矩阵](evidence/p1-p0-regression.md)、[容器故障](evidence/p1-runtime.json)、[全新克隆启动](evidence/p1-clean-start.json)、[旧 P0 任务升级恢复](evidence/p1-legacy-upgrade.json)。原始 P0 证据保留在 [初次验收](evidence/acceptance.md)。
 
 ## 代码与文档
 

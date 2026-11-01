@@ -1,0 +1,248 @@
+{
+  "passed": true,
+  "at": "2026-11-01T12:37:05.511118+00:00",
+  "task_id": "e362ced8-448f-4722-9555-44af8216ea42",
+  "created_at": "2026-11-01T11:31:17.235327+00:00",
+  "finished_at": "2026-11-01T12:32:01.099975+00:00",
+  "database_elapsed_seconds": 3643.864648,
+  "observer_elapsed_seconds": 3650.3098009999994,
+  "kill": {
+    "at": "2026-11-01T11:46:24.548639+00:00",
+    "old_attempt": "63e8b5c3-a93a-4ed8-b0cf-4279dde7a6db",
+    "checkpoint_ids": [
+      "ac126a09-bb5c-45fd-88c9-709b095845fa",
+      "f95f23df-769f-4f06-b799-cb5e5fd761e5"
+    ],
+    "command": "docker compose kill -s SIGKILL worker"
+  },
+  "lease_seconds": 30,
+  "heartbeat_seconds": 5,
+  "lease_intervals_seconds": [
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0,
+    30.0
+  ],
+  "successful_chunk_commits": 8,
+  "reused_chunk_ids": [
+    "ac126a09-bb5c-45fd-88c9-709b095845fa",
+    "f95f23df-769f-4f06-b799-cb5e5fd761e5"
+  ],
+  "verified_downloads": [
+    {
+      "step": "inspect",
+      "file": "output.json",
+      "sha256": "bea96f6880b2d6c73f7cd35cb530ef31f0abbd2d3d9e8b7f8bd895bea9ff358d"
+    },
+    {
+      "step": "normalize_extract",
+      "file": "output.json",
+      "sha256": "ebb7d45b0d250055ab1b4a842329d9d35c8daf6fae4bcda783491e84bc96b590"
+    },
+    {
+      "step": "remove_background",
+      "file": "block-000.json",
+      "sha256": "210a37fee7f2986f1951fa4070c915e67116d5481270c36b1925f5d11785316a"
+    },
+    {
+      "step": "remove_background",
+      "file": "block-001.json",
+      "sha256": "5a366f0e2b05aa237a2bfc5f2c09e9119c94a517fe31b5f5b1c6873f2557ee92"
+    },
+    {
+      "step": "remove_background",
+      "file": "block-002.json",
+      "sha256": "8511d6846a49dd1343ae0523232bbed91977c5e10eedd1d494a6bbbf3acac885"
+    },
+    {
+      "step": "remove_background",
+      "file": "block-003.json",
+      "sha256": "f3573aaf7eb543404934441d78905204663f0ee8ed165a11c88e6031f36e1053"
+    },
+    {
+      "step": "remove_background",
+      "file": "output.json",
+      "sha256": "a0b8ffe84c93d7ade0b09ca925cf020e65b87eb9ee9fcca232602f7c545a0ac8"
+    },
+    {
+      "step": "enhance_frames",
+      "file": "block-000.json",
+      "sha256": "aa8072c0deea8293e9c1bb6640faaacfbd3237ac41794fdd74342e7b84eb829e"
+    },
+    {
+      "step": "enhance_frames",
+      "file": "block-001.json",
+      "sha256": "696abab0fbca8fb38f68be8efd71948905a29f9e576a8c81cc5c35278e3fc481"
+    },
+    {
+      "step": "enhance_frames",
+      "file": "block-002.json",
+      "sha256": "4120c2bd98ecc7977402135615b106ce08b71aa25d6aff9a12db7d68dc57ebd0"
+    },
+    {
+      "step": "enhance_frames",
+      "file": "block-003.json",
+      "sha256": "c8372dba1edc75d5044b3ee8921e51c453a8971485d79ad548f2b9916b48e21c"
+    },
+    {
+      "step": "enhance_frames",
+      "file": "output.json",
+      "sha256": "e120e9388e48999407d2aef5fb90a906cf1ae4e4ec4ee2d2605c51062e618aa8"
+    },
+    {
+      "step": "build_atlas",
+      "file": "output.json",
+      "sha256": "106983fc8484c36e52c83b8810a6f9dd9edd1bce061f683c7837d6b4cea9c5e4"
+    },
+    {
+      "step": "build_atlas",
+      "file": "preview.svg",
+      "sha256": "9b8ad6f3a0e4115d4997f817b243e742000ec83ced60b2dddba4b2fe6b145fb2"
+    },
+    {
+      "step": "render_preview",
+      "file": "output.json",
+      "sha256": "9b459954f24343b443bc3cccf0ed3f1e1580709e270ad3278b419d7deac30b2f"
+    },
+    {
+      "step": "render_preview",
+      "file": "preview.svg",
+      "sha256": "b0aedc5beabe838c07892a192318857db1399dee58560aac226c0f1c16658e70"
+    },
+    {
+      "step": "package",
+      "file": "output.json",
+      "sha256": "9bd35e61cc789afeb2d06cb27091f908c7d31accf84a42e76a356d0b116ebe2c"
+    },
+    {
+      "step": "package",
+      "file": "preview.svg",
+      "sha256": "5650856fd5addfac317705fe0f92941d7270cf60bfe9ef56618e7b8eaf88a532"
+    }
+  ],
+  "resource_history_count": 2136,
+  "history_resolutions": [
+    "minute",
+    "raw"
+  ],
+  "resource_policy": {
+    "sample_seconds": 5.0,
+    "raw_hours": 1.0,
+    "minute_days": 7.0,
+    "rollup": "per minute valid sample averages; invalid-only buckets remain unavailable; holder_ids retain lineage"
+  },
+  "final_resources": {
+    "slots": [
+      {
+        "id": "hourly:cpu-0",
+        "node_id": "hourly",
+        "key": "cpu-0",
+        "kind": "cpu",
+        "status": "AVAILABLE",
+        "holder_id": null,
+        "holder_fence": null,
+        "reason": null,
+        "sample": {
+          "valid": true,
+          "source": "mock",
+          "simulated": true,
+          "temperature_c": 32,
+          "memory_used_mb": 0,
+          "memory_total_mb": 8192,
+          "unavailable_reason": null,
+          "utilization_percent": 0
+        },
+        "measured_at": "2026-11-01T12:37:04.671686+00:00",
+        "sample_age_seconds": 0.632695,
+        "sample_fresh": true,
+        "holder": null
+      },
+      {
+        "id": "hourly:cpu-1",
+        "node_id": "hourly",
+        "key": "cpu-1",
+        "kind": "cpu",
+        "status": "AVAILABLE",
+        "holder_id": null,
+        "holder_fence": null,
+        "reason": null,
+        "sample": {
+          "valid": true,
+          "source": "mock",
+          "simulated": true,
+          "temperature_c": 32,
+          "memory_used_mb": 0,
+          "memory_total_mb": 8192,
+          "unavailable_reason": null,
+          "utilization_percent": 0
+        },
+        "measured_at": "2026-11-01T12:37:04.673571+00:00",
+        "sample_age_seconds": 0.63081,
+        "sample_fresh": true,
+        "holder": null
+      },
+      {
+        "id": "hourly:mock-gpu-0",
+        "node_id": "hourly",
+        "key": "mock-gpu-0",
+        "kind": "gpu",
+        "status": "AVAILABLE",
+        "holder_id": null,
+        "holder_fence": null,
+        "reason": null,
+        "sample": {
+          "valid": true,
+          "source": "mock",
+          "simulated": true,
+          "temperature_c": 32,
+          "memory_used_mb": 0,
+          "memory_total_mb": 8192,
+          "unavailable_reason": null,
+          "utilization_percent": 0
+        },
+        "measured_at": "2026-11-01T12:37:04.675273+00:00",
+        "sample_age_seconds": 0.629108,
+        "sample_fresh": true,
+        "holder": null
+      }
+    ],
+    "workers": [
+      {
+        "id": "0e9bfe39-2d15-446a-84e1-6bf4de7e9f3d",
+        "node_id": "hourly",
+        "pid": 7,
+        "process_created": 1793533588.24,
+        "host_name": "b51bd6097a45",
+        "heartbeat_at": "2026-11-01T12:37:04.670449+00:00",
+        "online": true
+      },
+      {
+        "id": "8a5f577d-0754-4592-b54e-f6b83aa9bc17",
+        "node_id": "hourly",
+        "pid": 7,
+        "process_created": 1793532675.76,
+        "host_name": "af74868d06f3",
+        "heartbeat_at": "2026-11-01T11:46:20.022893+00:00",
+        "online": false
+      }
+    ],
+    "waiting": [],
+    "server_time": "2026-11-01T12:37:05.304381+00:00",
+    "simulated": true
+  },
+  "api_observations": 358,
+  "observation_gaps": 0,
+  "controller_interruptions": [
+    {
+      "failure": "ConnectError('[WinError 10061] 由于目标计算机积极拒绝，无法连接。')",
+      "last_observation_at": "2026-11-01T11:37:08.183158+00:00",
+      "reattached_at": "2026-11-01T11:38:23.086880+00:00"
+    }
+  ],
+  "docker_events_note": "Docker historical buffer is bounded; older SIGKILL may no longer be present. The live controller operation record, old LOST/new Attempt timeline and checkpoint lineage are the primary interruption evidence.",
+  "boundary": "Actual elapsed MOCK control and chunk recovery, not real GPU/model throughput or model-state restoration."
+}

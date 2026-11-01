@@ -17,15 +17,17 @@
 | P10 | 超过 100 事件筛选/翻页、资源查询及指标口径 | 通过 | [p1-ui-history.json](p1-ui-history.json) |
 | P11 | 降采样和保留期；无效指标保留缺失 | 通过 | [p1-full-junit.xml](p1-full-junit.xml) |
 | P12 | 中断未完成 Step 中坏 1 块，只重算坏块和缺失块 | 通过 | [p1-full-junit.xml](p1-full-junit.xml) |
-| P13 | 实际 ≥3600 秒、真实中断恢复、旧块保留和资源回收 | 未完成 / 待验证 | [hourly.json](hourly.json) |
-| P14 | 0001 不变、真实旧数据/下载兼容升级 | 通过 | [p1-upgrade.json](p1-upgrade.json) |
+| P13 | 实际 ≥3600 秒、真实中断恢复、旧块保留和资源回收 | 通过 | [hourly.json](hourly.json) |
+| P14 | 0001 不变、旧数据/下载兼容，实际旧 P0 任务升级后恢复 | 通过 | [p1-legacy-upgrade.json](p1-legacy-upgrade.json) |
 | P15 | 公开克隆、新卷迁移启动、v1/v2与重启持久化 | 通过 | [p1-clean-start.json](p1-clean-start.json) |
 
 P0 A01～A28 的 P1 回归映射见 [回归矩阵](p1-p0-regression.md)；真实停库、kill 容器及 API 重启见 [容器验证](p1-runtime.json)。
+最终 v2 页面提交→三次预览失败→人工恢复→成功及祖先保留，见 [页面恢复记录](p1-ui-resume.json)。公开属性与功能源码匿名读取见 [公开访问证据](p1-public-read.json)。
 
 ## 实际小时级记录
 
-任务 `e362ced8-448f-4722-9555-44af8216ea42`；状态 `RUNNING`；开始 UTC `2026-11-01T11:31:17.255311+00:00`；结束 UTC `—`；实际观察时长 `2345.68` 秒。
+任务 `e362ced8-448f-4722-9555-44af8216ea42`；状态 `SUCCEEDED`；开始 UTC `2026-11-01T11:31:17.255311+00:00`；结束 UTC `2026-11-01T12:32:07.595531+00:00`；实际观察时长 `3650.31` 秒。
+数据库生命周期 UTC `2026-11-01T11:31:17.235327+00:00` → `2026-11-01T12:32:01.099975+00:00`；任务实际耗时 `3643.864648` 秒。观察器轮询结束比数据库完成晚数秒，二者口径分开记录。
 
 [逐次观察](hourly-observations.jsonl) · [独立时间/下载/心跳审计](p1-hourly-audit.json) · [页面重连证据](p1-hourly-browser.json)
 

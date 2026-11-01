@@ -199,16 +199,28 @@ def test_P09_active_duplicate_chunk_ack_and_cancel_race(client,workers):
     assert checkpoints.register(spec,1,blob)
     with Session() as s:
         assert len(list(s.scalars(select(CheckpointUse).where(CheckpointUse.attempt_id==a["id"]))))==2
+    # Race a NEW valid chunk registration, not only replay of an existing ack.
+    # MOCK output may be manufactured, but the DB race and running child are real.
+    chunk=checkpoints.definitions(spec)[2]
+    source=f'race-work/{a["id"]}/2'
+    artifacts.write_json(artifacts.folder(source+"/output.json"),
+        {"simulated":True,"chunk_identity":chunk["identity"]})
+    artifacts.seal(artifacts.folder(source),chunk["chunk_key"])
+    new_blob=artifacts.publish_directory(source,f'checkpoints/{a["id"]}/2')
     import threading
     gate=threading.Barrier(2)
-    def ack():gate.wait();return checkpoints.register(spec,1,blob)
+    def ack():gate.wait();return checkpoints.register(spec,2,new_blob)
     def cancel():gate.wait();return command(client,tid,"cancel")
     with ThreadPoolExecutor(2) as pool:
         f1,f2=pool.submit(ack),pool.submit(cancel)
-        f1.result();assert f2.result().status_code==202
+        accepted=f1.result();assert f2.result().status_code==202
     final=terminal(client,tid)
     assert final["status"]=="CANCELLED"
-    assert not checkpoints.register(spec,1,blob)
+    assert not checkpoints.register(spec,2,new_blob)
+    with Session() as s:
+        uses=list(s.scalars(select(CheckpointUse).where(CheckpointUse.attempt_id==a["id"])))
+        assert len(uses)==(3 if accepted else 2)
+        assert sum(u.chunk_index==2 for u in uses)==int(accepted)
 
 
 def test_P10_history_pagination_and_timing_metrics(client,workers):

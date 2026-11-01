@@ -12,6 +12,8 @@ import psutil
 ROOT=Path(__file__).resolve().parents[1]
 E=ROOT/"evidence"
 def utc():return datetime.now(timezone.utc).isoformat()
+def digest(value):
+    return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(",",":"),ensure_ascii=False).encode()).hexdigest()
 def load(name):return json.loads((E/name).read_text(encoding="utf-8"))
 def main():
     p=argparse.ArgumentParser()
@@ -74,6 +76,13 @@ def main():
             for f in a['manifest']['files']:
                 r=c.get(f'/api/artifacts/{a["id"]}/files/{f["key"]}')
                 assert r.status_code==200 and hashlib.sha256(r.content).hexdigest()==f['sha256']
+                if f['key'].startswith('block-'):
+                    index=int(f['key'].removeprefix('block-').removesuffix('.json'))
+                    payload=r.json();identity=payload['chunk_identity']
+                    cp=next(x for x in s['checkpoints']['items'] if x['index']==index)
+                    assert set(payload)=={'simulated','chunk_identity'} and payload['simulated'] is True
+                    assert identity['schema']==1 and digest(identity)==cp['chunk_key']
+                    assert (identity['start'],identity['end'])==(cp['start'],cp['end'])
                 downloads.append({'step':s['key'],'file':f['key'],'sha256':f['sha256']})
         samples=[];cursor=None
         while True:
@@ -91,7 +100,7 @@ def main():
         event_end=utc()
         events=subprocess.run(['docker','events','--since',record['started_at'],'--until',event_end,
             '--filter','type=container','--filter','label=com.docker.compose.project=taskd-hour','--format','{{json .}}'],
-            text=True,capture_output=True,timeout=20,check=True).stdout
+            text=True,encoding='utf-8',capture_output=True,timeout=20,check=True).stdout
         (E/'p1-hourly-docker-events.jsonl').write_text(events,encoding='utf-8')
         proof={'passed':True,'at':utc(),'task_id':d['id'],'created_at':d['created_at'],'finished_at':d['finished_at'],
             'database_elapsed_seconds':elapsed,'observer_elapsed_seconds':record['elapsed_seconds'],
@@ -104,6 +113,7 @@ def main():
             'resource_policy':page['policy'],'final_resources':resources,
             'api_observations':len(measured),'observation_gaps':len([x for x in observations if 'observation_gap' in x]),
             'controller_interruptions':record.get('controller_interruptions',[]),
+            'docker_events_note':'Docker historical buffer is bounded; older SIGKILL may no longer be present. The live controller operation record, old LOST/new Attempt timeline and checkpoint lineage are the primary interruption evidence.',
             'boundary':'Actual elapsed MOCK control and chunk recovery, not real GPU/model throughput or model-state restoration.'}
         assert all(abs(t-30)<.01 for t in proof['lease_intervals_seconds'])
         (E/'p1-hourly-audit.json').write_text(json.dumps(proof,ensure_ascii=False,indent=2),encoding='utf-8')

@@ -1,0 +1,53 @@
+# HELP pipeline_tasks Current tasks by state
+# TYPE pipeline_tasks gauge
+pipeline_tasks{state="SUCCEEDED"} 1
+# HELP pipeline_attempts Attempts by state
+# TYPE pipeline_attempts gauge
+pipeline_attempts{state="SUCCEEDED"} 7
+pipeline_attempts{state="LOST"} 1
+# HELP pipeline_additional_attempts_total Attempts beyond the first, including manual resumes
+# TYPE pipeline_additional_attempts_total counter
+pipeline_additional_attempts_total 1
+# HELP pipeline_checkpoints_total Committed immutable chunk records, including invalidated history
+# TYPE pipeline_checkpoints_total counter
+pipeline_checkpoints_total 8
+# HELP pipeline_checkpoint_reuses_total Committed reuse bindings across attempts
+# TYPE pipeline_checkpoint_reuses_total counter
+pipeline_checkpoint_reuses_total 2
+# HELP pipeline_cached_steps Current steps satisfied by whole-step cache
+# TYPE pipeline_cached_steps gauge
+pipeline_cached_steps 0
+# HELP pipeline_queue_seconds_sum Sum of persisted READY-to-claim queue time
+# TYPE pipeline_queue_seconds_sum gauge
+pipeline_queue_seconds_sum 0.7170289999999999
+# HELP pipeline_queue_seconds_count Number of included observations
+# TYPE pipeline_queue_seconds_count gauge
+pipeline_queue_seconds_count 8
+# HELP pipeline_run_seconds_sum Sum of completed executor-to-terminal time
+# TYPE pipeline_run_seconds_sum gauge
+pipeline_run_seconds_sum 3641.512639
+# HELP pipeline_run_seconds_count Number of included observations
+# TYPE pipeline_run_seconds_count gauge
+pipeline_run_seconds_count 8
+# HELP pipeline_lease_detection_seconds_sum Sum of expired-lease-to-LOST detection time
+# TYPE pipeline_lease_detection_seconds_sum gauge
+pipeline_lease_detection_seconds_sum 0.062383
+# HELP pipeline_lease_detection_seconds_count Number of included observations
+# TYPE pipeline_lease_detection_seconds_count gauge
+pipeline_lease_detection_seconds_count 1
+# HELP pipeline_recovery_start_seconds_sum Sum of expired lease to replacement executor start
+# TYPE pipeline_recovery_start_seconds_sum gauge
+pipeline_recovery_start_seconds_sum 2.663982
+# HELP pipeline_recovery_start_seconds_count Number of included observations
+# TYPE pipeline_recovery_start_seconds_count gauge
+pipeline_recovery_start_seconds_count 1
+# HELP pipeline_resource_slots Slots by kind and state
+# TYPE pipeline_resource_slots gauge
+pipeline_resource_slots{kind="cpu",state="AVAILABLE"} 2
+pipeline_resource_slots{kind="gpu",state="AVAILABLE"} 1
+# HELP pipeline_mock_gpu_valid_samples Fresh valid MOCK GPU samples; 0 means unavailable, not idle
+# TYPE pipeline_mock_gpu_valid_samples gauge
+pipeline_mock_gpu_valid_samples 1
+# HELP pipeline_mock_gpu_utilization_percent Mean fresh simulated GPU utilization
+# TYPE pipeline_mock_gpu_utilization_percent gauge
+pipeline_mock_gpu_utilization_percent{source="mock"} 0.0

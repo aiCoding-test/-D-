@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "at": "2026-11-01T12:39:30.476516+00:00",
+  "pytest_passed": 37,
+  "evidence_verified": {
+    "p1-hourly-audit.json": true,
+    "p1-hourly-browser.json": true,
+    "p1-hourly-live.json": true,
+    "p1-clean-start.json": true,
+    "p1-upgrade.json": true,
+    "p1-legacy-upgrade.json": true,
+    "p1-runtime.json": true,
+    "p1-ui-resume.json": true,
+    "p1-public-read.json": true
+  },
+  "p0_matrix": "28/28",
+  "p1_matrix": "15/15",
+  "local_links_valid": true,
+  "main_api_ready": true,
+  "low_cardinality_metrics": true,
+  "original_0001_unchanged": true,
+  "actual_hourly_database_seconds": 3643.864648,
+  "history_resolutions": [
+    "minute",
+    "raw"
+  ],
+  "limitations": [
+    "MOCK models/GPU only",
+    "No SSE/public execution deployment",
+    "Single machine local volume; no automatic file GC",
+    "No real model internal state restoration"
+  ]
+}

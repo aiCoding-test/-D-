@@ -4,5 +4,19 @@
   "event_count": 128,
   "method": "API task with always_fail and five real manual resumes; no direct status changes",
   "browser_rows_loaded": 128,
-  "older_button_hidden": true
+  "older_button_hidden": true,
+  "final_browser_recheck": {
+    "source_commit": "b80a032",
+    "rows_loaded": 128,
+    "older_button_hidden": true,
+    "attempt_filter_label": "逐帧抠图 · #17 / 代次 6",
+    "filtered_event_count": 4,
+    "filtered_sequences": [
+      116,
+      117,
+      118,
+      119
+    ],
+    "console_errors": []
+  }
 }

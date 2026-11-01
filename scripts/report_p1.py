@@ -13,6 +13,7 @@ def read(name):
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 hour=read("hourly.json")
+audit=read("p1-hourly-audit.json")
 mapping=[
  ("P01","分块正常执行、输出 schema、完整 manifest / 下载与整步缓存区分",tests("test_P01_","test_P13_"),"p1-full-junit.xml"),
  ("P02","提交两块后真实杀 Worker/子进程，仅补剩余块",tests("test_P02_"),"p1-full-junit.xml"),
@@ -26,8 +27,8 @@ mapping=[
  ("P10","超过 100 事件筛选/翻页、资源查询及指标口径",tests("test_P10_") and read("p1-ui-history.json").get("browser_rows_loaded",0)>100,"p1-ui-history.json"),
  ("P11","降采样和保留期；无效指标保留缺失",tests("test_P11_"),"p1-full-junit.xml"),
  ("P12","中断未完成 Step 中坏 1 块，只重算坏块和缺失块",tests("test_P12_"),"p1-full-junit.xml"),
- ("P13","实际 ≥3600 秒、真实中断恢复、旧块保留和资源回收",hour.get("passed",False) and read("p1-hourly-audit.json").get("passed",False),"hourly.json"),
- ("P14","0001 不变、真实旧数据/下载兼容升级",read("p1-upgrade.json").get("passed",False),"p1-upgrade.json"),
+ ("P13","实际 ≥3600 秒、真实中断恢复、旧块保留和资源回收",hour.get("passed",False) and audit.get("passed",False),"hourly.json"),
+ ("P14","0001 不变、旧数据/下载兼容，实际旧 P0 任务升级后恢复",read("p1-upgrade.json").get("passed",False) and read("p1-legacy-upgrade.json").get("passed",False),"p1-legacy-upgrade.json"),
  ("P15","公开克隆、新卷迁移启动、v1/v2与重启持久化",read("p1-clean-start.json").get("passed",False),"p1-clean-start.json"),
 ]
 lines=["# P1 实际验收记录","",f"自动回归：{sum(cases.values())}/{len(cases)} 通过；JUnit 见 [完整结果](p1-full-junit.xml)。",
@@ -35,7 +36,9 @@ lines=["# P1 实际验收记录","",f"自动回归：{sum(cases.values())}/{len(
        "","| 编号 | 验收项 | 实际结果 | 证据 |","| --- | --- | --- | --- |"]
 for key,title,ok,source in mapping:lines.append(f"| {key} | {title} | {'通过' if ok else '未完成 / 待验证'} | [{source}]({source}) |")
 lines += ["","P0 A01～A28 的 P1 回归映射见 [回归矩阵](p1-p0-regression.md)；真实停库、kill 容器及 API 重启见 [容器验证](p1-runtime.json)。",
+          "最终 v2 页面提交→三次预览失败→人工恢复→成功及祖先保留，见 [页面恢复记录](p1-ui-resume.json)。公开属性与功能源码匿名读取见 [公开访问证据](p1-public-read.json)。",
           "","## 实际小时级记录","",f"任务 `{hour.get('task_id','尚未提交')}`；状态 `{hour.get('status','尚未开始')}`；开始 UTC `{hour.get('started_at','—')}`；结束 UTC `{hour.get('finished_at','—')}`；实际观察时长 `{hour.get('elapsed_seconds',0):.2f}` 秒。",
+          f"数据库生命周期 UTC `{audit.get('created_at','尚待独立审计')}` → `{audit.get('finished_at','—')}`；任务实际耗时 `{audit.get('database_elapsed_seconds',0):.6f}` 秒。观察器轮询结束比数据库完成晚数秒，二者口径分开记录。",
           "", "[逐次观察](hourly-observations.jsonl) · [独立时间/下载/心跳审计](p1-hourly-audit.json) · [页面重连证据](p1-hourly-browser.json)",
           "","## 复现","","```bash",
           "docker compose -f compose.yaml -f compose.test.yaml run --rm test",
