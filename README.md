@@ -91,7 +91,7 @@ python -m venv .venv
 
 脚本真实 kill Worker、stop PostgreSQL、restart API。验证后可运行 python scripts/verify_runtime.py --cleanup，仅移除该测试项目的容器/网络，保留卷与证据。首次运行自动建立全新项目；重复运行保留历史任务。
 
-实际结果与 A01～A28 对照见 **[验收记录](evidence/acceptance.md)**、[容器故障快照](evidence/runtime.json)、[页面截图](evidence/dashboard.jpg)。
+实际结果与 A01～A28 对照见 **[验收记录](evidence/acceptance.md)**、[容器故障快照](evidence/runtime.json)、[全新克隆启动证据](evidence/clean-start.json)、[页面截图](evidence/dashboard.jpg)。
 
 ## 代码与文档
 

@@ -89,6 +89,9 @@ def main():
         assert r.status_code == 503, r.text
         assert r.json()["code"] == "DATABASE_UNAVAILABLE"
         time.sleep(6)  # Exceed the configured 4s lease; not a substitute for killing DB.
+        dc("exec", "-T", "worker", "python", "-c",
+           "from app.execution_lock import is_stopped; "
+           f"assert is_stopped('{old['id']}'), 'Old executor still holds its lifetime lock'")
         dc("start", "postgres")
         end=time.monotonic()+15
         while time.monotonic()<end:
@@ -98,7 +101,8 @@ def main():
         after=wait(c,tid,lambda d:d["status"] in {"SUCCEEDED","FAILED"})
         assert after["status"]=="SUCCEEDED",after
         assert step(after,"remove_background")["attempts"][0]["status"]=="LOST"
-        evidence["checks"].append({"ids":["A22"],"passed":True,"task_id":tid,"old_attempt_id":old["id"],"api_while_db_down":r.json(),"snapshot":after})
+        evidence["checks"].append({"ids":["A22"],"passed":True,"task_id":tid,"old_attempt_id":old["id"],
+                                  "old_executor_stopped_while_db_down":True,"api_while_db_down":r.json(),"snapshot":after})
         print("PASS A22: actual PostgreSQL stopped; API 503; lease recovery",flush=True)
 
         tid=create(c,name="E2E · API restart",step_seconds=.8)
@@ -125,7 +129,8 @@ def main():
         evidence["finished_at"]=datetime.now(timezone.utc).isoformat()
         (ROOT/"evidence").mkdir(exist_ok=True)
         (ROOT/"evidence"/"runtime.json").write_text(json.dumps(evidence,ensure_ascii=False,indent=2),encoding="utf-8")
-        (ROOT/"evidence"/"runtime-worker.log").write_text(dc("logs","--no-color","--tail","300","worker"),encoding="utf-8")
+        raw_logs=dc("logs","--no-color","--tail","300","worker")
+        (ROOT/"evidence"/"runtime-worker.log").write_text("\n".join(line.rstrip() for line in raw_logs.splitlines())+"\n",encoding="utf-8")
 
 
 if __name__=="__main__":

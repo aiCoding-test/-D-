@@ -43,7 +43,7 @@ mapping = {
 }
 
 lines = ["# P0 验收结果", "", f"运行环境：Linux 容器，Python 3.12.13，PostgreSQL 16.14；{len(cases)} 项 pytest 用例。",
-         "", "证据： [JUnit](junit.xml)、[真实容器故障快照](runtime.json)、[故障过程 Worker 日志](runtime-worker.log)、[页面恢复截图](dashboard.jpg)。",
+         "", "证据： [JUnit](junit.xml)、[真实容器故障快照](runtime.json)、[故障过程 Worker 日志](runtime-worker.log)、[全新克隆启动](clean-start.json)、[页面恢复截图](dashboard.jpg)、[最终看板](dashboard-preview.jpg)。",
          "", "测试采用加速配置：单步 0.07～0.2 秒、心跳 0.25 秒、租约 2 秒；容器故障验证为心跳 0.5 秒、租约 4 秒。默认演示配置仍为心跳 5 秒、租约 30 秒。",
          "", "| 编号 | 场景 | 结果 | 证据入口 |", "| --- | --- | --- | --- |"]
 passed = 0

@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-11-01T10:56:48.171441+00:00",
+  "started_at": "2026-11-01T11:10:16.363313+00:00",
   "project": "taskd-e2e",
   "checks": [
     {
@@ -8,10 +8,10 @@
         "A10"
       ],
       "passed": true,
-      "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+      "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
       "operation": "docker compose kill -s SIGKILL worker; up -d worker",
       "snapshot": {
-        "id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+        "id": "be815cf8-970b-4730-9f2b-d57673105b8d",
         "request": {
           "name": "E2E · kill Worker container",
           "asset_id": "orbit",
@@ -38,7 +38,8 @@
             "deps": [],
             "name": "校验素材",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "normalize_extract",
@@ -49,7 +50,8 @@
             "params": [
               "fps"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "remove_background",
@@ -61,7 +63,8 @@
               "matte_model",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "enhance_frames",
@@ -74,7 +77,8 @@
               "size",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "build_atlas",
@@ -85,7 +89,8 @@
             "params": [
               "atlas_columns"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "render_preview",
@@ -96,7 +101,8 @@
             "params": [
               "preview_format"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-2"
           },
           {
             "key": "package",
@@ -106,7 +112,8 @@
             ],
             "name": "打包产物",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           }
         ],
         "status": "SUCCEEDED",
@@ -114,63 +121,64 @@
         "revision": 37,
         "event_seq": 36,
         "stop_reason": null,
-        "created_at": "2026-11-01T10:56:53.443311+00:00",
-        "epoch_started_at": "2026-11-01T10:56:53.443311+00:00",
-        "deadline_at": "2026-11-01T11:26:53.443311+00:00",
-        "finished_at": "2026-11-01T10:57:16.955446+00:00",
+        "created_at": "2026-11-01T11:10:22.104455+00:00",
+        "epoch_started_at": "2026-11-01T11:10:22.104455+00:00",
+        "deadline_at": "2026-11-01T11:40:22.104455+00:00",
+        "finished_at": "2026-11-01T11:10:45.468721+00:00",
         "steps": [
           {
-            "id": "3f659dad-49b0-40c6-80ed-f45fb2737695",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "157cda74-cb5e-468d-b873-8b92229e31dc",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "inspect",
             "spec": {
               "key": "inspect",
               "deps": [],
               "name": "校验素材",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:56:53.530334+00:00",
+            "ready_at": "2026-11-01T11:10:22.172676+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9",
+            "artifact_id": "20f168e9-d107-4ea3-8142-0dbd5f87ea59",
             "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:10:22.774056+00:00",
             "attempts": [
               {
-                "id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
-                "step_id": "3f659dad-49b0-40c6-80ed-f45fb2737695",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "3622c4d9-97ed-434c-9787-f71b5d21ed4c",
+                "step_id": "157cda74-cb5e-468d-b873-8b92229e31dc",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "worker_id": "c153b348-c78a-4f93-846f-53ea34550545",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:56:53.555117+00:00",
-                "started_at": "2026-11-01T10:56:53.579894+00:00",
-                "heartbeat_at": "2026-11-01T10:56:53.718722+00:00",
-                "lease_expires_at": "2026-11-01T10:56:57.718722+00:00",
-                "run_deadline_at": "2026-11-01T10:58:53.579894+00:00",
-                "finished_at": "2026-11-01T10:56:54.299047+00:00",
+                "claimed_at": "2026-11-01T11:10:22.188045+00:00",
+                "started_at": "2026-11-01T11:10:22.203440+00:00",
+                "heartbeat_at": "2026-11-01T11:10:22.322418+00:00",
+                "lease_expires_at": "2026-11-01T11:10:26.322418+00:00",
+                "run_deadline_at": "2026-11-01T11:12:22.203440+00:00",
+                "finished_at": "2026-11-01T11:10:22.773915+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 9,
-                "executor_created": 1793530613.23,
+                "executor_created": 1793531421.89,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
               }
             ],
             "artifact": {
-              "id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9",
-              "producer_attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
+              "id": "20f168e9-d107-4ea3-8142-0dbd5f87ea59",
+              "producer_attempt_id": "3622c4d9-97ed-434c-9787-f71b5d21ed4c",
               "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
               "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
               "manifest": {
@@ -187,13 +195,13 @@
                 "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:56:54.297651+00:00",
+              "created_at": "2026-11-01T11:10:22.772766+00:00",
               "available": true
             }
           },
           {
-            "id": "dfefe133-ba31-4526-8dd3-826b4ec7dccc",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "9c2f44c2-0134-4577-8e51-de16459c53bb",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "normalize_extract",
             "spec": {
               "key": "normalize_extract",
@@ -204,49 +212,50 @@
               "params": [
                 "fps"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:56:54.306315+00:00",
+            "ready_at": "2026-11-01T11:10:22.779462+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc",
+            "artifact_id": "04112ceb-31b5-4b0c-8fa4-4dbc1da6b486",
             "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:10:23.381876+00:00",
             "attempts": [
               {
-                "id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
-                "step_id": "dfefe133-ba31-4526-8dd3-826b4ec7dccc",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "5532cc0d-4151-4daf-8890-ac76772ecf9d",
+                "step_id": "9c2f44c2-0134-4577-8e51-de16459c53bb",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "worker_id": "c153b348-c78a-4f93-846f-53ea34550545",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:56:54.319510+00:00",
-                "started_at": "2026-11-01T10:56:54.336021+00:00",
-                "heartbeat_at": "2026-11-01T10:56:54.319510+00:00",
-                "lease_expires_at": "2026-11-01T10:56:58.319510+00:00",
-                "run_deadline_at": "2026-11-01T10:58:54.336021+00:00",
-                "finished_at": "2026-11-01T10:56:54.912968+00:00",
+                "claimed_at": "2026-11-01T11:10:22.790536+00:00",
+                "started_at": "2026-11-01T11:10:22.803858+00:00",
+                "heartbeat_at": "2026-11-01T11:10:22.925520+00:00",
+                "lease_expires_at": "2026-11-01T11:10:26.925520+00:00",
+                "run_deadline_at": "2026-11-01T11:12:22.803858+00:00",
+                "finished_at": "2026-11-01T11:10:23.381691+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 10,
-                "executor_created": 1793530613.99,
+                "executor_created": 1793531422.49,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
               }
             ],
             "artifact": {
-              "id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc",
-              "producer_attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
+              "id": "04112ceb-31b5-4b0c-8fa4-4dbc1da6b486",
+              "producer_attempt_id": "5532cc0d-4151-4daf-8890-ac76772ecf9d",
               "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
               "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
               "manifest": {
@@ -263,13 +272,13 @@
                 "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:56:54.912093+00:00",
+              "created_at": "2026-11-01T11:10:23.380907+00:00",
               "available": true
             }
           },
           {
-            "id": "20b15ebc-f39f-4781-b996-956bbb063256",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "bf6181b7-0fb6-452c-b33f-281254d03f18",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "remove_background",
             "spec": {
               "key": "remove_background",
@@ -281,74 +290,75 @@
                 "matte_model",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 2,
             "current_attempt_id": null,
-            "next_run_at": "2026-11-01T10:56:59.242429+00:00",
-            "ready_at": "2026-11-01T10:56:59.274487+00:00",
+            "next_run_at": null,
+            "ready_at": "2026-11-01T11:10:27.799927+00:00",
             "wait_reason": null,
-            "error": "LEASE_EXPIRED",
-            "artifact_id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25",
+            "error": null,
+            "artifact_id": "761b1b8a-607e-43a1-8716-e67abbfad7ab",
             "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:13.452979+00:00",
+            "last_progress_at": "2026-11-01T11:10:43.201655+00:00",
             "attempts": [
               {
-                "id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-                "step_id": "20b15ebc-f39f-4781-b996-956bbb063256",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "5ea4833e-b54a-4239-985d-a006922f763f",
+                "step_id": "bf6181b7-0fb6-452c-b33f-281254d03f18",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "1ff57841-445d-4c35-92a4-816c067643ee",
+                "worker_id": "c153b348-c78a-4f93-846f-53ea34550545",
                 "slot_id": "local:mock-gpu-0",
                 "status": "LOST",
                 "phase": "EXECUTING",
-                "claimed_at": "2026-11-01T10:56:54.931343+00:00",
-                "started_at": "2026-11-01T10:56:54.945961+00:00",
-                "heartbeat_at": "2026-11-01T10:56:54.931343+00:00",
-                "lease_expires_at": "2026-11-01T10:56:58.931343+00:00",
-                "run_deadline_at": "2026-11-01T10:58:54.945961+00:00",
-                "finished_at": "2026-11-01T10:56:59.031605+00:00",
+                "claimed_at": "2026-11-01T11:10:23.399231+00:00",
+                "started_at": "2026-11-01T11:10:23.412177+00:00",
+                "heartbeat_at": "2026-11-01T11:10:23.532141+00:00",
+                "lease_expires_at": "2026-11-01T11:10:27.532141+00:00",
+                "run_deadline_at": "2026-11-01T11:12:23.412177+00:00",
+                "finished_at": "2026-11-01T11:10:27.565746+00:00",
                 "error_code": "LEASE_EXPIRED",
                 "error": "LEASE_EXPIRED",
                 "retryable": true,
                 "executor_pid": 11,
-                "executor_created": 1793530614.6,
+                "executor_created": 1793531423.1,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": null
               },
               {
-                "id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
-                "step_id": "20b15ebc-f39f-4781-b996-956bbb063256",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "bd86ed8f-baec-44b8-97bd-b3c3580f9561",
+                "step_id": "bf6181b7-0fb6-452c-b33f-281254d03f18",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 2,
                 "epoch": 1,
                 "fence": 2,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:56:59.292264+00:00",
-                "started_at": "2026-11-01T10:56:59.307312+00:00",
-                "heartbeat_at": "2026-11-01T10:57:14.610079+00:00",
-                "lease_expires_at": "2026-11-01T10:57:18.610079+00:00",
-                "run_deadline_at": "2026-11-01T10:58:59.307312+00:00",
-                "finished_at": "2026-11-01T10:57:14.731860+00:00",
+                "claimed_at": "2026-11-01T11:10:27.813978+00:00",
+                "started_at": "2026-11-01T11:10:27.830750+00:00",
+                "heartbeat_at": "2026-11-01T11:10:43.082508+00:00",
+                "lease_expires_at": "2026-11-01T11:10:47.082508+00:00",
+                "run_deadline_at": "2026-11-01T11:12:27.830750+00:00",
+                "finished_at": "2026-11-01T11:10:43.201455+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 9,
-                "executor_created": 1793530618.96,
+                "executor_created": 1793531427.52,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
               }
             ],
             "artifact": {
-              "id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25",
-              "producer_attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
+              "id": "761b1b8a-607e-43a1-8716-e67abbfad7ab",
+              "producer_attempt_id": "bd86ed8f-baec-44b8-97bd-b3c3580f9561",
               "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
               "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
               "manifest": {
@@ -365,13 +375,13 @@
                 "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:14.730099+00:00",
+              "created_at": "2026-11-01T11:10:43.200057+00:00",
               "available": true
             }
           },
           {
-            "id": "8dcd3a68-65da-4177-b4ca-6a3efb870711",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "b9423d4f-3c5c-4ff8-988b-67f548b69d93",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "enhance_frames",
             "spec": {
               "key": "enhance_frames",
@@ -384,49 +394,50 @@
                 "size",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:14.738637+00:00",
+            "ready_at": "2026-11-01T11:10:43.207242+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "0509c702-1291-4058-a412-f6ffc89bd589",
+            "artifact_id": "a83f9d31-715b-4361-bdc2-b8b8d9ae0053",
             "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:15.114021+00:00",
+            "last_progress_at": "2026-11-01T11:10:43.813091+00:00",
             "attempts": [
               {
-                "id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
-                "step_id": "8dcd3a68-65da-4177-b4ca-6a3efb870711",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "993e19b8-428e-445c-bf80-7019ef1dd2b8",
+                "step_id": "b9423d4f-3c5c-4ff8-988b-67f548b69d93",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:14.751639+00:00",
-                "started_at": "2026-11-01T10:57:14.766908+00:00",
-                "heartbeat_at": "2026-11-01T10:57:15.114021+00:00",
-                "lease_expires_at": "2026-11-01T10:57:19.114021+00:00",
-                "run_deadline_at": "2026-11-01T10:59:14.766908+00:00",
-                "finished_at": "2026-11-01T10:57:15.344511+00:00",
+                "claimed_at": "2026-11-01T11:10:43.218050+00:00",
+                "started_at": "2026-11-01T11:10:43.231539+00:00",
+                "heartbeat_at": "2026-11-01T11:10:43.693426+00:00",
+                "lease_expires_at": "2026-11-01T11:10:47.693426+00:00",
+                "run_deadline_at": "2026-11-01T11:12:43.231539+00:00",
+                "finished_at": "2026-11-01T11:10:43.812856+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 10,
-                "executor_created": 1793530634.42,
+                "executor_created": 1793531442.92,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
               }
             ],
             "artifact": {
-              "id": "0509c702-1291-4058-a412-f6ffc89bd589",
-              "producer_attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
+              "id": "a83f9d31-715b-4361-bdc2-b8b8d9ae0053",
+              "producer_attempt_id": "993e19b8-428e-445c-bf80-7019ef1dd2b8",
               "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
               "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
               "manifest": {
@@ -443,13 +454,13 @@
                 "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:15.343623+00:00",
+              "created_at": "2026-11-01T11:10:43.811991+00:00",
               "available": true
             }
           },
           {
-            "id": "fccdae57-f44b-4223-9943-0c40af1c01a2",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "6be938f9-7618-4225-8fd3-d3a65f2ebf1c",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "build_atlas",
             "spec": {
               "key": "build_atlas",
@@ -460,49 +471,50 @@
               "params": [
                 "atlas_columns"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:15.349113+00:00",
+            "ready_at": "2026-11-01T11:10:43.817762+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d",
+            "artifact_id": "fec1e1d3-2d1d-4061-9d94-e6773a89ec52",
             "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:10:44.609330+00:00",
             "attempts": [
               {
-                "id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
-                "step_id": "fccdae57-f44b-4223-9943-0c40af1c01a2",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "9c9ae981-69db-420f-a6f8-77dcc5205caf",
+                "step_id": "6be938f9-7618-4225-8fd3-d3a65f2ebf1c",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:15.362540+00:00",
-                "started_at": "2026-11-01T10:57:15.375733+00:00",
-                "heartbeat_at": "2026-11-01T10:57:15.662076+00:00",
-                "lease_expires_at": "2026-11-01T10:57:19.662076+00:00",
-                "run_deadline_at": "2026-11-01T10:59:15.375733+00:00",
-                "finished_at": "2026-11-01T10:57:16.206419+00:00",
+                "claimed_at": "2026-11-01T11:10:43.831644+00:00",
+                "started_at": "2026-11-01T11:10:43.844735+00:00",
+                "heartbeat_at": "2026-11-01T11:10:44.288713+00:00",
+                "lease_expires_at": "2026-11-01T11:10:48.288713+00:00",
+                "run_deadline_at": "2026-11-01T11:12:43.844735+00:00",
+                "finished_at": "2026-11-01T11:10:44.608990+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 11,
-                "executor_created": 1793530635.03,
+                "executor_created": 1793531443.54,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
               }
             ],
             "artifact": {
-              "id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d",
-              "producer_attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
+              "id": "fec1e1d3-2d1d-4061-9d94-e6773a89ec52",
+              "producer_attempt_id": "9c9ae981-69db-420f-a6f8-77dcc5205caf",
               "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
               "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
               "manifest": {
@@ -524,13 +536,13 @@
                 "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:16.205573+00:00",
+              "created_at": "2026-11-01T11:10:44.607918+00:00",
               "available": true
             }
           },
           {
-            "id": "e9f2ff23-46bd-4ec8-8256-ae11c4d30203",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "a068872c-a903-486e-a28b-a26ef4e7e4a6",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "render_preview",
             "spec": {
               "key": "render_preview",
@@ -541,57 +553,58 @@
               "params": [
                 "preview_format"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-2"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:15.349113+00:00",
+            "ready_at": "2026-11-01T11:10:43.817762+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "034a9e70-040d-4c3e-a841-1299acc88640",
-            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "artifact_id": "8259dc12-3bef-4c93-910e-a9d0482dcf36",
+            "cache_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:16.218896+00:00",
+            "last_progress_at": "2026-11-01T11:10:44.859823+00:00",
             "attempts": [
               {
-                "id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
-                "step_id": "e9f2ff23-46bd-4ec8-8256-ae11c4d30203",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "9eca0ed6-0bb5-4a91-8312-66069d433f38",
+                "step_id": "a068872c-a903-486e-a28b-a26ef4e7e4a6",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-1",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:15.521806+00:00",
-                "started_at": "2026-11-01T10:57:15.539957+00:00",
-                "heartbeat_at": "2026-11-01T10:57:16.218896+00:00",
-                "lease_expires_at": "2026-11-01T10:57:20.218896+00:00",
-                "run_deadline_at": "2026-11-01T10:59:15.539957+00:00",
-                "finished_at": "2026-11-01T10:57:16.340427+00:00",
+                "claimed_at": "2026-11-01T11:10:43.966086+00:00",
+                "started_at": "2026-11-01T11:10:43.980515+00:00",
+                "heartbeat_at": "2026-11-01T11:10:44.362364+00:00",
+                "lease_expires_at": "2026-11-01T11:10:48.362364+00:00",
+                "run_deadline_at": "2026-11-01T11:12:43.980515+00:00",
+                "finished_at": "2026-11-01T11:10:44.859553+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 12,
-                "executor_created": 1793530635.2,
+                "executor_created": 1793531443.67,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+                "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f"
               }
             ],
             "artifact": {
-              "id": "034a9e70-040d-4c3e-a841-1299acc88640",
-              "producer_attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
-              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
-              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "id": "8259dc12-3bef-4c93-910e-a9d0482dcf36",
+              "producer_attempt_id": "9eca0ed6-0bb5-4a91-8312-66069d433f38",
+              "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f",
+              "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 421,
-                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                    "sha256": "093dbb4c58af462406846135533af650cdb0e8e909d2792f128bba61069f64ad"
                   },
                   {
                     "key": "preview.svg",
@@ -601,17 +614,17 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
-                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+                "semantic_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
+                "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:16.339485+00:00",
+              "created_at": "2026-11-01T11:10:44.858488+00:00",
               "available": true
             }
           },
           {
-            "id": "eb2ad460-1beb-4322-945e-d51ee037da49",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "f7e3f334-1afe-4882-a4cb-8fe893f41c82",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "key": "package",
             "spec": {
               "key": "package",
@@ -621,57 +634,58 @@
               ],
               "name": "打包产物",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:16.345486+00:00",
+            "ready_at": "2026-11-01T11:10:44.865451+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4",
-            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "artifact_id": "6cc1000b-885a-4698-aeca-c6d8acdce822",
+            "cache_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:16.721172+00:00",
+            "last_progress_at": "2026-11-01T11:10:45.465170+00:00",
             "attempts": [
               {
-                "id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
-                "step_id": "eb2ad460-1beb-4322-945e-d51ee037da49",
-                "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+                "id": "be567c6e-3bc2-4a61-8188-74abbacf420c",
+                "step_id": "f7e3f334-1afe-4882-a4cb-8fe893f41c82",
+                "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:16.361397+00:00",
-                "started_at": "2026-11-01T10:57:16.376220+00:00",
-                "heartbeat_at": "2026-11-01T10:57:16.721172+00:00",
-                "lease_expires_at": "2026-11-01T10:57:20.721172+00:00",
-                "run_deadline_at": "2026-11-01T10:59:16.376220+00:00",
-                "finished_at": "2026-11-01T10:57:16.951051+00:00",
+                "claimed_at": "2026-11-01T11:10:44.880661+00:00",
+                "started_at": "2026-11-01T11:10:44.895128+00:00",
+                "heartbeat_at": "2026-11-01T11:10:44.880661+00:00",
+                "lease_expires_at": "2026-11-01T11:10:48.880661+00:00",
+                "run_deadline_at": "2026-11-01T11:12:44.895128+00:00",
+                "finished_at": "2026-11-01T11:10:45.464979+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 13,
-                "executor_created": 1793530636.03,
+                "executor_created": 1793531444.59,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+                "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d"
               }
             ],
             "artifact": {
-              "id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4",
-              "producer_attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
-              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
-              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "id": "6cc1000b-885a-4698-aeca-c6d8acdce822",
+              "producer_attempt_id": "be567c6e-3bc2-4a61-8188-74abbacf420c",
+              "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d",
+              "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 467,
-                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                    "sha256": "95f2f6910a90fd43ede3319727c698047488abba8fe40f61703f37a33ed1483d"
                   },
                   {
                     "key": "preview.svg",
@@ -681,482 +695,482 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
-                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+                "semantic_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
+                "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:16.950204+00:00",
+              "created_at": "2026-11-01T11:10:45.464063+00:00",
               "available": true
             }
           }
         ],
         "event_cursor": 36,
         "completed_steps": 7,
-        "server_time": "2026-11-01T10:57:17.087239+00:00",
+        "server_time": "2026-11-01T11:10:45.612073+00:00",
         "events": [
           {
-            "id": "c599e17b-4232-454b-806f-3e5ab17e8a0a",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "0e037d30-3184-4933-a9b1-e6a1362e7ecf",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 1,
             "epoch": 1,
             "type": "TASK_ACCEPTED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:56:53.454028+00:00",
+            "at": "2026-11-01T11:10:22.112540+00:00",
             "payload": {
               "pipeline": "animation-v1",
               "simulated": true
             }
           },
           {
-            "id": "cd1fc9e1-99db-41f1-9d0b-f4b201bd54fb",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "fa75b641-90fd-428b-93a3-154866d681e1",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 2,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "inspect",
             "attempt_id": null,
-            "at": "2026-11-01T10:56:53.530630+00:00",
+            "at": "2026-11-01T11:10:22.172823+00:00",
             "payload": {}
           },
           {
-            "id": "0193a4ce-3baf-4db0-b39e-0b5185f95125",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "570b1a82-e66c-423a-96bd-ee6e09dcc7d6",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 3,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "inspect",
-            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
-            "at": "2026-11-01T10:56:53.558787+00:00",
+            "attempt_id": "3622c4d9-97ed-434c-9787-f71b5d21ed4c",
+            "at": "2026-11-01T11:10:22.190470+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "a74baf7b-846b-4598-b4e4-14775d8db1e7",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "f2bc356d-0577-4597-a6fd-8443bc3bff32",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 4,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "inspect",
-            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
-            "at": "2026-11-01T10:56:53.580968+00:00",
+            "attempt_id": "3622c4d9-97ed-434c-9787-f71b5d21ed4c",
+            "at": "2026-11-01T11:10:22.203706+00:00",
             "payload": {
               "pid": 9
             }
           },
           {
-            "id": "f475d614-f845-498a-a0a0-65e8f88c1861",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "b9c566dd-223e-4a50-8134-e4a6f0870373",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 5,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "inspect",
-            "attempt_id": "6e11b8bc-fa80-4780-9776-f44aef95fe28",
-            "at": "2026-11-01T10:56:54.302774+00:00",
+            "attempt_id": "3622c4d9-97ed-434c-9787-f71b5d21ed4c",
+            "at": "2026-11-01T11:10:22.777052+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "3e84bf55-4633-4ff0-b414-7a15d61b0dd9"
+              "artifact_id": "20f168e9-d107-4ea3-8142-0dbd5f87ea59"
             }
           },
           {
-            "id": "6683fac8-cd11-4817-be46-962a414a12fe",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "43f2eb55-7ba9-444e-afd7-a33efb56f2d4",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 6,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "normalize_extract",
             "attempt_id": null,
-            "at": "2026-11-01T10:56:54.306514+00:00",
+            "at": "2026-11-01T11:10:22.779602+00:00",
             "payload": {}
           },
           {
-            "id": "5d47ea1c-50ad-4888-8f09-6f8142bc9fac",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "6298e981-9ca3-44dd-bf25-820b354e549c",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 7,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "normalize_extract",
-            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
-            "at": "2026-11-01T10:56:54.321056+00:00",
+            "attempt_id": "5532cc0d-4151-4daf-8890-ac76772ecf9d",
+            "at": "2026-11-01T11:10:22.791976+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "12dd5599-80f4-41f8-b507-43b2ce0275c6",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "b47a4d9e-225d-4352-8a97-b12c681c5372",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 8,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "normalize_extract",
-            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
-            "at": "2026-11-01T10:56:54.336410+00:00",
+            "attempt_id": "5532cc0d-4151-4daf-8890-ac76772ecf9d",
+            "at": "2026-11-01T11:10:22.804184+00:00",
             "payload": {
               "pid": 10
             }
           },
           {
-            "id": "0919e841-175a-4966-acb8-c97567e054f8",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "a4e0d93c-5dfa-47ea-9c11-d6ab15f08902",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 9,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "normalize_extract",
-            "attempt_id": "e10fd759-1420-44c7-847c-8dae94ad63dd",
-            "at": "2026-11-01T10:56:54.915361+00:00",
+            "attempt_id": "5532cc0d-4151-4daf-8890-ac76772ecf9d",
+            "at": "2026-11-01T11:10:23.384342+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "f2d2d4ac-e7c1-483d-8aa8-d71ae41664bc"
+              "artifact_id": "04112ceb-31b5-4b0c-8fa4-4dbc1da6b486"
             }
           },
           {
-            "id": "7e397fa5-2e75-49fe-afc5-b8f48bc49dd0",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "38afa53a-4611-44b7-8a8c-97056124c6b9",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 10,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "remove_background",
             "attempt_id": null,
-            "at": "2026-11-01T10:56:54.917634+00:00",
+            "at": "2026-11-01T11:10:23.386613+00:00",
             "payload": {}
           },
           {
-            "id": "7cf1de43-edd5-4c3f-b928-abf81e080e3e",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "9beb6104-8643-47c3-8a42-da2b9990d264",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 11,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "remove_background",
-            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-            "at": "2026-11-01T10:56:54.932773+00:00",
+            "attempt_id": "5ea4833e-b54a-4239-985d-a006922f763f",
+            "at": "2026-11-01T11:10:23.400382+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "f7e46842-7561-48ed-a33b-c8b9c6ddc1b9",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "42f665a5-64ed-4e7a-a59e-efd7901495d0",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 12,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "remove_background",
-            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-            "at": "2026-11-01T10:56:54.946237+00:00",
+            "attempt_id": "5ea4833e-b54a-4239-985d-a006922f763f",
+            "at": "2026-11-01T11:10:23.412527+00:00",
             "payload": {
               "pid": 11
             }
           },
           {
-            "id": "1d9d916b-7a11-4606-9418-fc539bd16d3a",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "ee100157-427a-498b-a377-8b718b7a4fbe",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 13,
             "epoch": 1,
             "type": "ATTEMPT_LOST",
             "step_key": "remove_background",
-            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-            "at": "2026-11-01T10:56:59.034121+00:00",
+            "attempt_id": "5ea4833e-b54a-4239-985d-a006922f763f",
+            "at": "2026-11-01T11:10:27.567598+00:00",
             "payload": {
               "code": "LEASE_EXPIRED",
               "retryable": true
             }
           },
           {
-            "id": "338db73f-aa99-4b88-b8c1-aa763449da67",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "522e2f75-abc4-47d5-bbcb-a533293cfca8",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 14,
             "epoch": 1,
             "type": "STEP_RETRY_SCHEDULED",
             "step_key": "remove_background",
-            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-            "at": "2026-11-01T10:56:59.040482+00:00",
+            "attempt_id": "5ea4833e-b54a-4239-985d-a006922f763f",
+            "at": "2026-11-01T11:10:27.572541+00:00",
             "payload": {
-              "next_run_at": "2026-11-01T10:56:59.242429+00:00"
+              "next_run_at": "2026-11-01T11:10:27.773119+00:00"
             }
           },
           {
-            "id": "a167199d-f1a6-412a-907f-45338dd62ffd",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "3cf13602-5504-46bd-8156-ab6a57b8eda0",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 15,
             "epoch": 1,
             "type": "EXECUTOR_STOP_CONFIRMED",
             "step_key": "remove_background",
-            "attempt_id": "8a41caf2-870d-47e8-ac0e-ca64356fef8d",
-            "at": "2026-11-01T10:56:59.049953+00:00",
+            "attempt_id": "5ea4833e-b54a-4239-985d-a006922f763f",
+            "at": "2026-11-01T11:10:27.579642+00:00",
             "payload": {}
           },
           {
-            "id": "518adb04-aaf8-4320-b8a9-ee808b755a79",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "01edb2d6-cdcf-445e-b66a-ee01c54a2715",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 16,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "remove_background",
             "attempt_id": null,
-            "at": "2026-11-01T10:56:59.274796+00:00",
+            "at": "2026-11-01T11:10:27.800067+00:00",
             "payload": {}
           },
           {
-            "id": "554cfcea-bf32-4982-a1c5-d065f63607f5",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "dc027264-15fb-4744-9fbe-2bda437ff4e1",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 17,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "remove_background",
-            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
-            "at": "2026-11-01T10:56:59.294348+00:00",
+            "attempt_id": "bd86ed8f-baec-44b8-97bd-b3c3580f9561",
+            "at": "2026-11-01T11:10:27.815883+00:00",
             "payload": {
               "fence": 2,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "b7e08487-a19f-4fe2-b3cc-5e983512f4e9",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "13dfb603-0fb4-4aba-8640-ebea61557ec1",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 18,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "remove_background",
-            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
-            "at": "2026-11-01T10:56:59.307648+00:00",
+            "attempt_id": "bd86ed8f-baec-44b8-97bd-b3c3580f9561",
+            "at": "2026-11-01T11:10:27.831068+00:00",
             "payload": {
               "pid": 9
             }
           },
           {
-            "id": "167d3d6b-f58f-4d22-9555-4da460758f62",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "330da5b4-6c97-4ee7-a5a4-3c410add0427",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 19,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "remove_background",
-            "attempt_id": "c2924426-91a0-49f3-bc8b-25cb1d08198e",
-            "at": "2026-11-01T10:57:14.735428+00:00",
+            "attempt_id": "bd86ed8f-baec-44b8-97bd-b3c3580f9561",
+            "at": "2026-11-01T11:10:43.204469+00:00",
             "payload": {
               "fence": 2,
-              "artifact_id": "bc9fb58b-8152-4008-b1a2-4f6ba4742f25"
+              "artifact_id": "761b1b8a-607e-43a1-8716-e67abbfad7ab"
             }
           },
           {
-            "id": "046babb7-0701-4964-a528-a5c7ff673716",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "0fb40bde-aac1-4490-9b0c-c18104031815",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 20,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "enhance_frames",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:14.738870+00:00",
+            "at": "2026-11-01T11:10:43.207478+00:00",
             "payload": {}
           },
           {
-            "id": "15630fe7-05df-4066-a1a6-062ef5378942",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "bc0297fb-8b25-4652-96a3-f6cc23e5f234",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 21,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "enhance_frames",
-            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
-            "at": "2026-11-01T10:57:14.753270+00:00",
+            "attempt_id": "993e19b8-428e-445c-bf80-7019ef1dd2b8",
+            "at": "2026-11-01T11:10:43.219056+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "ec14337c-1eb4-4ed6-9a27-a4cfd470b2ce",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "369beb86-fdea-4b0b-b36c-1d3a5d9ef37f",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 22,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "enhance_frames",
-            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
-            "at": "2026-11-01T10:57:14.767212+00:00",
+            "attempt_id": "993e19b8-428e-445c-bf80-7019ef1dd2b8",
+            "at": "2026-11-01T11:10:43.231842+00:00",
             "payload": {
               "pid": 10
             }
           },
           {
-            "id": "d101b714-7c69-4d6d-82b4-826c440ee4c7",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "6a9cc3d9-4fe9-4fdb-aad2-0c30fb7d751f",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 23,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "enhance_frames",
-            "attempt_id": "5bbc689f-37d2-43fe-87ae-4f1306576d75",
-            "at": "2026-11-01T10:57:15.346975+00:00",
+            "attempt_id": "993e19b8-428e-445c-bf80-7019ef1dd2b8",
+            "at": "2026-11-01T11:10:43.815617+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "0509c702-1291-4058-a412-f6ffc89bd589"
+              "artifact_id": "a83f9d31-715b-4361-bdc2-b8b8d9ae0053"
             }
           },
           {
-            "id": "0ddfb568-df14-4c21-a7df-5a1d3b66c4d0",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "9bb741f8-28df-4cc2-be5d-7bb5097c2db5",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 24,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "build_atlas",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:15.349270+00:00",
+            "at": "2026-11-01T11:10:43.817989+00:00",
             "payload": {}
           },
           {
-            "id": "9a07f77d-b893-4028-aede-c0c6b8112e1f",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "fc4cfa41-303e-40e8-8107-5565884002f3",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 25,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "render_preview",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:15.349523+00:00",
+            "at": "2026-11-01T11:10:43.818276+00:00",
             "payload": {}
           },
           {
-            "id": "ddb72618-5295-4bd2-a419-c78038fe4d76",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "24acebfc-e379-4d7f-b7ff-217b159bc844",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 26,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "build_atlas",
-            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
-            "at": "2026-11-01T10:57:15.363838+00:00",
+            "attempt_id": "9c9ae981-69db-420f-a6f8-77dcc5205caf",
+            "at": "2026-11-01T11:10:43.832864+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "088fbab9-4882-4c74-98fa-c95ecf2a839d",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "1b295da0-aa2c-4450-81a8-8b45d62e6dc1",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 27,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "build_atlas",
-            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
-            "at": "2026-11-01T10:57:15.376130+00:00",
+            "attempt_id": "9c9ae981-69db-420f-a6f8-77dcc5205caf",
+            "at": "2026-11-01T11:10:43.845026+00:00",
             "payload": {
               "pid": 11
             }
           },
           {
-            "id": "a4737e94-b2dc-4556-b18a-5d6766d3e910",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "16db5596-471d-45ba-afe0-b8afdad92c31",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 28,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "render_preview",
-            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
-            "at": "2026-11-01T10:57:15.523851+00:00",
+            "attempt_id": "9eca0ed6-0bb5-4a91-8312-66069d433f38",
+            "at": "2026-11-01T11:10:43.967308+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-1"
             }
           },
           {
-            "id": "d5b538f1-2cb2-4138-a4c1-56389c31cf92",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "24d1b7a3-eb34-4090-a47c-49a0e4e3f707",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 29,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "render_preview",
-            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
-            "at": "2026-11-01T10:57:15.540348+00:00",
+            "attempt_id": "9eca0ed6-0bb5-4a91-8312-66069d433f38",
+            "at": "2026-11-01T11:10:43.980855+00:00",
             "payload": {
               "pid": 12
             }
           },
           {
-            "id": "e2afa7c4-d710-48a4-a851-ce75308a314d",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "afaa918b-bb5b-4ecb-a86b-0346d6026604",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 30,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "build_atlas",
-            "attempt_id": "1a8d4b79-836a-4c60-b64e-08ded16e865d",
-            "at": "2026-11-01T10:57:16.209081+00:00",
+            "attempt_id": "9c9ae981-69db-420f-a6f8-77dcc5205caf",
+            "at": "2026-11-01T11:10:44.612327+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "20c406b3-9da1-4a50-ab2b-124fe4103d7d"
+              "artifact_id": "fec1e1d3-2d1d-4061-9d94-e6773a89ec52"
             }
           },
           {
-            "id": "ede57216-9cf4-4703-bfc7-6e49bc81abe6",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "039ae370-c8fd-41a5-8209-fd9c18fa3548",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 31,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "render_preview",
-            "attempt_id": "cf5b43c4-9d18-4b90-a814-04d420157d7c",
-            "at": "2026-11-01T10:57:16.343068+00:00",
+            "attempt_id": "9eca0ed6-0bb5-4a91-8312-66069d433f38",
+            "at": "2026-11-01T11:10:44.862818+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "034a9e70-040d-4c3e-a841-1299acc88640"
+              "artifact_id": "8259dc12-3bef-4c93-910e-a9d0482dcf36"
             }
           },
           {
-            "id": "d78c32f2-f29c-4cb7-90ca-c638e6b9d282",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "8f489c18-df8c-419d-b166-605ac9d16b54",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 32,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "package",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:16.345687+00:00",
+            "at": "2026-11-01T11:10:44.865715+00:00",
             "payload": {}
           },
           {
-            "id": "17da4a5b-d9e1-4f4f-8f4c-f0448c1bd2a2",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "9d14ac5a-fdbc-4b55-b479-01d1fbcdbd9d",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 33,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "package",
-            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
-            "at": "2026-11-01T10:57:16.363115+00:00",
+            "attempt_id": "be567c6e-3bc2-4a61-8188-74abbacf420c",
+            "at": "2026-11-01T11:10:44.882133+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "fe19c58d-a316-4dfa-b97b-6dd271ea472c",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "3cc65436-735f-4b03-834f-fd27d3e7e74e",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 34,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "package",
-            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
-            "at": "2026-11-01T10:57:16.376602+00:00",
+            "attempt_id": "be567c6e-3bc2-4a61-8188-74abbacf420c",
+            "at": "2026-11-01T11:10:44.895524+00:00",
             "payload": {
               "pid": 13
             }
           },
           {
-            "id": "7ae047f4-f2b9-4d91-ba65-c4cb02a46c6d",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "0efb56af-74ac-4c97-a7ba-1b2f8475ed97",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 35,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "package",
-            "attempt_id": "2959d00a-77a1-45a5-b050-f49bc701cdbc",
-            "at": "2026-11-01T10:57:16.953357+00:00",
+            "attempt_id": "be567c6e-3bc2-4a61-8188-74abbacf420c",
+            "at": "2026-11-01T11:10:45.467026+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "2ccf97d1-d11e-46cf-918f-12f94630e5c4"
+              "artifact_id": "6cc1000b-885a-4698-aeca-c6d8acdce822"
             }
           },
           {
-            "id": "26162ef0-5c7a-4596-911d-2bf5775cbf16",
-            "task_id": "c328a3d9-6e84-4e68-9133-c5072e30bb0a",
+            "id": "00b411e6-bad2-4f4b-8152-3dac1b8807ae",
+            "task_id": "be815cf8-970b-4730-9f2b-d57673105b8d",
             "seq": 36,
             "epoch": 1,
             "type": "TASK_SUCCEEDED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:57:16.955737+00:00",
+            "at": "2026-11-01T11:10:45.468854+00:00",
             "payload": {}
           }
         ]
@@ -1167,16 +1181,17 @@
         "A22"
       ],
       "passed": true,
-      "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
-      "old_attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
+      "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
+      "old_attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+      "old_executor_stopped_while_db_down": true,
       "api_while_db_down": {
         "code": "DATABASE_UNAVAILABLE",
         "message": "数据库暂不可用，请稍后重试",
         "retryable": true,
-        "request_id": "571ea932-718b-4ad0-b352-8fd38f363753"
+        "request_id": "00c93786-7135-4920-926b-6bd7a9948c32"
       },
       "snapshot": {
-        "id": "bd0193fe-d688-494b-b182-d37c38758880",
+        "id": "bc461daa-64b4-4452-8b75-368fa64e7260",
         "request": {
           "name": "E2E · PostgreSQL outage",
           "asset_id": "orbit",
@@ -1203,7 +1218,8 @@
             "deps": [],
             "name": "校验素材",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "normalize_extract",
@@ -1214,7 +1230,8 @@
             "params": [
               "fps"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "remove_background",
@@ -1226,7 +1243,8 @@
               "matte_model",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "enhance_frames",
@@ -1239,7 +1257,8 @@
               "size",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "build_atlas",
@@ -1250,7 +1269,8 @@
             "params": [
               "atlas_columns"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "render_preview",
@@ -1261,7 +1281,8 @@
             "params": [
               "preview_format"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-2"
           },
           {
             "key": "package",
@@ -1271,7 +1292,8 @@
             ],
             "name": "打包产物",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           }
         ],
         "status": "SUCCEEDED",
@@ -1279,63 +1301,64 @@
         "revision": 37,
         "event_seq": 36,
         "stop_reason": null,
-        "created_at": "2026-11-01T10:57:17.101283+00:00",
-        "epoch_started_at": "2026-11-01T10:57:17.101283+00:00",
-        "deadline_at": "2026-11-01T11:27:17.101283+00:00",
-        "finished_at": "2026-11-01T10:57:44.941342+00:00",
+        "created_at": "2026-11-01T11:10:45.622994+00:00",
+        "epoch_started_at": "2026-11-01T11:10:45.622994+00:00",
+        "deadline_at": "2026-11-01T11:40:45.622994+00:00",
+        "finished_at": "2026-11-01T11:11:14.146243+00:00",
         "steps": [
           {
-            "id": "d2bbb095-f63f-4932-95a1-a6dc1ae3651c",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "01192765-272f-475d-9b83-b9854f196604",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "inspect",
             "spec": {
               "key": "inspect",
               "deps": [],
               "name": "校验素材",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:17.167715+00:00",
+            "ready_at": "2026-11-01T11:10:45.679585+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "639ad54a-f4b7-4164-a845-a03c6a45974d",
+            "artifact_id": "52b0b345-d3e1-4605-8cf5-2fc2e2278c41",
             "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:10:46.277480+00:00",
             "attempts": [
               {
-                "id": "c03f7736-fb6a-4506-8747-64b30cae281c",
-                "step_id": "d2bbb095-f63f-4932-95a1-a6dc1ae3651c",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "3f013311-d1d0-46b1-8bad-6da0f591a84b",
+                "step_id": "01192765-272f-475d-9b83-b9854f196604",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:17.181014+00:00",
-                "started_at": "2026-11-01T10:57:17.194907+00:00",
-                "heartbeat_at": "2026-11-01T10:57:17.315002+00:00",
-                "lease_expires_at": "2026-11-01T10:57:21.315002+00:00",
-                "run_deadline_at": "2026-11-01T10:59:17.194907+00:00",
-                "finished_at": "2026-11-01T10:57:17.769467+00:00",
+                "claimed_at": "2026-11-01T11:10:45.690711+00:00",
+                "started_at": "2026-11-01T11:10:45.703895+00:00",
+                "heartbeat_at": "2026-11-01T11:10:46.048724+00:00",
+                "lease_expires_at": "2026-11-01T11:10:50.048724+00:00",
+                "run_deadline_at": "2026-11-01T11:12:45.703895+00:00",
+                "finished_at": "2026-11-01T11:10:46.277275+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 14,
-                "executor_created": 1793530636.85,
+                "executor_created": 1793531445.4,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
               }
             ],
             "artifact": {
-              "id": "639ad54a-f4b7-4164-a845-a03c6a45974d",
-              "producer_attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
+              "id": "52b0b345-d3e1-4605-8cf5-2fc2e2278c41",
+              "producer_attempt_id": "3f013311-d1d0-46b1-8bad-6da0f591a84b",
               "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
               "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
               "manifest": {
@@ -1352,13 +1375,13 @@
                 "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:17.768685+00:00",
+              "created_at": "2026-11-01T11:10:46.276418+00:00",
               "available": true
             }
           },
           {
-            "id": "a593e2bd-1d45-470f-a201-084882a899cc",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "d26e8e1a-eb4a-435b-b719-760bb1b09b8c",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "normalize_extract",
             "spec": {
               "key": "normalize_extract",
@@ -1369,49 +1392,50 @@
               "params": [
                 "fps"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:17.773529+00:00",
+            "ready_at": "2026-11-01T11:10:46.281489+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "7b1da665-e7b5-457e-9086-f43c699e3698",
+            "artifact_id": "564e9fb3-3b69-491a-8516-d79e25ab7e43",
             "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:10:46.872986+00:00",
             "attempts": [
               {
-                "id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
-                "step_id": "a593e2bd-1d45-470f-a201-084882a899cc",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "6cd72789-87fc-4ef1-8a33-0981381bc0f7",
+                "step_id": "d26e8e1a-eb4a-435b-b719-760bb1b09b8c",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:17.784455+00:00",
-                "started_at": "2026-11-01T10:57:17.798437+00:00",
-                "heartbeat_at": "2026-11-01T10:57:17.926463+00:00",
-                "lease_expires_at": "2026-11-01T10:57:21.926463+00:00",
-                "run_deadline_at": "2026-11-01T10:59:17.798437+00:00",
-                "finished_at": "2026-11-01T10:57:18.383434+00:00",
+                "claimed_at": "2026-11-01T11:10:46.292497+00:00",
+                "started_at": "2026-11-01T11:10:46.304159+00:00",
+                "heartbeat_at": "2026-11-01T11:10:46.643782+00:00",
+                "lease_expires_at": "2026-11-01T11:10:50.643782+00:00",
+                "run_deadline_at": "2026-11-01T11:12:46.304159+00:00",
+                "finished_at": "2026-11-01T11:10:46.872815+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
                 "executor_pid": 15,
-                "executor_created": 1793530637.46,
+                "executor_created": 1793531446.0,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
               }
             ],
             "artifact": {
-              "id": "7b1da665-e7b5-457e-9086-f43c699e3698",
-              "producer_attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
+              "id": "564e9fb3-3b69-491a-8516-d79e25ab7e43",
+              "producer_attempt_id": "6cd72789-87fc-4ef1-8a33-0981381bc0f7",
               "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
               "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
               "manifest": {
@@ -1428,13 +1452,13 @@
                 "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:18.382569+00:00",
+              "created_at": "2026-11-01T11:10:46.872045+00:00",
               "available": true
             }
           },
           {
-            "id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "d2da1962-0088-4ca5-8d4d-bb35ec700a6d",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "remove_background",
             "spec": {
               "key": "remove_background",
@@ -1446,74 +1470,75 @@
                 "matte_model",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 2,
             "current_attempt_id": null,
-            "next_run_at": "2026-11-01T10:57:27.387098+00:00",
-            "ready_at": "2026-11-01T10:57:27.414507+00:00",
+            "next_run_at": null,
+            "ready_at": "2026-11-01T11:10:56.506435+00:00",
             "wait_reason": null,
-            "error": "LEASE_EXPIRED",
-            "artifact_id": "54d496f6-b9d0-4035-8a53-c9e266768df1",
+            "error": null,
+            "artifact_id": "04ba2633-af03-48ac-8b64-b646cee4feb9",
             "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:41.444907+00:00",
+            "last_progress_at": "2026-11-01T11:11:11.951077+00:00",
             "attempts": [
               {
-                "id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-                "step_id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+                "step_id": "d2da1962-0088-4ca5-8d4d-bb35ec700a6d",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "LOST",
                 "phase": "EXECUTING",
-                "claimed_at": "2026-11-01T10:57:18.403499+00:00",
-                "started_at": "2026-11-01T10:57:18.418032+00:00",
-                "heartbeat_at": "2026-11-01T10:57:18.549163+00:00",
-                "lease_expires_at": "2026-11-01T10:57:22.549163+00:00",
-                "run_deadline_at": "2026-11-01T10:59:18.418032+00:00",
-                "finished_at": "2026-11-01T10:57:27.184980+00:00",
+                "claimed_at": "2026-11-01T11:10:46.889148+00:00",
+                "started_at": "2026-11-01T11:10:46.901601+00:00",
+                "heartbeat_at": "2026-11-01T11:10:46.889148+00:00",
+                "lease_expires_at": "2026-11-01T11:10:50.889148+00:00",
+                "run_deadline_at": "2026-11-01T11:12:46.901601+00:00",
+                "finished_at": "2026-11-01T11:10:56.278912+00:00",
                 "error_code": "LEASE_EXPIRED",
                 "error": "LEASE_EXPIRED",
                 "retryable": true,
                 "executor_pid": 16,
-                "executor_created": 1793530638.07,
+                "executor_created": 1793531446.59,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": null
               },
               {
-                "id": "368540b5-7fad-4810-9c1c-f404963b39e6",
-                "step_id": "91dbdb3c-66c0-4670-8143-4d78dd3380d7",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "d4fa644d-3959-429c-8129-a95bbab771cf",
+                "step_id": "d2da1962-0088-4ca5-8d4d-bb35ec700a6d",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 2,
                 "epoch": 1,
                 "fence": 2,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:27.430271+00:00",
-                "started_at": "2026-11-01T10:57:27.447062+00:00",
-                "heartbeat_at": "2026-11-01T10:57:42.577155+00:00",
-                "lease_expires_at": "2026-11-01T10:57:46.577155+00:00",
-                "run_deadline_at": "2026-11-01T10:59:27.447062+00:00",
-                "finished_at": "2026-11-01T10:57:42.805619+00:00",
+                "claimed_at": "2026-11-01T11:10:56.520840+00:00",
+                "started_at": "2026-11-01T11:10:56.535074+00:00",
+                "heartbeat_at": "2026-11-01T11:11:11.606149+00:00",
+                "lease_expires_at": "2026-11-01T11:11:15.606149+00:00",
+                "run_deadline_at": "2026-11-01T11:12:56.535074+00:00",
+                "finished_at": "2026-11-01T11:11:11.950824+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 17,
-                "executor_created": 1793530647.1,
+                "executor_pid": 23,
+                "executor_created": 1793531456.23,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
               }
             ],
             "artifact": {
-              "id": "54d496f6-b9d0-4035-8a53-c9e266768df1",
-              "producer_attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
+              "id": "04ba2633-af03-48ac-8b64-b646cee4feb9",
+              "producer_attempt_id": "d4fa644d-3959-429c-8129-a95bbab771cf",
               "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
               "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
               "manifest": {
@@ -1530,13 +1555,13 @@
                 "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:42.804718+00:00",
+              "created_at": "2026-11-01T11:11:11.949732+00:00",
               "available": true
             }
           },
           {
-            "id": "29e4407f-0d41-443d-b453-ce7463099888",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "2bad7271-8cca-4b18-8ddd-383dde94878d",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "enhance_frames",
             "spec": {
               "key": "enhance_frames",
@@ -1549,49 +1574,50 @@
                 "size",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:42.810333+00:00",
+            "ready_at": "2026-11-01T11:11:11.956446+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8",
+            "artifact_id": "4b6eb1b5-dd4d-4a9d-a73d-04351a863af8",
             "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:43.177168+00:00",
+            "last_progress_at": "2026-11-01T11:11:12.568763+00:00",
             "attempts": [
               {
-                "id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
-                "step_id": "29e4407f-0d41-443d-b453-ce7463099888",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "88c909c0-9055-4947-84bd-5aa3c0621723",
+                "step_id": "2bad7271-8cca-4b18-8ddd-383dde94878d",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:42.821249+00:00",
-                "started_at": "2026-11-01T10:57:42.834699+00:00",
-                "heartbeat_at": "2026-11-01T10:57:43.177168+00:00",
-                "lease_expires_at": "2026-11-01T10:57:47.177168+00:00",
-                "run_deadline_at": "2026-11-01T10:59:42.834699+00:00",
-                "finished_at": "2026-11-01T10:57:43.406147+00:00",
+                "claimed_at": "2026-11-01T11:11:11.970836+00:00",
+                "started_at": "2026-11-01T11:11:11.984438+00:00",
+                "heartbeat_at": "2026-11-01T11:11:12.220328+00:00",
+                "lease_expires_at": "2026-11-01T11:11:16.220328+00:00",
+                "run_deadline_at": "2026-11-01T11:13:11.984438+00:00",
+                "finished_at": "2026-11-01T11:11:12.568619+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 18,
-                "executor_created": 1793530662.49,
+                "executor_pid": 24,
+                "executor_created": 1793531471.68,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
               }
             ],
             "artifact": {
-              "id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8",
-              "producer_attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
+              "id": "4b6eb1b5-dd4d-4a9d-a73d-04351a863af8",
+              "producer_attempt_id": "88c909c0-9055-4947-84bd-5aa3c0621723",
               "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
               "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
               "manifest": {
@@ -1608,13 +1634,13 @@
                 "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:43.405436+00:00",
+              "created_at": "2026-11-01T11:11:12.567850+00:00",
               "available": true
             }
           },
           {
-            "id": "9803d95d-df2b-4288-b98b-27e9824fc467",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "851101db-19e6-4e75-99e7-17a82f187a48",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "build_atlas",
             "spec": {
               "key": "build_atlas",
@@ -1625,49 +1651,50 @@
               "params": [
                 "atlas_columns"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:43.410042+00:00",
+            "ready_at": "2026-11-01T11:11:12.573133+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68",
+            "artifact_id": "eba875ee-4f27-483a-be92-bb4bb62b78fd",
             "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:11:13.284586+00:00",
             "attempts": [
               {
-                "id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
-                "step_id": "9803d95d-df2b-4288-b98b-27e9824fc467",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "a917a7b2-9a36-4fbc-b06b-c6cc157f4026",
+                "step_id": "851101db-19e6-4e75-99e7-17a82f187a48",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:43.421394+00:00",
-                "started_at": "2026-11-01T10:57:43.434997+00:00",
-                "heartbeat_at": "2026-11-01T10:57:43.736606+00:00",
-                "lease_expires_at": "2026-11-01T10:57:47.736606+00:00",
-                "run_deadline_at": "2026-11-01T10:59:43.434997+00:00",
-                "finished_at": "2026-11-01T10:57:44.097016+00:00",
+                "claimed_at": "2026-11-01T11:11:12.585308+00:00",
+                "started_at": "2026-11-01T11:11:12.599274+00:00",
+                "heartbeat_at": "2026-11-01T11:11:12.872237+00:00",
+                "lease_expires_at": "2026-11-01T11:11:16.872237+00:00",
+                "run_deadline_at": "2026-11-01T11:13:12.599274+00:00",
+                "finished_at": "2026-11-01T11:11:13.284340+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 19,
-                "executor_created": 1793530663.09,
+                "executor_pid": 25,
+                "executor_created": 1793531472.29,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
               }
             ],
             "artifact": {
-              "id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68",
-              "producer_attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
+              "id": "eba875ee-4f27-483a-be92-bb4bb62b78fd",
+              "producer_attempt_id": "a917a7b2-9a36-4fbc-b06b-c6cc157f4026",
               "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
               "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
               "manifest": {
@@ -1689,13 +1716,13 @@
                 "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:44.096169+00:00",
+              "created_at": "2026-11-01T11:11:13.283419+00:00",
               "available": true
             }
           },
           {
-            "id": "087ed4ce-12ed-4ed7-927f-c6ef709fc3f8",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "8cdbadf3-1a37-424f-a8d6-58ddf8d388a3",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "render_preview",
             "spec": {
               "key": "render_preview",
@@ -1706,57 +1733,58 @@
               "params": [
                 "preview_format"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-2"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:43.410042+00:00",
+            "ready_at": "2026-11-01T11:11:12.573133+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "1389524d-8d15-49ad-95e6-073c769b62d8",
-            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "artifact_id": "bb184a72-1114-44d4-b0ec-7162e8f0d99b",
+            "cache_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:11:13.534425+00:00",
             "attempts": [
               {
-                "id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
-                "step_id": "087ed4ce-12ed-4ed7-927f-c6ef709fc3f8",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "35960843-edcf-4276-9cfe-5006fb6a9dcf",
+                "step_id": "8cdbadf3-1a37-424f-a8d6-58ddf8d388a3",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-1",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:43.557664+00:00",
-                "started_at": "2026-11-01T10:57:43.571884+00:00",
-                "heartbeat_at": "2026-11-01T10:57:43.745679+00:00",
-                "lease_expires_at": "2026-11-01T10:57:47.745679+00:00",
-                "run_deadline_at": "2026-11-01T10:59:43.571884+00:00",
-                "finished_at": "2026-11-01T10:57:44.336420+00:00",
+                "claimed_at": "2026-11-01T11:11:12.720830+00:00",
+                "started_at": "2026-11-01T11:11:12.736168+00:00",
+                "heartbeat_at": "2026-11-01T11:11:13.415303+00:00",
+                "lease_expires_at": "2026-11-01T11:11:17.415303+00:00",
+                "run_deadline_at": "2026-11-01T11:13:12.736168+00:00",
+                "finished_at": "2026-11-01T11:11:13.534272+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 20,
-                "executor_created": 1793530663.23,
+                "executor_pid": 26,
+                "executor_created": 1793531472.43,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+                "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f"
               }
             ],
             "artifact": {
-              "id": "1389524d-8d15-49ad-95e6-073c769b62d8",
-              "producer_attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
-              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
-              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "id": "bb184a72-1114-44d4-b0ec-7162e8f0d99b",
+              "producer_attempt_id": "35960843-edcf-4276-9cfe-5006fb6a9dcf",
+              "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f",
+              "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 421,
-                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                    "sha256": "093dbb4c58af462406846135533af650cdb0e8e909d2792f128bba61069f64ad"
                   },
                   {
                     "key": "preview.svg",
@@ -1766,17 +1794,17 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
-                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+                "semantic_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
+                "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:44.335834+00:00",
+              "created_at": "2026-11-01T11:11:13.533405+00:00",
               "available": true
             }
           },
           {
-            "id": "457fed19-c4fa-49e5-ac02-b06260f0a139",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "2ee0735f-964e-44ba-9c2d-3f13fd90ca68",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "key": "package",
             "spec": {
               "key": "package",
@@ -1786,57 +1814,58 @@
               ],
               "name": "打包产物",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:44.340558+00:00",
+            "ready_at": "2026-11-01T11:11:13.538068+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "71733703-f984-41c5-a639-e9b2413045c7",
-            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "artifact_id": "5f54f719-173c-411e-8b09-d30df16389f6",
+            "cache_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
             "progress": 100.0,
-            "last_progress_at": null,
+            "last_progress_at": "2026-11-01T11:11:14.140125+00:00",
             "attempts": [
               {
-                "id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
-                "step_id": "457fed19-c4fa-49e5-ac02-b06260f0a139",
-                "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+                "id": "bac4165d-c31a-4eec-bb8d-5a9deb2be137",
+                "step_id": "2ee0735f-964e-44ba-9c2d-3f13fd90ca68",
+                "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:44.351720+00:00",
-                "started_at": "2026-11-01T10:57:44.365851+00:00",
-                "heartbeat_at": "2026-11-01T10:57:44.351720+00:00",
-                "lease_expires_at": "2026-11-01T10:57:48.351720+00:00",
-                "run_deadline_at": "2026-11-01T10:59:44.365851+00:00",
-                "finished_at": "2026-11-01T10:57:44.937574+00:00",
+                "claimed_at": "2026-11-01T11:11:13.549000+00:00",
+                "started_at": "2026-11-01T11:11:13.562730+00:00",
+                "heartbeat_at": "2026-11-01T11:11:14.019057+00:00",
+                "lease_expires_at": "2026-11-01T11:11:18.019057+00:00",
+                "run_deadline_at": "2026-11-01T11:13:13.562730+00:00",
+                "finished_at": "2026-11-01T11:11:14.139850+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 21,
-                "executor_created": 1793530664.02,
+                "executor_pid": 27,
+                "executor_created": 1793531473.25,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+                "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d"
               }
             ],
             "artifact": {
-              "id": "71733703-f984-41c5-a639-e9b2413045c7",
-              "producer_attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
-              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
-              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "id": "5f54f719-173c-411e-8b09-d30df16389f6",
+              "producer_attempt_id": "bac4165d-c31a-4eec-bb8d-5a9deb2be137",
+              "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d",
+              "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 467,
-                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                    "sha256": "95f2f6910a90fd43ede3319727c698047488abba8fe40f61703f37a33ed1483d"
                   },
                   {
                     "key": "preview.svg",
@@ -1846,482 +1875,482 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
-                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+                "semantic_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
+                "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:44.936987+00:00",
+              "created_at": "2026-11-01T11:11:14.138922+00:00",
               "available": true
             }
           }
         ],
         "event_cursor": 36,
         "completed_steps": 7,
-        "server_time": "2026-11-01T10:57:45.048953+00:00",
+        "server_time": "2026-11-01T11:11:14.243133+00:00",
         "events": [
           {
-            "id": "dd61a6ff-d0ae-4ea5-8846-b06eee137c0f",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "62be1706-2a86-497a-96fa-1457b809784c",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 1,
             "epoch": 1,
             "type": "TASK_ACCEPTED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:57:17.105492+00:00",
+            "at": "2026-11-01T11:10:45.626464+00:00",
             "payload": {
               "pipeline": "animation-v1",
               "simulated": true
             }
           },
           {
-            "id": "c7e7b986-0040-4a10-8820-6d75fbcdb362",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "00d52137-2f4c-4ee5-87b4-20bc97956584",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 2,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "inspect",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:17.168103+00:00",
+            "at": "2026-11-01T11:10:45.679950+00:00",
             "payload": {}
           },
           {
-            "id": "9ff9eec9-d345-427f-b100-d5aab728ad8b",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "c811f34e-b9cd-41f8-8be6-244293dd8fb4",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 3,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "inspect",
-            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
-            "at": "2026-11-01T10:57:17.182312+00:00",
+            "attempt_id": "3f013311-d1d0-46b1-8bad-6da0f591a84b",
+            "at": "2026-11-01T11:10:45.691722+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "a05a05d2-c36b-4795-a74a-86a3279011be",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "dae95eb5-99ad-4ae7-af09-0f4e18abba38",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 4,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "inspect",
-            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
-            "at": "2026-11-01T10:57:17.195176+00:00",
+            "attempt_id": "3f013311-d1d0-46b1-8bad-6da0f591a84b",
+            "at": "2026-11-01T11:10:45.704192+00:00",
             "payload": {
               "pid": 14
             }
           },
           {
-            "id": "523d8845-b44f-447e-b291-558ab9f0eb6d",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "3ec5a480-4578-4080-acd2-8da28cad5ced",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 5,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "inspect",
-            "attempt_id": "c03f7736-fb6a-4506-8747-64b30cae281c",
-            "at": "2026-11-01T10:57:17.771847+00:00",
+            "attempt_id": "3f013311-d1d0-46b1-8bad-6da0f591a84b",
+            "at": "2026-11-01T11:10:46.279532+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "639ad54a-f4b7-4164-a845-a03c6a45974d"
+              "artifact_id": "52b0b345-d3e1-4605-8cf5-2fc2e2278c41"
             }
           },
           {
-            "id": "cef2bda7-c5e9-48f9-b949-a926c36be14f",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "e8223678-a28b-4fb1-81d7-fa36a27c2717",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 6,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "normalize_extract",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:17.773696+00:00",
+            "at": "2026-11-01T11:10:46.281655+00:00",
             "payload": {}
           },
           {
-            "id": "4a14798e-6882-47c2-9554-ab6ecb462923",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "397fe8e1-01aa-4d02-96ea-59b5dc388a1a",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 7,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "normalize_extract",
-            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
-            "at": "2026-11-01T10:57:17.785301+00:00",
+            "attempt_id": "6cd72789-87fc-4ef1-8a33-0981381bc0f7",
+            "at": "2026-11-01T11:10:46.293744+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "f17cec24-2da7-4418-85e6-eb85884bd16f",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "5c7c11ca-ec6f-478a-ad79-acc445c7b84b",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 8,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "normalize_extract",
-            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
-            "at": "2026-11-01T10:57:17.798786+00:00",
+            "attempt_id": "6cd72789-87fc-4ef1-8a33-0981381bc0f7",
+            "at": "2026-11-01T11:10:46.304385+00:00",
             "payload": {
               "pid": 15
             }
           },
           {
-            "id": "f87ece70-09c0-422e-b86b-598acdeacae6",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "1d218365-faab-4d26-a002-60174e5a8ea0",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 9,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "normalize_extract",
-            "attempt_id": "7117f2b8-7c00-42b3-87d4-b4bdebea747a",
-            "at": "2026-11-01T10:57:18.386141+00:00",
+            "attempt_id": "6cd72789-87fc-4ef1-8a33-0981381bc0f7",
+            "at": "2026-11-01T11:10:46.875446+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "7b1da665-e7b5-457e-9086-f43c699e3698"
+              "artifact_id": "564e9fb3-3b69-491a-8516-d79e25ab7e43"
             }
           },
           {
-            "id": "b3fbb618-3ae5-42f5-bed2-52ab7397b9a7",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "6f3d24d7-2f4c-41d9-a9de-1547e9b5e9d9",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 10,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "remove_background",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:18.388701+00:00",
+            "at": "2026-11-01T11:10:46.877857+00:00",
             "payload": {}
           },
           {
-            "id": "81227f1a-99ff-4f94-875c-25d44ce99d08",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "a68d3ac6-77e2-4331-b06e-f36ef090d6a3",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 11,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "remove_background",
-            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-            "at": "2026-11-01T10:57:18.404923+00:00",
+            "attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+            "at": "2026-11-01T11:10:46.890290+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "d4d4a167-6e55-47c3-8473-fc3daf239410",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "e750224e-3bbf-44c9-8c8d-bcbcd5c3486e",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 12,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "remove_background",
-            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-            "at": "2026-11-01T10:57:18.418407+00:00",
+            "attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+            "at": "2026-11-01T11:10:46.901887+00:00",
             "payload": {
               "pid": 16
             }
           },
           {
-            "id": "dc83aafc-3319-47dd-8ab6-9178cf794268",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "289153db-1e12-4440-820b-017f5da2e06a",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 13,
             "epoch": 1,
             "type": "ATTEMPT_LOST",
             "step_key": "remove_background",
-            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-            "at": "2026-11-01T10:57:27.186372+00:00",
+            "attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+            "at": "2026-11-01T11:10:56.280266+00:00",
             "payload": {
               "code": "LEASE_EXPIRED",
               "retryable": true
             }
           },
           {
-            "id": "8ced2fca-21c4-48f4-85a4-5dbc49c7d6d9",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "53ca3a53-200e-48f6-8e1a-6fec641e1b4a",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 14,
             "epoch": 1,
             "type": "STEP_RETRY_SCHEDULED",
             "step_key": "remove_background",
-            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-            "at": "2026-11-01T10:57:27.190088+00:00",
+            "attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+            "at": "2026-11-01T11:10:56.282755+00:00",
             "payload": {
-              "next_run_at": "2026-11-01T10:57:27.387098+00:00"
+              "next_run_at": "2026-11-01T11:10:56.493579+00:00"
             }
           },
           {
-            "id": "627904d0-b878-46d0-8b9d-cfcab1fdc37e",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "c4a493c1-6b5b-4b31-b561-e9913560bd55",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 15,
             "epoch": 1,
             "type": "EXECUTOR_STOP_CONFIRMED",
             "step_key": "remove_background",
-            "attempt_id": "1b98ebd0-43de-415a-9af4-f0378239e47a",
-            "at": "2026-11-01T10:57:27.197934+00:00",
+            "attempt_id": "bb14b971-5d96-43a9-9f8f-337ee9eaf708",
+            "at": "2026-11-01T11:10:56.289411+00:00",
             "payload": {}
           },
           {
-            "id": "45bf927e-fc8b-473b-ba82-006bba875198",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "6d04bf76-6489-434a-9495-f0b2df14f066",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 16,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "remove_background",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:27.414797+00:00",
+            "at": "2026-11-01T11:10:56.506732+00:00",
             "payload": {}
           },
           {
-            "id": "b531c211-76c9-46c5-bd99-6976d218787a",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "1cf0bbc7-4214-41ac-a6dc-37c177787b7b",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 17,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "remove_background",
-            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
-            "at": "2026-11-01T10:57:27.432369+00:00",
+            "attempt_id": "d4fa644d-3959-429c-8129-a95bbab771cf",
+            "at": "2026-11-01T11:10:56.522348+00:00",
             "payload": {
               "fence": 2,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "c960dcd9-815b-4952-883a-fdfee9d24418",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "7ad92fa1-690c-425a-924f-27e956a253fe",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 18,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "remove_background",
-            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
-            "at": "2026-11-01T10:57:27.447314+00:00",
+            "attempt_id": "d4fa644d-3959-429c-8129-a95bbab771cf",
+            "at": "2026-11-01T11:10:56.535428+00:00",
             "payload": {
-              "pid": 17
+              "pid": 23
             }
           },
           {
-            "id": "600d335d-b086-4643-b356-688420f1ac18",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "dcf44c33-131e-4493-acc1-8b59b1e0d570",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 19,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "remove_background",
-            "attempt_id": "368540b5-7fad-4810-9c1c-f404963b39e6",
-            "at": "2026-11-01T10:57:42.808036+00:00",
+            "attempt_id": "d4fa644d-3959-429c-8129-a95bbab771cf",
+            "at": "2026-11-01T11:11:11.954006+00:00",
             "payload": {
               "fence": 2,
-              "artifact_id": "54d496f6-b9d0-4035-8a53-c9e266768df1"
+              "artifact_id": "04ba2633-af03-48ac-8b64-b646cee4feb9"
             }
           },
           {
-            "id": "7db11fc8-ffe6-406f-9653-b30f679ca05f",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "5d0140f6-2d1f-4820-87cd-f6a1122d294d",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 20,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "enhance_frames",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:42.810508+00:00",
+            "at": "2026-11-01T11:11:11.956711+00:00",
             "payload": {}
           },
           {
-            "id": "9b94b660-134b-437c-8aa0-af54064e99ff",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "f4faa76a-be22-4f99-9dbb-63a76f90b04a",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 21,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "enhance_frames",
-            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
-            "at": "2026-11-01T10:57:42.822607+00:00",
+            "attempt_id": "88c909c0-9055-4947-84bd-5aa3c0621723",
+            "at": "2026-11-01T11:11:11.972184+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "583b35de-b2ba-4b23-bce3-cdc3e8854cc4",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "628fe385-efb3-4aeb-95c0-e07f3e845c04",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 22,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "enhance_frames",
-            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
-            "at": "2026-11-01T10:57:42.835061+00:00",
+            "attempt_id": "88c909c0-9055-4947-84bd-5aa3c0621723",
+            "at": "2026-11-01T11:11:11.984839+00:00",
             "payload": {
-              "pid": 18
+              "pid": 24
             }
           },
           {
-            "id": "25058b2d-9a52-4175-9c2e-4184364f6f75",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "af0d0efa-1221-4ca5-b82e-ed39b82f0d7f",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 23,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "enhance_frames",
-            "attempt_id": "ae71e12f-1b27-4e74-93aa-82a3e89c01a2",
-            "at": "2026-11-01T10:57:43.408005+00:00",
+            "attempt_id": "88c909c0-9055-4947-84bd-5aa3c0621723",
+            "at": "2026-11-01T11:11:12.570975+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "cb94bc59-9d21-4b7a-8197-989b16ab6bf8"
+              "artifact_id": "4b6eb1b5-dd4d-4a9d-a73d-04351a863af8"
             }
           },
           {
-            "id": "ef5ccc9a-fcfa-4790-ba36-d4d58769476a",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "e07e53c6-9ab0-4b75-bc0c-6cb8556f7a95",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 24,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "build_atlas",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:43.410189+00:00",
+            "at": "2026-11-01T11:11:12.573295+00:00",
             "payload": {}
           },
           {
-            "id": "f6d85ea8-3ce8-4826-b1a2-ea353e84a2c9",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "f52fe612-785c-48b1-b893-3a69b84be039",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 25,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "render_preview",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:43.410442+00:00",
+            "at": "2026-11-01T11:11:12.573602+00:00",
             "payload": {}
           },
           {
-            "id": "8bef9d80-b066-461a-aadc-1125b3b5ffeb",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "f3405a00-0d5b-4cc6-a137-7c65f018594f",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 26,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "build_atlas",
-            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
-            "at": "2026-11-01T10:57:43.422663+00:00",
+            "attempt_id": "a917a7b2-9a36-4fbc-b06b-c6cc157f4026",
+            "at": "2026-11-01T11:11:12.586284+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "6eb3eaa5-b2cb-4863-a744-74376991fe50",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "55332d01-6cd2-48ad-a2c9-8f3800a8398d",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 27,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "build_atlas",
-            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
-            "at": "2026-11-01T10:57:43.435474+00:00",
+            "attempt_id": "a917a7b2-9a36-4fbc-b06b-c6cc157f4026",
+            "at": "2026-11-01T11:11:12.599613+00:00",
             "payload": {
-              "pid": 19
+              "pid": 25
             }
           },
           {
-            "id": "16acca40-2685-4e87-8f6c-0ef30ce6adc4",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "52e44dbd-7606-467a-844f-206f7c8d3479",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 28,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "render_preview",
-            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
-            "at": "2026-11-01T10:57:43.558994+00:00",
+            "attempt_id": "35960843-edcf-4276-9cfe-5006fb6a9dcf",
+            "at": "2026-11-01T11:11:12.722336+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-1"
             }
           },
           {
-            "id": "f6cb466d-e16e-43cd-8a3e-3fc6d2649653",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "6f191c34-cd25-411f-9fd2-022e1fdc6cbd",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 29,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "render_preview",
-            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
-            "at": "2026-11-01T10:57:43.572241+00:00",
+            "attempt_id": "35960843-edcf-4276-9cfe-5006fb6a9dcf",
+            "at": "2026-11-01T11:11:12.750363+00:00",
             "payload": {
-              "pid": 20
+              "pid": 26
             }
           },
           {
-            "id": "5377ea6d-3321-46e1-9e0d-ddecc7d4b289",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "7de8a23b-c663-4dcf-b77c-d91ea9b4decf",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 30,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "build_atlas",
-            "attempt_id": "f3a1ddb1-272f-42f7-9c19-2aaa80bac306",
-            "at": "2026-11-01T10:57:44.099005+00:00",
+            "attempt_id": "a917a7b2-9a36-4fbc-b06b-c6cc157f4026",
+            "at": "2026-11-01T11:11:13.287153+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "1bf918a8-3ca4-49c9-b128-3823bc8efe68"
+              "artifact_id": "eba875ee-4f27-483a-be92-bb4bb62b78fd"
             }
           },
           {
-            "id": "9bb564ec-c727-414b-a147-5843300aaa13",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "01a36a4c-9b3d-4ed4-90fb-6c3b405f2932",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 31,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "render_preview",
-            "attempt_id": "fb3cb9c8-4048-4f8c-963f-44e63bf8910d",
-            "at": "2026-11-01T10:57:44.338504+00:00",
+            "attempt_id": "35960843-edcf-4276-9cfe-5006fb6a9dcf",
+            "at": "2026-11-01T11:11:13.536372+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "1389524d-8d15-49ad-95e6-073c769b62d8"
+              "artifact_id": "bb184a72-1114-44d4-b0ec-7162e8f0d99b"
             }
           },
           {
-            "id": "a1e7dd98-6838-4e0c-b984-8ba93a1f01b7",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "a40b5b3b-45c2-4b3a-83f1-01a102013a67",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 32,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "package",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:44.340692+00:00",
+            "at": "2026-11-01T11:11:13.538316+00:00",
             "payload": {}
           },
           {
-            "id": "c226bebd-c7f0-4579-83f3-769f76ed6e49",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "3e494b24-656b-4189-a463-83ab39a3f06b",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 33,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "package",
-            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
-            "at": "2026-11-01T10:57:44.352742+00:00",
+            "attempt_id": "bac4165d-c31a-4eec-bb8d-5a9deb2be137",
+            "at": "2026-11-01T11:11:13.549833+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "e3688c7e-17d3-46f3-a46f-d3b1750e3b9b",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "ad00213a-3c4f-401c-9b25-fadd30e9d046",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 34,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "package",
-            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
-            "at": "2026-11-01T10:57:44.366250+00:00",
+            "attempt_id": "bac4165d-c31a-4eec-bb8d-5a9deb2be137",
+            "at": "2026-11-01T11:11:13.563079+00:00",
             "payload": {
-              "pid": 21
+              "pid": 27
             }
           },
           {
-            "id": "7f76654d-1004-4d8a-9a16-765f68645831",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "b277ad22-ce49-45c7-8116-53c05d4f6bd1",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 35,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "package",
-            "attempt_id": "acd76064-91e5-47bd-aa4f-2937a70c1910",
-            "at": "2026-11-01T10:57:44.939742+00:00",
+            "attempt_id": "bac4165d-c31a-4eec-bb8d-5a9deb2be137",
+            "at": "2026-11-01T11:11:14.143051+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "71733703-f984-41c5-a639-e9b2413045c7"
+              "artifact_id": "5f54f719-173c-411e-8b09-d30df16389f6"
             }
           },
           {
-            "id": "c018d123-3ca2-4e50-9868-19a8e52ee708",
-            "task_id": "bd0193fe-d688-494b-b182-d37c38758880",
+            "id": "c6941dc2-16cd-43f5-959b-455dd13058c8",
+            "task_id": "bc461daa-64b4-4452-8b75-368fa64e7260",
             "seq": 36,
             "epoch": 1,
             "type": "TASK_SUCCEEDED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:57:44.941475+00:00",
+            "at": "2026-11-01T11:11:14.147326+00:00",
             "payload": {}
           }
         ]
@@ -2332,10 +2361,10 @@
         "A24"
       ],
       "passed": true,
-      "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+      "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
       "operation": "docker compose restart api",
       "snapshot": {
-        "id": "888d74a2-d157-442c-98b0-004d41922940",
+        "id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
         "request": {
           "name": "E2E · API restart",
           "asset_id": "orbit",
@@ -2362,7 +2391,8 @@
             "deps": [],
             "name": "校验素材",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "normalize_extract",
@@ -2373,7 +2403,8 @@
             "params": [
               "fps"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "remove_background",
@@ -2385,7 +2416,8 @@
               "matte_model",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "enhance_frames",
@@ -2398,7 +2430,8 @@
               "size",
               "seed"
             ],
-            "resource": "gpu"
+            "resource": "gpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "build_atlas",
@@ -2409,7 +2442,8 @@
             "params": [
               "atlas_columns"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           },
           {
             "key": "render_preview",
@@ -2420,7 +2454,8 @@
             "params": [
               "preview_format"
             ],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-2"
           },
           {
             "key": "package",
@@ -2430,7 +2465,8 @@
             ],
             "name": "打包产物",
             "params": [],
-            "resource": "cpu"
+            "resource": "cpu",
+            "processor_version": "mock-1"
           }
         ],
         "status": "SUCCEEDED",
@@ -2438,63 +2474,64 @@
         "revision": 31,
         "event_seq": 30,
         "stop_reason": null,
-        "created_at": "2026-11-01T10:57:45.063360+00:00",
-        "epoch_started_at": "2026-11-01T10:57:45.063360+00:00",
-        "deadline_at": "2026-11-01T11:27:45.063360+00:00",
-        "finished_at": "2026-11-01T10:57:52.783600+00:00",
+        "created_at": "2026-11-01T11:11:14.266331+00:00",
+        "epoch_started_at": "2026-11-01T11:11:14.266331+00:00",
+        "deadline_at": "2026-11-01T11:41:14.266331+00:00",
+        "finished_at": "2026-11-01T11:11:22.101621+00:00",
         "steps": [
           {
-            "id": "8c7b6251-4a0a-4d26-a568-17fff5b61d0a",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "c37cd265-2dd3-4419-9905-9cf67e77db9f",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "inspect",
             "spec": {
               "key": "inspect",
               "deps": [],
               "name": "校验素材",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:45.152798+00:00",
+            "ready_at": "2026-11-01T11:11:14.368330+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358",
+            "artifact_id": "85faf976-b53c-4fee-b725-6701ff6f11f5",
             "cache_key": "17c98e90a2e70aca5cde350dc3aea8db2c8c8d2991cb2124a03e9dc4d18d3d87",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:46.079240+00:00",
+            "last_progress_at": "2026-11-01T11:11:15.703834+00:00",
             "attempts": [
               {
-                "id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
-                "step_id": "8c7b6251-4a0a-4d26-a568-17fff5b61d0a",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "0115accc-d5c2-46b9-a7ec-ae762ef06c09",
+                "step_id": "c37cd265-2dd3-4419-9905-9cf67e77db9f",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:45.163881+00:00",
-                "started_at": "2026-11-01T10:57:45.175128+00:00",
-                "heartbeat_at": "2026-11-01T10:57:46.079240+00:00",
-                "lease_expires_at": "2026-11-01T10:57:50.079240+00:00",
-                "run_deadline_at": "2026-11-01T10:59:45.175128+00:00",
-                "finished_at": "2026-11-01T10:57:46.308050+00:00",
+                "claimed_at": "2026-11-01T11:11:14.391809+00:00",
+                "started_at": "2026-11-01T11:11:14.413781+00:00",
+                "heartbeat_at": "2026-11-01T11:11:15.131834+00:00",
+                "lease_expires_at": "2026-11-01T11:11:19.131834+00:00",
+                "run_deadline_at": "2026-11-01T11:13:14.413781+00:00",
+                "finished_at": "2026-11-01T11:11:15.703599+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 22,
-                "executor_created": 1793530664.83,
+                "executor_pid": 28,
+                "executor_created": 1793531474.1,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82"
               }
             ],
             "artifact": {
-              "id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358",
-              "producer_attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
+              "id": "85faf976-b53c-4fee-b725-6701ff6f11f5",
+              "producer_attempt_id": "0115accc-d5c2-46b9-a7ec-ae762ef06c09",
               "manifest_digest": "68e55320220756ccfdfb771077ed44f63bae39882ddb8ef9efab22414ac74c82",
               "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175",
               "manifest": {
@@ -2511,13 +2548,13 @@
                 "content_digest": "20f3d41ba883afb24c4ee4e03f64bbd5297fc53a9da6dee47d3231734b7f7175"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:46.307459+00:00",
+              "created_at": "2026-11-01T11:11:15.702796+00:00",
               "available": true
             }
           },
           {
-            "id": "cddf615b-f53e-4188-bf22-bc5a30798a8a",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "382833d7-e9b9-40c5-8b70-ead13bd3c7b7",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "normalize_extract",
             "spec": {
               "key": "normalize_extract",
@@ -2528,49 +2565,50 @@
               "params": [
                 "fps"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:46.311746+00:00",
+            "ready_at": "2026-11-01T11:11:15.708366+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e",
+            "artifact_id": "41e051dd-d1f5-4052-98c0-855708bd0f04",
             "cache_key": "7f4ca3d64d661c8be1ac5a3a08d1da81e7c4437c3b96c3526c4fef373a77047e",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:47.266038+00:00",
+            "last_progress_at": "2026-11-01T11:11:16.901050+00:00",
             "attempts": [
               {
-                "id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
-                "step_id": "cddf615b-f53e-4188-bf22-bc5a30798a8a",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "d4ece9df-a775-47a2-b706-adf3657cdbd9",
+                "step_id": "382833d7-e9b9-40c5-8b70-ead13bd3c7b7",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:46.321980+00:00",
-                "started_at": "2026-11-01T10:57:46.334146+00:00",
-                "heartbeat_at": "2026-11-01T10:57:47.266038+00:00",
-                "lease_expires_at": "2026-11-01T10:57:51.266038+00:00",
-                "run_deadline_at": "2026-11-01T10:59:46.334146+00:00",
-                "finished_at": "2026-11-01T10:57:47.498090+00:00",
+                "claimed_at": "2026-11-01T11:11:15.720248+00:00",
+                "started_at": "2026-11-01T11:11:15.734153+00:00",
+                "heartbeat_at": "2026-11-01T11:11:16.313719+00:00",
+                "lease_expires_at": "2026-11-01T11:11:20.313719+00:00",
+                "run_deadline_at": "2026-11-01T11:13:15.734153+00:00",
+                "finished_at": "2026-11-01T11:11:16.900787+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 23,
-                "executor_created": 1793530665.99,
+                "executor_pid": 29,
+                "executor_created": 1793531475.43,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec"
               }
             ],
             "artifact": {
-              "id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e",
-              "producer_attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
+              "id": "41e051dd-d1f5-4052-98c0-855708bd0f04",
+              "producer_attempt_id": "d4ece9df-a775-47a2-b706-adf3657cdbd9",
               "manifest_digest": "8425058603561fd94b17bd0e0ea5940dddf86b0b239ed9f826944b44d5ca80ec",
               "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e",
               "manifest": {
@@ -2587,13 +2625,13 @@
                 "content_digest": "01f08100e3972f29fe70e2a7dd1c418f6df009cdcb3f8ee3e67255295adc106e"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:47.497205+00:00",
+              "created_at": "2026-11-01T11:11:16.899638+00:00",
               "available": true
             }
           },
           {
-            "id": "2816ea7e-eba6-4e9b-8eb3-e27203751ee6",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "7b743e9c-b206-4fe9-b83b-8f0efcfbe669",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "remove_background",
             "spec": {
               "key": "remove_background",
@@ -2605,49 +2643,50 @@
                 "matte_model",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:47.502962+00:00",
+            "ready_at": "2026-11-01T11:11:16.906791+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab",
+            "artifact_id": "159a556d-22d2-43f2-8903-14977187b5ac",
             "cache_key": "5302145170b11f2fa79003ab0f647d3f31cd043eafd22a336582c350a75ef755",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:48.460748+00:00",
+            "last_progress_at": "2026-11-01T11:11:18.214373+00:00",
             "attempts": [
               {
-                "id": "0ee31031-319a-42c5-bf27-930e79ac0327",
-                "step_id": "2816ea7e-eba6-4e9b-8eb3-e27203751ee6",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "14fa9bdc-82da-490a-9064-342eb2ec8247",
+                "step_id": "7b743e9c-b206-4fe9-b83b-8f0efcfbe669",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:47.517640+00:00",
-                "started_at": "2026-11-01T10:57:47.535195+00:00",
-                "heartbeat_at": "2026-11-01T10:57:48.460748+00:00",
-                "lease_expires_at": "2026-11-01T10:57:52.460748+00:00",
-                "run_deadline_at": "2026-11-01T10:59:47.535195+00:00",
-                "finished_at": "2026-11-01T10:57:48.818650+00:00",
+                "claimed_at": "2026-11-01T11:11:16.922158+00:00",
+                "started_at": "2026-11-01T11:11:16.939356+00:00",
+                "heartbeat_at": "2026-11-01T11:11:17.983628+00:00",
+                "lease_expires_at": "2026-11-01T11:11:21.983628+00:00",
+                "run_deadline_at": "2026-11-01T11:13:16.939356+00:00",
+                "finished_at": "2026-11-01T11:11:18.214153+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 24,
-                "executor_created": 1793530667.19,
+                "executor_pid": 30,
+                "executor_created": 1793531476.63,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142"
               }
             ],
             "artifact": {
-              "id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab",
-              "producer_attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
+              "id": "159a556d-22d2-43f2-8903-14977187b5ac",
+              "producer_attempt_id": "14fa9bdc-82da-490a-9064-342eb2ec8247",
               "manifest_digest": "c697d22155451ca91837ab31b3d9f2ee8af8b6649ce4cb9df3315b2031711142",
               "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3",
               "manifest": {
@@ -2664,13 +2703,13 @@
                 "content_digest": "7e9cb7c53190591ae016e6a71a476e2f23fe66818b4abab240b3ad34bc33bfe3"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:48.817595+00:00",
+              "created_at": "2026-11-01T11:11:18.213426+00:00",
               "available": true
             }
           },
           {
-            "id": "63429f59-787f-41b6-93c7-e120b06bf4ff",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "ea947c8d-5c46-4db9-b6ea-cb506cf6bba1",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "enhance_frames",
             "spec": {
               "key": "enhance_frames",
@@ -2683,49 +2722,50 @@
                 "size",
                 "seed"
               ],
-              "resource": "gpu"
+              "resource": "gpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:48.825113+00:00",
+            "ready_at": "2026-11-01T11:11:18.218545+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "b77ab709-b587-407a-991e-3bb28c60b1e4",
+            "artifact_id": "a35b944f-756c-49d0-ade4-eb2c5ae951a9",
             "cache_key": "fff708817133a872e5f331fef01e2d5177f6a09795e5750ce8795f871fb99b08",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:49.545306+00:00",
+            "last_progress_at": "2026-11-01T11:11:19.380053+00:00",
             "attempts": [
               {
-                "id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
-                "step_id": "63429f59-787f-41b6-93c7-e120b06bf4ff",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "b792f2fb-95f1-49d7-8278-486cd1ec352c",
+                "step_id": "ea947c8d-5c46-4db9-b6ea-cb506cf6bba1",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:mock-gpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:48.841220+00:00",
-                "started_at": "2026-11-01T10:57:48.858319+00:00",
-                "heartbeat_at": "2026-11-01T10:57:49.545306+00:00",
-                "lease_expires_at": "2026-11-01T10:57:53.545306+00:00",
-                "run_deadline_at": "2026-11-01T10:59:48.858319+00:00",
-                "finished_at": "2026-11-01T10:57:50.110040+00:00",
+                "claimed_at": "2026-11-01T11:11:18.230359+00:00",
+                "started_at": "2026-11-01T11:11:18.241381+00:00",
+                "heartbeat_at": "2026-11-01T11:11:19.151938+00:00",
+                "lease_expires_at": "2026-11-01T11:11:23.151938+00:00",
+                "run_deadline_at": "2026-11-01T11:13:18.241381+00:00",
+                "finished_at": "2026-11-01T11:11:19.379885+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 25,
-                "executor_created": 1793530668.52,
+                "executor_pid": 31,
+                "executor_created": 1793531477.93,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6"
               }
             ],
             "artifact": {
-              "id": "b77ab709-b587-407a-991e-3bb28c60b1e4",
-              "producer_attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
+              "id": "a35b944f-756c-49d0-ade4-eb2c5ae951a9",
+              "producer_attempt_id": "b792f2fb-95f1-49d7-8278-486cd1ec352c",
               "manifest_digest": "3c113c86a2cb940865711e9e602ffa50997503dae31bfbf46d4fa4055d632ee6",
               "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46",
               "manifest": {
@@ -2742,13 +2782,13 @@
                 "content_digest": "af948a7baa7835f3adbdba9355286b407d0cea687815917b75663841bc4d2f46"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:50.109437+00:00",
+              "created_at": "2026-11-01T11:11:19.379164+00:00",
               "available": true
             }
           },
           {
-            "id": "681b193d-9a8e-4de6-aa66-3494103c00c9",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "7b60d7d5-d5e8-4a43-be5f-27d8cf6d5e54",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "build_atlas",
             "spec": {
               "key": "build_atlas",
@@ -2759,49 +2799,50 @@
               "params": [
                 "atlas_columns"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:50.114215+00:00",
+            "ready_at": "2026-11-01T11:11:19.384211+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef",
+            "artifact_id": "d1950075-9302-47ca-ab0c-a46c29cbf503",
             "cache_key": "5965e9e8625c307e70ca34a377ec5a2866c5c0c0924a2919f48e7d639d1fb0ca",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:51.255099+00:00",
+            "last_progress_at": "2026-11-01T11:11:20.690289+00:00",
             "attempts": [
               {
-                "id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
-                "step_id": "681b193d-9a8e-4de6-aa66-3494103c00c9",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "a4aeb85c-14f8-4a84-8167-f3540466bebd",
+                "step_id": "7b60d7d5-d5e8-4a43-be5f-27d8cf6d5e54",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:50.127187+00:00",
-                "started_at": "2026-11-01T10:57:50.140756+00:00",
-                "heartbeat_at": "2026-11-01T10:57:51.255099+00:00",
-                "lease_expires_at": "2026-11-01T10:57:55.255099+00:00",
-                "run_deadline_at": "2026-11-01T10:59:50.140756+00:00",
-                "finished_at": "2026-11-01T10:57:51.381347+00:00",
+                "claimed_at": "2026-11-01T11:11:19.396714+00:00",
+                "started_at": "2026-11-01T11:11:19.408794+00:00",
+                "heartbeat_at": "2026-11-01T11:11:20.219592+00:00",
+                "lease_expires_at": "2026-11-01T11:11:24.219592+00:00",
+                "run_deadline_at": "2026-11-01T11:13:19.408794+00:00",
+                "finished_at": "2026-11-01T11:11:20.690130+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 26,
-                "executor_created": 1793530669.8,
+                "executor_pid": 32,
+                "executor_created": 1793531479.1,
                 "cleanup_state": "CONFIRMED",
                 "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae"
               }
             ],
             "artifact": {
-              "id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef",
-              "producer_attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
+              "id": "d1950075-9302-47ca-ab0c-a46c29cbf503",
+              "producer_attempt_id": "a4aeb85c-14f8-4a84-8167-f3540466bebd",
               "manifest_digest": "332c3a05d02d94525cc95f602bec96f7e2984ed0f65f37b41b0906b7ae6050ae",
               "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11",
               "manifest": {
@@ -2823,13 +2864,13 @@
                 "content_digest": "72d159a12bf23ea1a900bd093bb3a9d0259168f0988a2ab2f7e5afb1f54c0e11"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:51.380774+00:00",
+              "created_at": "2026-11-01T11:11:20.689264+00:00",
               "available": true
             }
           },
           {
-            "id": "80ae88d2-649a-4611-846b-84488a8b1aa7",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "e0f42a63-bbe9-499e-b2f9-5793cda0f00a",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "render_preview",
             "spec": {
               "key": "render_preview",
@@ -2840,57 +2881,58 @@
               "params": [
                 "preview_format"
               ],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-2"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:50.114215+00:00",
+            "ready_at": "2026-11-01T11:11:19.384211+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7",
-            "cache_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
+            "artifact_id": "2a559822-f30a-4f4b-9fd4-e32c073f051f",
+            "cache_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:51.262927+00:00",
+            "last_progress_at": "2026-11-01T11:11:20.936880+00:00",
             "attempts": [
               {
-                "id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
-                "step_id": "80ae88d2-649a-4611-846b-84488a8b1aa7",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "dbb39d3b-2749-4dbb-9374-c783a15a725c",
+                "step_id": "e0f42a63-bbe9-499e-b2f9-5793cda0f00a",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-1",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:50.263119+00:00",
-                "started_at": "2026-11-01T10:57:50.275796+00:00",
-                "heartbeat_at": "2026-11-01T10:57:51.262927+00:00",
-                "lease_expires_at": "2026-11-01T10:57:55.262927+00:00",
-                "run_deadline_at": "2026-11-01T10:59:50.275796+00:00",
-                "finished_at": "2026-11-01T10:57:51.617134+00:00",
+                "claimed_at": "2026-11-01T11:11:19.531332+00:00",
+                "started_at": "2026-11-01T11:11:19.560624+00:00",
+                "heartbeat_at": "2026-11-01T11:11:20.818290+00:00",
+                "lease_expires_at": "2026-11-01T11:11:24.818290+00:00",
+                "run_deadline_at": "2026-11-01T11:13:19.560624+00:00",
+                "finished_at": "2026-11-01T11:11:20.936746+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 27,
-                "executor_created": 1793530669.93,
+                "executor_pid": 33,
+                "executor_created": 1793531479.25,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1"
+                "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f"
               }
             ],
             "artifact": {
-              "id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7",
-              "producer_attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
-              "manifest_digest": "950a11e431441ab16e6a1291194672cf3035063bc319aad859fa92b8d11c9cf1",
-              "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c",
+              "id": "2a559822-f30a-4f4b-9fd4-e32c073f051f",
+              "producer_attempt_id": "dbb39d3b-2749-4dbb-9374-c783a15a725c",
+              "manifest_digest": "b9d8cd110f05e04111a8befc1d98bfc222c785aea5b11586b896bd3c6791d49f",
+              "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 421,
-                    "sha256": "f0eb3e86af21ce2301d9d6578991b4c02131d723046033b62940d3734c15511d"
+                    "sha256": "093dbb4c58af462406846135533af650cdb0e8e909d2792f128bba61069f64ad"
                   },
                   {
                     "key": "preview.svg",
@@ -2900,17 +2942,17 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "854607ad811a7458202d26d7c19ffb5ea8a5505453f15f8279ec2ee2cdaf8615",
-                "content_digest": "4a601dc254bcba6fa72fcc5cb754cb2cf473f96fdf297c1878fe4889f21add3c"
+                "semantic_key": "d707f37a022e1931aab97db06f1907d8e057b8ba8ccf76cf179de239f3f9e67d",
+                "content_digest": "79c5cedb849679d6b5be42b19fef04cc3f17bc0f531936d1a267a2e50469652d"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:51.616240+00:00",
+              "created_at": "2026-11-01T11:11:20.936113+00:00",
               "available": true
             }
           },
           {
-            "id": "2b643efa-38ee-46b6-b1d4-2c6a1479f6d4",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "204c71f3-17c5-40bc-8f0a-f048082d0352",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "key": "package",
             "spec": {
               "key": "package",
@@ -2920,57 +2962,58 @@
               ],
               "name": "打包产物",
               "params": [],
-              "resource": "cpu"
+              "resource": "cpu",
+              "processor_version": "mock-1"
             },
             "status": "SUCCEEDED",
             "fence": 1,
             "current_attempt_id": null,
             "next_run_at": null,
-            "ready_at": "2026-11-01T10:57:51.620832+00:00",
+            "ready_at": "2026-11-01T11:11:20.940959+00:00",
             "wait_reason": null,
             "error": null,
-            "artifact_id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a",
-            "cache_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
+            "artifact_id": "b0909ddb-557d-44c7-9fb8-cf875ddce5cb",
+            "cache_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
             "progress": 100.0,
-            "last_progress_at": "2026-11-01T10:57:52.329287+00:00",
+            "last_progress_at": "2026-11-01T11:11:22.097894+00:00",
             "attempts": [
               {
-                "id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
-                "step_id": "2b643efa-38ee-46b6-b1d4-2c6a1479f6d4",
-                "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+                "id": "8ab77878-2eed-4c49-883c-9e8774707983",
+                "step_id": "204c71f3-17c5-40bc-8f0a-f048082d0352",
+                "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
                 "number": 1,
                 "epoch": 1,
                 "fence": 1,
-                "worker_id": "9951ce2d-604b-4329-9339-adca5d4f4ed2",
+                "worker_id": "0ab22601-578e-4055-b4d4-2ff3d7b363aa",
                 "slot_id": "local:cpu-0",
                 "status": "SUCCEEDED",
                 "phase": "FINALIZING",
-                "claimed_at": "2026-11-01T10:57:51.632788+00:00",
-                "started_at": "2026-11-01T10:57:51.644799+00:00",
-                "heartbeat_at": "2026-11-01T10:57:52.329287+00:00",
-                "lease_expires_at": "2026-11-01T10:57:56.329287+00:00",
-                "run_deadline_at": "2026-11-01T10:59:51.644799+00:00",
-                "finished_at": "2026-11-01T10:57:52.780035+00:00",
+                "claimed_at": "2026-11-01T11:11:20.952346+00:00",
+                "started_at": "2026-11-01T11:11:20.965007+00:00",
+                "heartbeat_at": "2026-11-01T11:11:21.979029+00:00",
+                "lease_expires_at": "2026-11-01T11:11:25.979029+00:00",
+                "run_deadline_at": "2026-11-01T11:13:20.965007+00:00",
+                "finished_at": "2026-11-01T11:11:22.097760+00:00",
                 "error_code": null,
                 "error": null,
                 "retryable": false,
-                "executor_pid": 28,
-                "executor_created": 1793530671.3,
+                "executor_pid": 34,
+                "executor_created": 1793531480.66,
                 "cleanup_state": "CONFIRMED",
-                "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3"
+                "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d"
               }
             ],
             "artifact": {
-              "id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a",
-              "producer_attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
-              "manifest_digest": "b0eb3fbeac7aed71fb1f86bb57bc053fbbc021ca53c588213ce86ff2128dcee3",
-              "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6",
+              "id": "b0909ddb-557d-44c7-9fb8-cf875ddce5cb",
+              "producer_attempt_id": "8ab77878-2eed-4c49-883c-9e8774707983",
+              "manifest_digest": "70d352286a81615e5391d8f8a283e9c614598d9f7c3f94dcc69a9005464d220d",
+              "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965",
               "manifest": {
                 "files": [
                   {
                     "key": "output.json",
                     "size": 467,
-                    "sha256": "dbb1a4c7acb5621192af3e94dfebae4f9fa0fb4b9a2481ec3357b04357eda4b0"
+                    "sha256": "95f2f6910a90fd43ede3319727c698047488abba8fe40f61703f37a33ed1483d"
                   },
                   {
                     "key": "preview.svg",
@@ -2980,406 +3023,406 @@
                 ],
                 "schema": 1,
                 "simulated": true,
-                "semantic_key": "1b3d45fdeef4b088d634837c02832242c6f9b87dbe2b801a85fbdf72a65e6e09",
-                "content_digest": "e52d977e5f62cb1d2db06a5122cd3ea471193a0b3c7fff91f605425cf064f8e6"
+                "semantic_key": "720ae9fb2a33ff5755e4048e1910d2d48ee6ddcde3e0d1f1bfa2bf69430c5f66",
+                "content_digest": "d49f5d97194769c43e5cf939f683fe3e81c38bb8027d7ddfc027f98e2b0b0965"
               },
               "valid": true,
-              "created_at": "2026-11-01T10:57:52.779345+00:00",
+              "created_at": "2026-11-01T11:11:22.097138+00:00",
               "available": true
             }
           }
         ],
         "event_cursor": 30,
         "completed_steps": 7,
-        "server_time": "2026-11-01T10:57:52.926764+00:00",
+        "server_time": "2026-11-01T11:11:22.144744+00:00",
         "events": [
           {
-            "id": "2b76e0ec-4561-4222-8948-6152e759d0d1",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "280f52ef-d46b-4809-b7f2-46fa27ae9a04",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 1,
             "epoch": 1,
             "type": "TASK_ACCEPTED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:57:45.066787+00:00",
+            "at": "2026-11-01T11:11:14.271089+00:00",
             "payload": {
               "pipeline": "animation-v1",
               "simulated": true
             }
           },
           {
-            "id": "aadf49b8-04e1-4e65-9a3d-14ffbdb529a6",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "14af5953-ade1-4cbd-a16c-aed21d1be1b0",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 2,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "inspect",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:45.153027+00:00",
+            "at": "2026-11-01T11:11:14.368660+00:00",
             "payload": {}
           },
           {
-            "id": "ec82a06b-a03a-431c-97f8-6da56c16ea00",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "495beeb7-1cf9-4250-a3e7-5fbd5982a348",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 3,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "inspect",
-            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
-            "at": "2026-11-01T10:57:45.164902+00:00",
+            "attempt_id": "0115accc-d5c2-46b9-a7ec-ae762ef06c09",
+            "at": "2026-11-01T11:11:14.395127+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "d11abfad-e63f-447b-878b-9a53639301aa",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "862f632a-533f-40d8-81a6-a7543690cd80",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 4,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "inspect",
-            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
-            "at": "2026-11-01T10:57:45.175380+00:00",
+            "attempt_id": "0115accc-d5c2-46b9-a7ec-ae762ef06c09",
+            "at": "2026-11-01T11:11:14.414329+00:00",
             "payload": {
-              "pid": 22
+              "pid": 28
             }
           },
           {
-            "id": "b344549d-b9a6-48e3-b160-2d4dfa3a4af8",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "7e227825-5db7-43ba-a525-3819f0361d92",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 5,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "inspect",
-            "attempt_id": "32c4024e-04f2-4886-903b-8e64b4783eb2",
-            "at": "2026-11-01T10:57:46.310196+00:00",
+            "attempt_id": "0115accc-d5c2-46b9-a7ec-ae762ef06c09",
+            "at": "2026-11-01T11:11:15.706309+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "40bc30d9-fe2d-4433-ae2b-5c19c48af358"
+              "artifact_id": "85faf976-b53c-4fee-b725-6701ff6f11f5"
             }
           },
           {
-            "id": "36aaae11-563e-4878-9c74-b614936fed09",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "774c332f-36b9-44f0-ae4e-6eeb7d32e54b",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 6,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "normalize_extract",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:46.311876+00:00",
+            "at": "2026-11-01T11:11:15.708537+00:00",
             "payload": {}
           },
           {
-            "id": "92b4ef18-d75a-41d5-adb6-576da0db175c",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "191c362c-23e0-4d92-a29b-c337f69dcdec",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 7,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "normalize_extract",
-            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
-            "at": "2026-11-01T10:57:46.323067+00:00",
+            "attempt_id": "d4ece9df-a775-47a2-b706-adf3657cdbd9",
+            "at": "2026-11-01T11:11:15.721135+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "3f2b1a33-d732-468b-8a04-1a12c27cded3",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "8be43070-f120-4584-b735-8f44d48d029e",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 8,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "normalize_extract",
-            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
-            "at": "2026-11-01T10:57:46.334536+00:00",
+            "attempt_id": "d4ece9df-a775-47a2-b706-adf3657cdbd9",
+            "at": "2026-11-01T11:11:15.734503+00:00",
             "payload": {
-              "pid": 23
+              "pid": 29
             }
           },
           {
-            "id": "a1272f9c-fee2-41c1-b0e7-322bf65417a7",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "58b3bac1-8e3d-4793-9d80-52216c2f925c",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 9,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "normalize_extract",
-            "attempt_id": "895f258c-5a46-4327-ad50-6abb56d38bfc",
-            "at": "2026-11-01T10:57:47.500698+00:00",
+            "attempt_id": "d4ece9df-a775-47a2-b706-adf3657cdbd9",
+            "at": "2026-11-01T11:11:16.904146+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "fe14a360-d737-4b56-bcf4-c4cbf880f65e"
+              "artifact_id": "41e051dd-d1f5-4052-98c0-855708bd0f04"
             }
           },
           {
-            "id": "a2d14573-cdc2-43a0-8783-8f1c839fcf57",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "3888dfc1-ddba-4f59-8c82-e68893cc47be",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 10,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "remove_background",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:47.503153+00:00",
+            "at": "2026-11-01T11:11:16.907067+00:00",
             "payload": {}
           },
           {
-            "id": "a59d25a3-ea0d-44c8-98ce-cdcc7cde3468",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "c5f38570-5ee3-414a-b604-666f8a264093",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 11,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "remove_background",
-            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
-            "at": "2026-11-01T10:57:47.519093+00:00",
+            "attempt_id": "14fa9bdc-82da-490a-9064-342eb2ec8247",
+            "at": "2026-11-01T11:11:16.923970+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "a7274822-f9e5-408e-bee9-4a8090bf6b20",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "5ea80f9a-a21e-41d2-b914-04aa70995784",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 12,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "remove_background",
-            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
-            "at": "2026-11-01T10:57:47.535562+00:00",
+            "attempt_id": "14fa9bdc-82da-490a-9064-342eb2ec8247",
+            "at": "2026-11-01T11:11:16.939743+00:00",
             "payload": {
-              "pid": 24
+              "pid": 30
             }
           },
           {
-            "id": "67981cb6-58aa-400f-8ee2-b222907f0dda",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "d241130f-c66e-40e7-8495-b8f27b0aa536",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 13,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "remove_background",
-            "attempt_id": "0ee31031-319a-42c5-bf27-930e79ac0327",
-            "at": "2026-11-01T10:57:48.821999+00:00",
+            "attempt_id": "14fa9bdc-82da-490a-9064-342eb2ec8247",
+            "at": "2026-11-01T11:11:18.216426+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "69a9ad93-1ca8-4ff9-ae84-894c4affeaab"
+              "artifact_id": "159a556d-22d2-43f2-8903-14977187b5ac"
             }
           },
           {
-            "id": "b7586622-0073-4803-857d-1fd208f762e7",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "84e39883-204e-4611-b59d-d41fee47a820",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 14,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "enhance_frames",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:48.825419+00:00",
+            "at": "2026-11-01T11:11:18.218760+00:00",
             "payload": {}
           },
           {
-            "id": "3f66208c-3414-4657-8eea-dbb600d9bcc7",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "958a8445-ec99-48f0-8cf9-4f7c3455f72f",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 15,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "enhance_frames",
-            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
-            "at": "2026-11-01T10:57:48.842824+00:00",
+            "attempt_id": "b792f2fb-95f1-49d7-8278-486cd1ec352c",
+            "at": "2026-11-01T11:11:18.231315+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:mock-gpu-0"
             }
           },
           {
-            "id": "1aba9dc4-f69e-4998-a37e-797e33fa4d4d",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "4a2cf8da-5269-4915-be8d-180c79dc9746",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 16,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "enhance_frames",
-            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
-            "at": "2026-11-01T10:57:48.858741+00:00",
+            "attempt_id": "b792f2fb-95f1-49d7-8278-486cd1ec352c",
+            "at": "2026-11-01T11:11:18.241588+00:00",
             "payload": {
-              "pid": 25
+              "pid": 31
             }
           },
           {
-            "id": "30f070bf-4782-4c8e-a11d-73d1fe91e7be",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "259b7d39-1ec7-45b3-8106-ad10480600cf",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 17,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "enhance_frames",
-            "attempt_id": "4e364dcb-8095-4624-b40c-a7ef15fb8b0d",
-            "at": "2026-11-01T10:57:50.111943+00:00",
+            "attempt_id": "b792f2fb-95f1-49d7-8278-486cd1ec352c",
+            "at": "2026-11-01T11:11:19.382138+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "b77ab709-b587-407a-991e-3bb28c60b1e4"
+              "artifact_id": "a35b944f-756c-49d0-ade4-eb2c5ae951a9"
             }
           },
           {
-            "id": "bdd96815-bade-42ac-9e75-ebcb71fd568d",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "108449cd-17e2-4377-ab55-c1e78dec8015",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 18,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "build_atlas",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:50.114464+00:00",
+            "at": "2026-11-01T11:11:19.384388+00:00",
             "payload": {}
           },
           {
-            "id": "d216f13d-78c4-48ff-b5c7-934a586d0509",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "bc44349f-351d-4120-95c8-fbe7749896af",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 19,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "render_preview",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:50.114764+00:00",
+            "at": "2026-11-01T11:11:19.384643+00:00",
             "payload": {}
           },
           {
-            "id": "e899c5ce-b019-4fc3-a6e4-9283e2f17a14",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "04deb8ed-d7a8-4b44-b0cd-884f7ac3572a",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 20,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "build_atlas",
-            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
-            "at": "2026-11-01T10:57:50.128398+00:00",
+            "attempt_id": "a4aeb85c-14f8-4a84-8167-f3540466bebd",
+            "at": "2026-11-01T11:11:19.397841+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "5be2381f-db1b-4592-8246-23580b61c8ce",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "6ff32427-3695-4a0e-8ca3-abc2241111a3",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 21,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "build_atlas",
-            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
-            "at": "2026-11-01T10:57:50.141067+00:00",
+            "attempt_id": "a4aeb85c-14f8-4a84-8167-f3540466bebd",
+            "at": "2026-11-01T11:11:19.409113+00:00",
             "payload": {
-              "pid": 26
+              "pid": 32
             }
           },
           {
-            "id": "956c1765-15d3-4330-bcf6-1390a0bbc024",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "5940a57b-9c5b-43aa-a07c-43bd456e54f3",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 22,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "render_preview",
-            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
-            "at": "2026-11-01T10:57:50.264237+00:00",
+            "attempt_id": "dbb39d3b-2749-4dbb-9374-c783a15a725c",
+            "at": "2026-11-01T11:11:19.532368+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-1"
             }
           },
           {
-            "id": "5bdf903e-dd4e-4615-9b0f-c90f7f56344f",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "1de8c953-0ef6-405c-9f79-ac89ae8cf838",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 23,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "render_preview",
-            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
-            "at": "2026-11-01T10:57:50.276044+00:00",
+            "attempt_id": "dbb39d3b-2749-4dbb-9374-c783a15a725c",
+            "at": "2026-11-01T11:11:19.560915+00:00",
             "payload": {
-              "pid": 27
+              "pid": 33
             }
           },
           {
-            "id": "72019400-6711-416b-8cfd-344aecf58a56",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "2bf2441e-b9a7-4ab5-8b4e-c2b2568393f0",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 24,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "build_atlas",
-            "attempt_id": "c7294fed-a7c2-470b-bc81-8c07a9805775",
-            "at": "2026-11-01T10:57:51.383629+00:00",
+            "attempt_id": "a4aeb85c-14f8-4a84-8167-f3540466bebd",
+            "at": "2026-11-01T11:11:20.692880+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "5dc0f978-dc50-4892-a0fe-c8400b2662ef"
+              "artifact_id": "d1950075-9302-47ca-ab0c-a46c29cbf503"
             }
           },
           {
-            "id": "71dda8ac-5430-4895-92fc-fd8af21c8a73",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "56b6a49c-526b-4654-96d3-7a517841c932",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 25,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "render_preview",
-            "attempt_id": "0d7ff43b-4ff2-4ad4-8210-5aec624cbb70",
-            "at": "2026-11-01T10:57:51.618996+00:00",
+            "attempt_id": "dbb39d3b-2749-4dbb-9374-c783a15a725c",
+            "at": "2026-11-01T11:11:20.939102+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "7b2450f8-fbb1-4e8e-bcee-2dee4b4375b7"
+              "artifact_id": "2a559822-f30a-4f4b-9fd4-e32c073f051f"
             }
           },
           {
-            "id": "b4b833c5-28c6-4e40-88e7-871bef0a2a70",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "2c0725d7-f83a-4f55-a03e-cb736f60ef84",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 26,
             "epoch": 1,
             "type": "STEP_READY",
             "step_key": "package",
             "attempt_id": null,
-            "at": "2026-11-01T10:57:51.621089+00:00",
+            "at": "2026-11-01T11:11:20.941104+00:00",
             "payload": {}
           },
           {
-            "id": "7e16e7c1-f330-4d39-b5d1-e8a1519aec68",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "950ee61d-61f9-4423-9beb-a5779887e8b2",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 27,
             "epoch": 1,
             "type": "ATTEMPT_CLAIMED",
             "step_key": "package",
-            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
-            "at": "2026-11-01T10:57:51.633901+00:00",
+            "attempt_id": "8ab77878-2eed-4c49-883c-9e8774707983",
+            "at": "2026-11-01T11:11:20.953152+00:00",
             "payload": {
               "fence": 1,
               "slot_id": "local:cpu-0"
             }
           },
           {
-            "id": "b91c606d-5568-4304-b98f-deb85c20d4f9",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "b480086d-aead-4c14-8781-4b0b157eb0f6",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 28,
             "epoch": 1,
             "type": "ATTEMPT_STARTED",
             "step_key": "package",
-            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
-            "at": "2026-11-01T10:57:51.645028+00:00",
+            "attempt_id": "8ab77878-2eed-4c49-883c-9e8774707983",
+            "at": "2026-11-01T11:11:20.965242+00:00",
             "payload": {
-              "pid": 28
+              "pid": 34
             }
           },
           {
-            "id": "76b66bed-c955-4cd5-a099-b1173de7ed19",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "09a1e31f-8911-45cd-bf30-69bafd122ca8",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 29,
             "epoch": 1,
             "type": "ATTEMPT_SUCCEEDED",
             "step_key": "package",
-            "attempt_id": "16b7fba5-7a6a-4b36-a74a-758d23b83108",
-            "at": "2026-11-01T10:57:52.781800+00:00",
+            "attempt_id": "8ab77878-2eed-4c49-883c-9e8774707983",
+            "at": "2026-11-01T11:11:22.099654+00:00",
             "payload": {
               "fence": 1,
-              "artifact_id": "10d5b1e9-8a9d-4167-acc7-9777414fd95a"
+              "artifact_id": "b0909ddb-557d-44c7-9fb8-cf875ddce5cb"
             }
           },
           {
-            "id": "596d6876-4fc1-47c5-9f24-18fe808d8303",
-            "task_id": "888d74a2-d157-442c-98b0-004d41922940",
+            "id": "5f0de12c-eff2-4cef-b428-9e1f7580902b",
+            "task_id": "75583a3a-06c7-424e-b228-119cb5d20ae5",
             "seq": 30,
             "epoch": 1,
             "type": "TASK_SUCCEEDED",
             "step_key": null,
             "attempt_id": null,
-            "at": "2026-11-01T10:57:52.783730+00:00",
+            "at": "2026-11-01T11:11:22.101765+00:00",
             "payload": {}
           }
         ]
@@ -3387,5 +3430,5 @@
     }
   ],
   "passed": true,
-  "finished_at": "2026-11-01T10:57:53.326205+00:00"
+  "finished_at": "2026-11-01T11:11:22.535911+00:00"
 }
